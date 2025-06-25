@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeninfinity Inspiration</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+        /* Header styles - consistent with previous pages */
+        .header-bg {
+            background-color: #f3f4f6; /* Light gray from image */
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .greeninfinity-button {
+            background-color: #ef4444; /* Red from image */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* Rounded corners */
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+            transition: all 0.2s ease-in-out; /* Added transition for hover */
+        }
+        .greeninfinity-button:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        .nav-link {
+            color: #4b5563; /* Dark gray for header links */
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #ef4444; /* Red on hover */
+        }
+        .text-red-theme {
+            color: #ef4444;
+        }
+
+        /* Top-level navigation icons */
+        .top-nav-icon {
+            background-color: #2D4F32; /* Dark green from image */
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+            transition: all 0.2s ease-in-out; /* Added transition for hover */
+        }
+        .top-nav-icon:hover {
+            background-color: #3A6641; /* Slightly lighter green on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+
+        /* Hero section specific styles - Updated for Slider */
+        .hero-slider-container {
+            position: relative;
+            width: 100%;
+            height: 500px; /* Fixed height for the hero slider */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-slider-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Dark overlay for text readability */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        .hero-slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border: none;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            z-index: 3;
+            font-size: 1.5rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+        }
+        .hero-slider-nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            transform: translateY(-50%) scale(1.05); /* Slight scale on hover */
+        }
+        .hero-slider-dots {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .hero-dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .hero-dot.active {
+            background-color: #ffffff;
+            transform: scale(1.2);
+        }
+
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover {
+            color: #ffffff;
+        }
+
+        /* Room/Furniture Type filter styles */
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease-in-out; /* Added transition for hover */
+        }
+        .filter-item.active {
+            border-color: #3A6641; /* Green color for active filter */
+            color: #3A6641; /* Green color for active text */
+        }
+        .filter-item.active i {
+            color: #3A6641 !important; /* Ensure active icon is green */
+        }
+        .filter-item:hover:not(.active) {
+            color: #555555;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+            border-radius: 0.5rem; /* Add some rounded corners on hover */
+        }
+        .filter-item i {
+            font-size: 2.5rem; /* Larger icon size */
+            margin-bottom: 0.5rem;
+            transition: color 0.2s; /* Smooth color transition for icons */
+        }
+        .filter-item-text {
+            font-weight: 600;
+        }
+
+        /* Image gallery styles */
+        .inspiration-card {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced box-shadow */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added box-shadow to transition */
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: flex; /* Use flex to control internal layout */
+            flex-direction: column; /* Stack image and content vertically */
+            height: 320px; /* Fixed total height for the card */
+        }
+        .inspiration-card:hover {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); /* More pronounced shadow on hover */
+        }
+        .inspiration-card img {
+            width: 100%;
+            height: 250px; /* Fixed height for gallery images */
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out; /* Smooth transition for zoom */
+        }
+        .inspiration-card img:hover {
+            transform: scale(1.05); /* Zoom in by 5% */
+        }
+        .inspiration-card-content {
+            padding: 1rem;
+            background-color: #ffffff;
+            flex-grow: 1; /* Allow content to take remaining space */
+            display: flex;
+            align-items: center; /* Center text vertically if it's short */
+            justify-content: center; /* Center text horizontally */
+        }
+        .inspiration-card-title {
+            font-weight: 600;
+            color: #333333;
+            text-align: center; /* Ensure text is centered */
+        }
+
+        /* Trending section styles */
+        .trending-card {
+            background-color: #f8f8f8; /* Light background for trending cards */
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box-shadow */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added box-shadow to transition */
+            flex-shrink: 0; /* Important for slider */
+            display: flex;
+            flex-direction: column;
+            height: 250px; /* Fixed total height for trending card */
+        }
+        .trending-card:hover {
+            transform: translateY(-5px); /* Lift on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+        }
+        .trending-img-container {
+            position: relative;
+        }
+        .trending-img-container img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out; /* Smooth transition for zoom */
+        }
+        .trending-img-container img:hover {
+            transform: scale(1.05); /* Zoom in by 5% */
+        }
+        .trending-label {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            background-color: #ffc107; /* Yellow */
+            color: #333;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .trending-card .p-4 {
+            flex-grow: 1; /* Allow content to take remaining space */
+            display: flex;
+            align-items: center; /* Center text vertically */
+            justify-content: center; /* Center text horizontally */
+        }
+        .trending-card .p-4 p {
+            text-align: center; /* Ensure text is centered */
+            font-weight: 600;
+        }
+
+        .view-all-btn {
+            background-color: #3A6641; /* Green */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+            transition: all 0.2s ease-in-out; /* Added transition for hover */
+        }
+        .view-all-btn:hover {
+            background-color: #2D4F32;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        /* Footer styles - consistent with previous pages */
+        .footer-dark-bg {
+            background-color: #212529;
+            color: #ffffff;
+        }
+        .footer-dark-bg .footer-heading {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .footer-dark-bg .footer-link {
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+        .footer-dark-bg .footer-link:hover {
+            color: #ffffff;
+        }
+        .social-icon-footer {
+            background-color: #4b5563;
+            color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s; /* Added box-shadow and transform to transition */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem; /* Fixed width for consistent circle */
+            height: 3rem; /* Fixed height for consistent circle */
+        }
+        .social-icon-footer:hover {
+            background-color: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        /* Slider specific styles */
+        .slider-container {
+            position: relative;
+            display: flex;
+            align-items: center; /* Vertically align slider and buttons */
+            overflow: hidden; /* Hide overflow from slider items */
+        }
+
+        #trending-slider {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+            width: 100%; /* Take full width of the available space */
+        }
+        /* Responsive width for trending cards within slider */
+        .trending-card-wrapper {
+            flex-shrink: 0;
+            width: 100%; /* Default for mobile */
+            padding: 0.5rem; /* Add padding for spacing */
+        }
+        @media (min-width: 640px) { /* sm */
+            .trending-card-wrapper {
+                width: 50%; /* Show 2 cards */
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .trending-card-wrapper {
+                width: 33.333%; /* Show 3 cards */
+            }
+        }
+
+        .slider-button {
+            background-color: #3A6641; /* Green */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+            transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s; /* Added box-shadow and transform to transition */
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+            z-index: 10; /* Ensure buttons are above slider content */
+        }
+        .slider-button:hover {
+            background-color: #2D4F32;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            transform: translateY(-50%) scale(1.05); /* Slight scale on hover */
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Header Section -->
+    <header class="header-bg shadow-sm py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Greeninfinity Button -->
+            <a href="#" class="greeninfinity-button">Greeninfinity</a>
+            <nav class="flex items-center space-x-6">
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="#" class="nav-link">Consumer</a></li>
+                    <li><a href="#" class="nav-link">Investors</a></li>
+                    <li><a href="#" class="nav-link">About Us</a></li>
+                    <li><a href="#" class="nav-link text-red-theme font-semibold">Inspiration</a></li>
+                    <li><a href="#" class="nav-link">Products</a></li>
+                    <li><a href="#" class="nav-link">Blogs</a></li>
+                </ul>
+                <!-- WhatsApp Icon on the right side of the top navigation -->
+                <div class="flex items-center space-x-3 ml-4">
+                    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="top-nav-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                <button class="md:hidden text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Image Slider -->
+    <section class="hero-slider-container">
+        <div class="hero-slider-overlay"></div>
+        <div class="hero-slide active" style="background-image: url('https://placehold.co/1920x600/3A2D2B/F8F8F8?text=Living+Room+Inspiration+1');">
+            <div class="hero-content">
+                <p class="breadcrumb">Home > Inspiration</p>
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Envision your dream home</h1>
+                <p class="text-lg md:text-xl text-gray-200">Looking for some inspiration and ideas?</p>
+            </div>
+        </div>
+        <div class="hero-slide" style="background-image: url('https://placehold.co/1920x600/6B4F4F/F8F8F8?text=Bedroom+Inspiration+2');">
+            <div class="hero-content">
+                <p class="breadcrumb">Home > Inspiration</p>
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Discover Your Perfect Space</h1>
+                <p class="text-lg md:text-xl text-gray-200">Find ideas that reflect your unique style.</p>
+            </div>
+        </div>
+        <div class="hero-slide" style="background-image: url('https://placehold.co/1920x600/A0AEC0/F8F8F8?text=Kitchen+Inspiration+3');">
+            <div class="hero-content">
+                <p class="breadcrumb">Home > Inspiration</p>
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Innovate Your Living</h1>
+                <p class="text-lg md:text-xl text-gray-200">From classic to contemporary, we inspire.</p>
+            </div>
+        </div>
+
+        <button class="hero-slider-nav-btn prev" id="hero-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="hero-slider-nav-btn next" id="hero-next"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="hero-slider-dots" id="hero-dots">
+            <span class="hero-dot active" data-slide="0"></span>
+            <span class="hero-dot" data-slide="1"></span>
+            <span class="hero-dot" data-slide="2"></span>
+        </div>
+    </section>
+
+    <!-- Room Type Filter Section -->
+    <section class="py-12 px-6 md:px-12 container mx-auto">
+        <div class="flex justify-center space-x-8 border-b border-gray-200 pb-4 mb-8" id="room-type-filters">
+            <div class="filter-item active" data-room="bedroom">
+                <i class="fas fa-bed text-red-500"></i> <!-- Red icon -->
+                <span class="filter-item-text">Bedroom</span>
+            </div>
+            <div class="filter-item" data-room="living-room">
+                <i class="fas fa-couch text-blue-500"></i> <!-- Blue icon -->
+                <span class="filter-item-text">Living Room</span>
+            </div>
+            <div class="filter-item" data-room="kitchen">
+                <i class="fas fa-utensils text-yellow-500"></i> <!-- Yellow icon -->
+                <span class="filter-item-text">Kitchen</span>
+            </div>
+            <div class="filter-item" data-room="office">
+                <i class="fas fa-briefcase text-purple-500"></i> <!-- Purple icon -->
+                <span class="filter-item-text">Office</span>
+            </div>
+        </div>
+
+        <!-- Room Image Galleries (Initially show Bedroom) -->
+        <div id="bedroom-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 room-gallery">
+            <!-- Bedroom Image Cards -->
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3A2D2B/F8F8F8?text=Opulent+Bedroom" alt="Opulent Bedroom">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Opulent</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3A2D2B/F8F8F8?text=Artistic+Den" alt="Artistic Den">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Artistic Den</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3A2D2B/F8F8F8?text=Modern+Minimalism" alt="Modern Minimalism">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Modern Minimalism</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3A2D2B/F8F8F8?text=Indian+Ethos" alt="Indian Ethos">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Indian Ethos</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="living-room-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 room-gallery hidden">
+            <!-- Living Room Image Cards (from image_0ff9b6.jpg) -->
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/A0AEC0/FFFFFF?text=Living+Room+Opulent" alt="Living Room Opulent">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Opulent</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/A0AEC0/FFFFFF?text=Living+Room+Artistic+Den" alt="Living Room Artistic Den">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Artistic Den</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/A0AEC0/FFFFFF?text=Living+Room+Modern+Minimalism" alt="Living Room Modern Minimalism">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Modern Minimalism</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/A0AEC0/FFFFFF?text=Living+Room+Indian+Ethish" alt="Living Room Indian Ethos">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Indian Ethos</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="kitchen-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 room-gallery hidden">
+            <!-- Kitchen Image Cards (from image_0ffc7f.jpg) -->
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/6B4F4F/FFFFFF?text=Kitchen+Opulent" alt="Kitchen Opulent">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Opulent</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/6B4F4F/FFFFFF?text=Kitchen+Artistic+Den" alt="Kitchen Artistic Den">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Artistic Den</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/6B4F4F/FFFFFF?text=Kitchen+Modern+Minimalism" alt="Kitchen Modern Minimalism">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Modern Minimalism</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/6B4F4F/FFFFFF?text=Kitchen+Indian+Ethos" alt="Kitchen Indian Ethos">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Indian Ethos</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="office-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 room-gallery hidden">
+            <!-- Office Image Cards (from image_0ffcbb.jpg) -->
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3D405B/FFFFFF?text=Office+Opulent" alt="Office Opulent">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Opulent</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3D405B/FFFFFF?text=Office+Artistic+Den" alt="Office Artistic Den">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Artistic Den</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3D405B/FFFFFF?text=Office+Modern+Minimalism" alt="Office Modern Minimalism">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Modern Minimalism</p>
+                </div>
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3D405B/FFFFFF?text=Indian+Ethos" alt="Indian Ethos">
+                <div class="inspiration-card-content">
+                    <p class="inspiration-card-title">Indian Ethos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Furniture Type Section -->
+    <section class="bg-gray-100 py-12 px-6 md:px-12">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Furniture Type</h2>
+            <div class="flex justify-center space-x-8">
+                <div class="filter-item">
+                    <i class="fas fa-chair text-indigo-500"></i> <!-- Indigo icon -->
+                    <span class="filter-item-text">Chair</span>
+                </div>
+                <div class="filter-item">
+                    <i class="fas fa-table text-pink-500"></i> <!-- Table icon (changed from fa-desk to fa-table) -->
+                    <span class="filter-item-text">Study Table</span>
+                </div>
+                <div class="filter-item">
+                    <i class="fas fa-couch text-purple-500"></i> <!-- Purple icon -->
+                    <span class="filter-item-text">Sofa</span>
+                </div>
+                <div class="filter-item">
+                    <i class="fas fa-bed text-teal-500"></i> <!-- Teal icon -->
+                    <span class="filter-item-text">Bed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Design Ideas Section -->
+    <section class="py-12 px-6 md:px-12 container mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800">Trending Design Ideas</h2>
+            <a href="#" class="view-all-btn hidden md:block">View All</a> <!-- Hide on small screens -->
+        </div>
+        <div class="slider-container relative">
+            <button id="trending-prev" class="slider-button absolute left-0 top-1/2 -translate-y-1/2 ml-2 p-3 rounded-full shadow-lg">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="relative overflow-hidden flex-grow mx-4"> <!-- Added flex-grow and horizontal margin -->
+                <div id="trending-slider" class="flex transition-transform duration-300 ease-in-out">
+                    <!-- Trending Cards -->
+                    <div class="trending-card-wrapper">
+                        <div class="trending-card">
+                            <div class="trending-img-container">
+                                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Home+Office" alt="Home Office Design Trends to Watch">
+                                <span class="trending-label">Trending</span>
+                            </div>
+                            <div class="p-4">
+                                <p class="font-semibold text-gray-700">Home Office Design Trends to Watch</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trending-card-wrapper">
+                        <div class="trending-card">
+                            <div class="trending-img-container">
+                                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Brutalism" alt="Revival of Brutalism">
+                                <span class="trending-label">Trending</span>
+                            </div>
+                            <div class="p-4">
+                                <p class="font-semibold text-gray-700">Revival of Brutalism</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trending-card-wrapper">
+                        <div class="trending-card">
+                            <div class="trending-img-container">
+                                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=Kitchenette" alt="Make your Kitchenette look spacious">
+                                <span class="trending-label">Trending</span>
+                            </div>
+                            <div class="p-4">
+                                <p class="font-semibold text-gray-700">Make your Kitchenette look spacious</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more trending cards as needed for the slider to function -->
+                    <div class="trending-card-wrapper">
+                        <div class="trending-card">
+                            <div class="trending-img-container">
+                                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Modern+Workspace" alt="Modern Workspace">
+                                <span class="trending-label">Trending</span>
+                            </div>
+                            <div class="p-4">
+                                <p class="font-semibold text-gray-700">Modern Workspace Ideas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trending-card-wrapper">
+                        <div class="trending-card">
+                            <div class="trending-img-container">
+                                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Minimalist+Design" alt="Minimalist Design">
+                                <span class="trending-label">Trending</span>
+                            </div>
+                            <div class="p-4">
+                                <p class="font-semibold text-gray-700">Minimalist Design Trends</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="trending-next" class="slider-button absolute right-0 top-1/2 -translate-y-1/2 mr-2 p-3 rounded-full shadow-lg">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <a href="#" class="view-all-btn md:hidden mt-4 mx-auto">View All</a> <!-- Show on small screens -->
+        </div>
+    </section>
+
+    <!-- GreenSpaces Section -->
+    <section class="py-12 px-6 md:px-12 container mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800">#GreenSpaces</h2>
+            <a href="#" class="view-all-btn">Discover</a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- GreenSpaces Image Cards -->
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=GreenSpace+1" alt="Green Space 1">
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=GreenSpace+2" alt="Green Space 2">
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=GreenSpace+3" alt="Green Space 3">
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3A2D2B/F8F8F8?text=GreenSpace+4" alt="Green Space 4">
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=GreenSpace+5" alt="Green Space 5">
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=GreenSpace+6" alt="Green Space 6">
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=GreenSpace+7" alt="Green Space 7">
+            </div>
+            <div class="inspiration-card">
+                <img src="https://placehold.co/600x400/3A2D2B/F8F8F8?text=GreenSpace+8" alt="Green Space 8">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer Section - Consistent with Blog Page -->
+    <footer class="footer-dark-bg py-10 px-6 md:px-12 mt-12 text-sm">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 text-center md:text-left">
+            <!-- Column 1: Products -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Products</h4>
+                <div class="grid grid-cols-1 gap-y-2"> <!-- Adjusted grid for single column on mobile -->
+                    <div>
+                        <h5 class="font-semibold text-white mb-2">Categories</h5>
+                        <ul class="space-y-1">
+                            <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                            <li><a href="#" class="footer-link">Doors</a></li>
+                            <li><a href="#" class="footer-link">Veneers</a></li>
+                            <li><a href="#" class="footer-link">MDF</a></li>
+                            <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                            <li><a href="#" class="footer-link">PVC</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Speciality Feature -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Speciality Feature</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Brands -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Brands</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Greeninfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">Greeninfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crest</a></li>
+                    <li><a href="#" class="footer-link">Greeninfinity MDF</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Furniture Type -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Furniture Type</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 5: Quick Links & More -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Quick Links & More</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Social Media and Copyright -->
+        <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+            <h5 class="font-semibold text-white mb-4">Follow us on</h5>
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="#" class="social-icon-footer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fas fa-globe"></i></a>
+            </div>
+            <p class="text-gray-400 text-sm">&copy; Copyright 2025 Greeninfinity.com. All Rights Reserved</p>
+            <p class="text-gray-400 text-sm">Digital agency Tonic Worldwide</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Room Type Filter Logic
+            const filterItems = document.querySelectorAll('#room-type-filters .filter-item');
+            const roomGalleries = document.querySelectorAll('.room-gallery');
+
+            filterItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    filterItems.forEach(fi => fi.classList.remove('active'));
+                    this.classList.add('active');
+
+                    roomGalleries.forEach(gallery => gallery.classList.add('hidden'));
+
+                    const roomType = this.dataset.room;
+                    document.getElementById(roomType + '-gallery').classList.remove('hidden');
+                });
+            });
+
+            // Hero Section Image Slider Logic
+            const heroSlides = document.querySelectorAll('.hero-slide');
+            const heroPrevBtn = document.getElementById('hero-prev');
+            const heroNextBtn = document.getElementById('hero-next');
+            const heroDotsContainer = document.getElementById('hero-dots');
+            const heroDots = document.querySelectorAll('.hero-dot');
+
+            let currentHeroSlide = 0;
+            let heroSlideInterval; // Variable to hold the interval ID
+
+            function showHeroSlide(index) {
+                // Hide all slides and deactivate dots
+                heroSlides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    heroDots[i].classList.remove('active');
+                });
+
+                // Show the current slide and activate the corresponding dot
+                heroSlides[index].classList.add('active');
+                heroDots[index].classList.add('active');
+            }
+
+            function nextHeroSlide() {
+                currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+                showHeroSlide(currentHeroSlide);
+            }
+
+            function prevHeroSlide() {
+                currentHeroSlide = (currentHeroSlide - 1 + heroSlides.length) % heroSlides.length;
+                showHeroSlide(currentHeroSlide);
+            }
+
+            // Event Listeners for Hero Slider Buttons
+            heroNextBtn.addEventListener('click', () => {
+                nextHeroSlide();
+                resetHeroAutoSlide(); // Reset auto-slide on manual interaction
+            });
+
+            heroPrevBtn.addEventListener('click', () => {
+                prevHeroSlide();
+                resetHeroAutoSlide(); // Reset auto-slide on manual interaction
+            });
+
+            // Event Listeners for Hero Slider Dots
+            heroDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.dataset.slide);
+                    currentHeroSlide = slideIndex;
+                    showHeroSlide(currentHeroSlide);
+                    resetHeroAutoSlide(); // Reset auto-slide on manual interaction
+                });
+            });
+
+            // Auto-slide functionality
+            function startHeroAutoSlide() {
+                heroSlideInterval = setInterval(nextHeroSlide, 5000); // Change slide every 5 seconds
+            }
+
+            function resetHeroAutoSlide() {
+                clearInterval(heroSlideInterval); // Clear existing interval
+                startHeroAutoSlide(); // Start a new one
+            }
+
+            // Initialize auto-slide when the page loads
+            startHeroAutoSlide();
+
+            // Trending Design Ideas Slider Logic
+            const trendingSlider = document.getElementById('trending-slider');
+            const trendingCards = document.querySelectorAll('#trending-slider .trending-card-wrapper');
+            const trendingPrevBtn = document.getElementById('trending-prev');
+            const trendingNextBtn = document.getElementById('trending-next');
+
+            let currentTrendingSlide = 0; // Current index of the first visible card
+
+            function getTrendingCardsPerView() {
+                if (window.innerWidth >= 1024) { // lg breakpoint
+                    return 3;
+                } else if (window.innerWidth >= 640) { // sm breakpoint
+                    return 2;
+                } else {
+                    return 1;
+                }
+            }
+
+            function updateTrendingSliderPosition() {
+                const cardsPerView = getTrendingCardsPerView();
+                const totalCards = trendingCards.length;
+                const maxIndex = Math.max(0, totalCards - cardsPerView); // Max index for the first visible card
+
+                // Ensure currentTrendingSlide is within bounds
+                if (currentTrendingSlide > maxIndex) {
+                    currentTrendingSlide = 0; // Loop to start if over
+                }
+                if (currentTrendingSlide < 0) {
+                    currentTrendingSlide = maxIndex; // Loop to end if under
+                }
+
+                // Calculate the translation based on the width of a single card-wrapper
+                const cardWidthPercentage = 100 / cardsPerView;
+                const offset = -currentTrendingSlide * cardWidthPercentage;
+                trendingSlider.style.transform = `translateX(${offset}%)`;
+            }
+
+            trendingNextBtn.addEventListener('click', () => {
+                currentTrendingSlide++;
+                updateTrendingSliderPosition();
+            });
+
+            trendingPrevBtn.addEventListener('click', () => {
+                currentTrendingSlide--;
+                updateTrendingSliderPosition();
+            });
+
+            // Initialize trending slider on load and resize
+            updateTrendingSliderPosition();
+            window.addEventListener('resize', updateTrendingSliderPosition);
+        });
+    </script>
+</body>
+</html>

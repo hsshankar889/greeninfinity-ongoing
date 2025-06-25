@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeninfinity - Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* Header styles */
+        .header-bg {
+            background-color: #f3f4f6; /* Light gray from image */
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .greeninfinity-button {
+            background-color: #ef4444; /* Red from image */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* Rounded corners */
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+        .greeninfinity-button:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .nav-link {
+            color: #4b5563; /* Dark gray for header links */
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #ef4444; /* Red on hover */
+        }
+        .text-red-theme {
+            color: #ef4444;
+        }
+
+        /* Top-level navigation icons (WhatsApp in this case) */
+        .top-nav-icon {
+            background-color: #2D4F32; /* Dark green from image */
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+            position: fixed;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+        .top-nav-icon:hover {
+            background-color: #3A6641;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Hero section specific to Products page */
+        .products-hero-section {
+            background-image: url('https://placehold.co/1920x400/5C4033/FFFFFF?text=Discover+Sustainable+Solutions');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 5%; /* Adjust as needed */
+            position: relative;
+        }
+        .products-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+            z-index: 1;
+        }
+        .products-hero-content {
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+            max-width: 600px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .products-hero-content .breadcrumb {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+        }
+        .products-hero-content .breadcrumb a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .products-hero-content .breadcrumb a:hover {
+            color: #ffffff;
+        }
+        .products-hero-content h1 {
+            font-size: 2.5rem; /* text-4xl */
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        @media (min-width: 768px) {
+            .products-hero-content h1 {
+                font-size: 3.5rem; /* text-5xl on md screens */
+            }
+        }
+
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            flex-direction: column; /* Stack on small screens */
+            gap: 2rem;
+            padding: 2rem 1rem;
+        }
+        @media (min-width: 768px) {
+            .dashboard-container {
+                flex-direction: row; /* Side-by-side on larger screens */
+                padding: 2rem;
+            }
+        }
+
+        /* Sidebar Filters */
+        .filter-sidebar {
+            width: 100%;
+            max-width: 300px; /* Max width for sidebar */
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .filter-group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        .filter-group-header h3 {
+            font-weight: 600;
+            color: #333333;
+        }
+        .filter-group-content {
+            padding-left: 0.5rem;
+            padding-bottom: 1rem;
+        }
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #555555;
+        }
+        .filter-option input[type="checkbox"] {
+            margin-right: 0.75rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #d1d5db;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .filter-option input[type="checkbox"]:checked {
+            background-color: #2D4F32; /* Dark green for checked */
+            border-color: #2D4F32;
+        }
+        .filter-option input[type="checkbox"]:checked::before {
+            content: '\2713'; /* Checkmark symbol */
+            display: block;
+            color: white;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            text-align: center;
+        }
+        .filter-option label {
+            cursor: pointer;
+        }
+
+        /* Product Grid */
+        .product-grid-container {
+            flex-grow: 1; /* Take remaining space */
+            display: grid;
+            grid-template-columns: repeat(1, 1fr); /* Single column on small screens */
+            gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .product-grid-container {
+                grid-template-columns: repeat(2, 1fr); /* Two columns on small-medium screens */
+            }
+        }
+        @media (min-width: 1024px) {
+            .product-grid-container {
+                grid-template-columns: repeat(3, 1fr); /* Three columns on large screens */
+            }
+        }
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .product-image-container {
+            position: relative;
+            height: 250px; /* Fixed height for product images */
+            overflow: hidden;
+            background-color: #f0f0f0; /* Placeholder background */
+        }
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        .product-content {
+            padding: 1rem;
+            flex-grow: 1; /* Allows content area to expand */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-name {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 1rem;
+            flex-grow: 1; /* Push button to bottom */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .view-product-btn {
+            background-color: #2D4F32; /* Dark green */
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .view-product-btn:hover {
+            background-color: #3A6641; /* Slightly lighter green */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .show-more-btn-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .show-more-btn {
+            background-color: #2D4F32; /* Dark green */
+            color: #ffffff;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .show-more-btn:hover {
+            background-color: #3A6641;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
+        }
+
+
+        /* Footer styles */
+        .footer-dark-bg {
+            background-color: #212529;
+            color: #ffffff;
+        }
+        .footer-dark-bg .footer-heading {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .footer-dark-bg .footer-link {
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+        .footer-dark-bg .footer-link:hover {
+            color: #ffffff;
+        }
+        .social-icon-footer {
+            background-color: #4b5563;
+            color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+        }
+        .social-icon-footer:hover {
+            background-color: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Header Section -->
+    <header class="header-bg shadow-sm py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Greeninfinity Button -->
+            <a href="index.html" class="greeninfinity-button">Greeninfinity</a>
+            <nav class="flex items-center space-x-6">
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="#" class="nav-link">Consumer</a></li>
+                    <li><a href="investors.html" class="nav-link">Investors</a></li>
+                    <li><a href="#" class="nav-link">About Us</a></li>
+                    <li><a href="#" class="nav-link">Inspiration</a></li>
+                    <li><a href="products.html" class="nav-link text-red-theme font-semibold">Products</a></li>
+                    <li><a href="#" class="nav-link">Blogs</a></li>
+                </ul>
+                <button class="md:hidden text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Fixed WhatsApp Icon -->
+    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="top-nav-icon">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Products Hero Section -->
+    <section class="products-hero-section">
+        <div class="products-hero-overlay"></div>
+        <div class="products-hero-content">
+            <p class="breadcrumb">Home > Products</p>
+            <h1>Discover Sustainable Solutions: Greenply's Premium Products</h1>
+        </div>
+    </section>
+
+    <!-- Products Dashboard Section -->
+    <section class="container mx-auto dashboard-container">
+        <!-- Filter Sidebar -->
+        <aside class="filter-sidebar">
+            <!-- Filter By Feature -->
+            <div class="filter-group mb-6">
+                <div class="filter-group-header" data-toggle="feature">
+                    <h3>Filter By Feature</h3>
+                    <i class="fas fa-chevron-up"></i>
+                </div>
+                <div class="filter-group-content" id="feature-filter-content">
+                    <div class="filter-option">
+                        <input type="checkbox" id="waterProof" name="feature" value="Water Proof">
+                        <label for="waterProof">Water Proof</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="fireRetardant" name="feature" value="Fire Retardant">
+                        <label for="fireRetardant">Fire Retardant</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="zeroEmission" name="feature" value="Zero Emission">
+                        <label for="zeroEmission">Zero Emission</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="termiteProof" name="feature" value="Termite Proof">
+                        <label for="termiteProof">Termite Proof</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="acoustic" name="feature" value="Acoustic">
+                        <label for="acoustic">Acoustic</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="antiViral" name="feature" value="Anti Viral">
+                        <label for="antiViral">Anti Viral</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="antiBacterial" name="feature" value="Anti Bacterial">
+                        <label for="antiBacterial">Anti Bacterial</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="calibrated" name="feature" value="Calibrated">
+                        <label for="calibrated">Calibrated</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="structuralGrade" name="feature" value="Structural Grade">
+                        <label for="structuralGrade">Structural Grade</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="borerProof" name="feature" value="Borer Proof">
+                        <label for="borerProof">Borer Proof</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="leadFree" name="feature" value="Lead Free">
+                        <label for="leadFree">Lead Free</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="moistureResistant" name="feature" value="Moisture Resistant">
+                        <label for="moistureResistant">Moisture Resistant</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="weatherResistant" name="feature" value="Weather Resistant">
+                        <label for="weatherResistant">Weather Resistant</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="lifetimeWarranty" name="feature" value="Lifetime Warranty">
+                        <label for="lifetimeWarranty">Lifetime Warranty</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="fireSafe" name="feature" value="Fire Safe">
+                        <label for="fireSafe">Fire Safe</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter By Material -->
+            <div class="filter-group mb-6">
+                <div class="filter-group-header" data-toggle="material">
+                    <h3>Filter By Material</h3>
+                    <i class="fas fa-chevron-up"></i>
+                </div>
+                <div class="filter-group-content" id="material-filter-content">
+                    <div class="filter-option">
+                        <input type="checkbox" id="plywoodBlockboard" name="material" value="Plywood & Blockboard">
+                        <label for="plywoodBlockboard">Plywood & Blockboard</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="doors" name="material" value="Doors">
+                        <label for="doors">Doors</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="veneers" name="material" value="Veneers">
+                        <label for="veneers">Veneers</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="mdfBoard" name="material" value="MDF and Board">
+                        <label for="mdfBoard">MDF and Board</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="specialityPlywood" name="material" value="Speciality Plywood">
+                        <label for="specialityPlywood">Speciality Plywood</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="pvc" name="material" value="PVC">
+                        <label for="pvc">PVC</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter By Brand -->
+            <div class="filter-group">
+                <div class="filter-group-header" data-toggle="brand">
+                    <h3>Filter By Brand</h3>
+                    <i class="fas fa-chevron-up"></i>
+                </div>
+                <div class="filter-group-content" id="brand-filter-content">
+                    <div class="filter-option">
+                        <input type="checkbox" id="green" name="brand" value="Green">
+                        <label for="green">Green</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="ecotec" name="brand" value="Ecotec">
+                        <label for="ecotec">Ecotec</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="optimaG" name="brand" value="Optima G">
+                        <label for="optimaG">Optima G</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="greenNdure" name="brand" value="Green Ndure">
+                        <label for="greenNdure">Green Ndure</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="woodCrest" name="brand" value="Wood Crest">
+                        <label for="woodCrest">Wood Crest</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="greenMDF" name="brand" value="Green MDF">
+                        <label for="greenMDF">Green MDF</label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Product Grid -->
+        <main class="product-grid-container" id="product-grid">
+            <!-- Products will be loaded here by JavaScript -->
+        </main>
+    </section>
+
+    <div class="show-more-btn-container">
+        <button class="show-more-btn" id="show-more-products">Show More</button>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer-dark-bg py-10 px-6 md:px-12 mt-12 text-sm">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 text-center md:text-left">
+            <!-- Column 1: Products -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Products</h4>
+                <div class="grid grid-cols-1 gap-y-2">
+                    <div>
+                        <h5 class="font-semibold text-white mb-2">Categories</h5>
+                        <ul class="space-y-1">
+                            <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                            <li><a href="#" class="footer-link">Doors</a></li>
+                            <li><a href="#" class="footer-link">Veneers</a></li>
+                            <li><a href="#" class="footer-link">MDF</a></li>
+                            <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                            <li><a href="#" class="footer-link">PVC</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Speciality Feature -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Speciality Feature</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Brands -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Brands</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Greeninfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">Greeninfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crest</a></li>
+                    <li><a href="#" class="footer-link">Greeninfinity MDF</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Furniture Type -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Furniture Type</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 5: Quick Links & More -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Quick Links & More</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Social Media and Copyright -->
+        <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+            <h5 class="font-semibold text-white mb-4">Follow us on</h5>
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="#" class="social-icon-footer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fas fa-globe"></i></a>
+            </div>
+            <p class="text-gray-400 text-sm">&copy; Copyright 2025 Greeninfinity.com. All Rights Reserved</p>
+            <p class="text-gray-400 text-sm">Digital agency Tonic Worldwide</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            let allProducts = []; // Will store all products after fetching
+
+            const productsPerPage = 6;
+            let currentProductCount = 0;
+            let filteredProducts = [];
+
+            const productGrid = document.getElementById('product-grid');
+            const showMoreButton = document.getElementById('show-more-products');
+            const filterCheckboxes = document.querySelectorAll('.filter-sidebar input[type="checkbox"]');
+            const filterGroupHeaders = document.querySelectorAll('.filter-group-header');
+
+            // Fetch products from JSON file
+            try {
+                // Assuming 'products.json' is accessible at the root or relative path
+                const response = await fetch('products.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                allProducts = await response.json();
+                console.log('Products loaded:', allProducts);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                productGrid.innerHTML = '<p class="col-span-full text-center text-red-500">Failed to load products. Please ensure products.json is available.</p>';
+                showMoreButton.classList.add('hidden');
+                return; // Stop execution if products can't be loaded
+            }
+
+            // Function to render products
+            function renderProducts(productsToRender) {
+                // Clear existing products if starting fresh (e.g., after filters change)
+                if (currentProductCount === 0) {
+                    productGrid.innerHTML = '';
+                }
+
+                const startIndex = currentProductCount;
+                const endIndex = Math.min(startIndex + productsPerPage, productsToRender.length);
+
+                for (let i = startIndex; i < endIndex; i++) {
+                    const product = productsToRender[i];
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <div class="product-image-container">
+                            <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/400x250/cccccc/333333?text=Image+Not+Found';">
+                        </div>
+                        <div class="product-content">
+                            <h2 class="product-name">${product.name}</h2>
+                            <button class="view-product-btn">View Product</button>
+                        </div>
+                    `;
+                    productGrid.appendChild(productCard);
+                }
+                currentProductCount = endIndex;
+
+                // Hide/Show "Show More" button
+                if (currentProductCount >= productsToRender.length) {
+                    showMoreButton.classList.add('hidden');
+                } else {
+                    showMoreButton.classList.remove('hidden');
+                }
+            }
+
+            // Function to filter products
+            function applyFilters() {
+                const selectedFeatures = Array.from(document.querySelectorAll('input[name="feature"]:checked')).map(cb => cb.value);
+                const selectedMaterials = Array.from(document.querySelectorAll('input[name="material"]:checked')).map(cb => cb.value);
+                const selectedBrands = Array.from(document.querySelectorAll('input[name="brand"]:checked')).map(cb => cb.value);
+
+                filteredProducts = allProducts.filter(product => { // Use allProducts here
+                    const matchesFeature = selectedFeatures.length === 0 || selectedFeatures.every(feature => product.features.includes(feature));
+                    const matchesMaterial = selectedMaterials.length === 0 || selectedMaterials.includes(product.material);
+                    const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+
+                    return matchesFeature && matchesMaterial && matchesBrand;
+                });
+
+                currentProductCount = 0; // Reset count for new filter results
+                renderProducts(filteredProducts);
+            }
+
+            // Event Listeners for Filters
+            filterCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', applyFilters);
+            });
+
+            // Event Listener for "Show More" button
+            showMoreButton.addEventListener('click', () => {
+                renderProducts(filteredProducts);
+            });
+
+            // Toggle filter group content visibility
+            filterGroupHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('fa-chevron-up');
+                    icon.classList.toggle('fa-chevron-down');
+                });
+            });
+
+            // Initial load of products after fetching
+            applyFilters(); // Apply initial filters (which means show all if no filters selected)
+        });
+    </script>
+</body>
+</html>

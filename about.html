@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - GreenInfinity</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Roboto Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+            margin: 0;
+            padding: 0;
+            /* Removed overflow: hidden; to allow main window scrolling */
+        }
+        /* Navbar specific styles for single line and left alignment */
+        @media (min-width: 768px) {
+            .navbar-menu {
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                width: auto;
+                flex-grow: 1;
+                margin-left: 1rem;
+            }
+
+            .navbar-menu .nav-item {
+                padding: 0.5rem 1rem;
+                border-right: 1px solid #e5e7eb;
+            }
+
+            .navbar-menu .nav-item:last-child {
+                border-right: none;
+            }
+        }
+
+        /* Footer specific styles */
+        .footer-list-header {
+            font-weight: 500;
+            color: #F87171;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .footer-list-item {
+            margin-bottom: 0.25rem;
+        }
+
+        /* General Section Styling for consistency */
+        section {
+            padding: 4rem 1.5rem;
+        }
+        .section-header {
+            text-align: center;
+            font-size: 2.25rem; /* 3xl */
+            font-weight: 700; /* bold */
+            color: #1a202c; /* gray-800 */
+            margin-bottom: 2.5rem; /* mb-10 */
+        }
+
+        /* Core Values specific styling */
+        .core-value-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 2px solid #22C55E; /* Green-500 border from image */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align icon and text to start */
+            text-align: left; /* Align text to left */
+        }
+        .core-value-card svg {
+            color: #22C55E; /* Green-500 for icons */
+            margin-bottom: 0.75rem;
+        }
+
+        /* Carousel Specific Styles (Awards & Certifications and GreenInfinity Journey) */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .carousel-container {
+            overflow-x: auto; /* Allow manual horizontal scrolling */
+            scroll-snap-type: x mandatory; /* Snap to cards */
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            display: flex;
+            gap: 1.5rem; /* Spacing between cards */
+            padding: 0 1rem; /* Padding for the ends of the carousel */
+            border-radius: 0.75rem;
+            padding-top: 2rem; /* Add padding for visual spacing from the top */
+            padding-bottom: 2rem; /* Add padding for visual spacing from the bottom */
+        }
+
+        .carousel-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .carousel-card {
+            min-width: 220px; /* Reduced width for each card */
+            height: 280px; /* Reduced height for each card */
+            flex-shrink: 0; /* Prevent cards from shrinking */
+            scroll-snap-align: center; /* Snap cards to center when scrolling */
+            scroll-snap-stop: always; /* Ensures scrolling stops precisely on each card */
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            border: 1px solid #34D399; /* Green border for cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start; /* Align content to the left */
+            text-align: left; /* Align text to left */
+        }
+
+        .carousel-card h3 {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .carousel-card p {
+            font-size: 0.95rem; /* slightly larger text */
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .carousel-card-image {
+            width: 80px; /* Adjusted image size for smaller cards */
+            height: auto;
+            margin-bottom: 1rem;
+            align-self: center; /* Center the image */
+        }
+
+        .carousel-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #10B981; /* Green-500 */
+            color: white;
+            padding: 0.75rem 0.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; /* fixed width */
+            height: 40px; /* fixed height */
+        }
+
+        .carousel-nav-button:hover {
+            background-color: #059669; /* Darker green on hover */
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav-button.left {
+            left: -20px; /* Position outside for a floating effect */
+        }
+
+        .carousel-nav-button.right {
+            right: -20px; /* Position outside for a floating effect */
+        }
+
+         /* Responsive adjustments for the carousel buttons */
+        @media (max-width: 768px) {
+            .carousel-nav-button.left {
+                left: 0px; /* Stick to the edge on smaller screens */
+            }
+            .carousel-nav-button.right {
+                right: 0px; /* Stick to the edge on smaller screens */
+            }
+        }
+
+        /* Specific background for Awards & Certifications */
+        #awards-section .carousel-container {
+            background-color: #1a2e2d; /* Dark green background as per image */
+        }
+
+        /* Greenply Foundation Section specific styles */
+        .greenply-foundation-section {
+            background-color: #ffffff; /* White background */
+            padding: 4rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .greenply-foundation-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            max-width: 1200px; /* Adjust max-width as needed */
+        }
+
+        @media (min-width: 1024px) { /* Large screens */
+            .greenply-foundation-content {
+                flex-direction: row;
+                text-align: left;
+            }
+            .greenply-foundation-content .video-wrapper {
+                flex: 1; /* Take up equal space */
+            }
+            .greenply-foundation-content .text-content {
+                flex: 1; /* Take up equal space */
+            }
+        }
+
+        /* Responsive video wrapper */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio (height / width * 100%) */
+            overflow: hidden;
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Shadow */
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 0.75rem; /* Ensure video inherits parent's rounded corners */
+        }
+
+        .greenply-foundation-text-content {
+            color: #1a202c; /* Dark text */
+            text-align: center;
+        }
+
+        .greenply-foundation-text-content h2 {
+            font-size: 2.5rem; /* 4xl */
+            font-weight: 800; /* Extra bold */
+            margin-bottom: 1rem;
+            color: #1a202c; /* Dark text color */
+        }
+
+        .greenply-foundation-text-content p {
+            font-size: 1.125rem; /* lg */
+            line-height: 1.75;
+            color: #4a5568; /* Gray text color */
+        }
+
+        /* Company Management specific styles from new image */
+        .management-card {
+            background-color: white;
+            padding: 1rem; /* Reduced padding slightly for a tighter look */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align content to the left within the card */
+            text-align: left; /* Align text to left */
+            padding-bottom: 1.5rem; /* Add some padding at the bottom */
+            min-height: 450px; /* Minimum height for consistency */
+        }
+
+        .management-card-image {
+            width: 100%;
+            height: 250px; /* Fixed height for consistent image size */
+            object-fit: cover; /* Cover the area, crop if necessary */
+            border-radius: 0.75rem; /* Rounded corners for image */
+            margin-bottom: 1rem;
+        }
+
+        .management-card h3 {
+            font-size: 1.5rem; /* Larger font size for name */
+            font-weight: 700; /* Bold */
+            color: #1a202c; /* Dark color */
+            margin-bottom: 0.25rem; /* Small margin below name */
+        }
+
+        .management-card p.title {
+            font-size: 1rem; /* Regular font size for title */
+            color: #4a5568; /* Gray color */
+            margin-bottom: 0.5rem; /* Margin below title */
+        }
+
+        .management-card .bio-summary {
+            font-size: 0.95rem; /* Smaller text for bio */
+            color: #6b7280; /* Slightly darker gray for bio text */
+            line-height: 1.5;
+            margin-top: 0.5rem;
+            /* Added for truncating text */
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Show up to 3 lines initially */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .management-card .full-bio {
+            font-size: 0.95rem;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-top: 0.5rem;
+            display: none; /* Hidden by default */
+        }
+
+        .management-card .arrow-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center the icon horizontally */
+            width: 2rem; /* Small fixed width */
+            height: 2rem; /* Small fixed height */
+            border-radius: 9999px; /* Circular background */
+            background-color: #F87171; /* Red color from existing design */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+            margin-top: 1rem; /* Space from the text above */
+            align-self: flex-end; /* Align to the right bottom of the card */
+        }
+
+        .management-card .arrow-icon-wrapper:hover {
+            background-color: #EF4444; /* Darker red on hover */
+        }
+
+        .management-card .arrow-icon-wrapper svg {
+            fill: white;
+            width: 1rem; /* Smaller icon */
+            height: 1rem; /* Smaller icon */
+            transition: transform 0.3s ease;
+        }
+
+        .management-card .arrow-icon-wrapper.expanded svg {
+            transform: rotate(90deg); /* Rotate for expanded state */
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+    <!-- Header Section (Same as Front Page) -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
+        <div class="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0">
+            <img src="https://placehold.co/100x40/EF4444/FFFFFF?text=GreenInfinity" alt="GreenInfinity Logo" class="h-10 rounded">
+            <button id="menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
+            </button>
+        </div>
+        <nav id="navbar-menu" class="hidden md:flex flex-row md:items-center md:space-x-4 w-full md:w-auto">
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">About Us</a>
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section for About Us -->
+        <section class="bg-red-600 text-white py-20 px-6 md:px-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">About GreenInfinity</h1>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                Driven by innovation and a commitment to excellence, GreenInfinity is a leading name in the wood panel industry, crafting sustainable and high-quality solutions for modern living.
+            </p>
+        </section>
+
+        <!-- Progressing Sustainably Section -->
+        <section class="bg-gray-100 py-16 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header">Progressing Sustainably</h2>
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <div class="lg:w-1/2">
+                        <img src="https://placehold.co/600x400/22C55E/FFFFFF?text=Sustainable+Practices" alt="Sustainable Practices" class="rounded-lg shadow-lg mx-auto mb-6 lg:mb-0">
+                    </div>
+                    <div class="lg:w-1/2 text-lg text-gray-700 text-left">
+                        <p class="mb-4">
+                            At GreenInfinity, sustainability isn't just a buzzword; it's a core philosophy embedded in every aspect of our operations. We are dedicated to responsible resource management, minimizing our environmental footprint, and contributing positively to the communities we serve.
+                        </p>
+                        <p class="mb-4">
+                            From sourcing raw materials from sustainably managed forests to implementing eco-friendly manufacturing processes and promoting circular economy principles, we strive to create products that are not only beautiful and durable but also kind to the planet. Our commitment extends to reducing waste, conserving energy, and investing in green technologies.
+                        </p>
+                        <p>
+                            We believe that a thriving business and a healthy planet go hand in hand, and we are continuously exploring new ways to innovate for a more sustainable future.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Core Values Section -->
+        <section class="bg-gray-100 py-16 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header">Our Core Values</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="core-value-card">
+                        <!-- Icon for Innovation (Wrench/Gear) -->
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.46 12.92l-.9-.9c-.61-.61-1.6-.61-2.21 0l-.9.9c-.61.61-.61 1.6 0 2.21l.9.9c.61.61 1.6.61 2.21 0l.9-.9c.61-.61.61-1.6 0-2.21zm-1.88 1.88l-2.21-2.21c-.3-.3-.79-.3-1.09 0l-2.21 2.21c-.3.3-.3.79 0 1.09l2.21 2.21c.3.3.79.3 1.09 0l2.21-2.21c.3-.3.3-.79 0-1.09zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold mb-2">Innovation:</h3>
+                        <p class="text-gray-600">Constantly creating products with attributes, features and benefits that are first in the category</p>
+                    </div>
+                    <div class="core-value-card">
+                        <!-- Icon for Customer Centricity (People Group) -->
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16.5 12c1.38 0 2.5-1.12 2.5-2.5S17.88 7 16.5 7 14 8.12 14 9.5s1.12 2.5 2.5 2.5zM9 11c1.66 0 2.99-1.34 2.99-3S10.66 5 9 5C7.34 5 6 6.34 6 8s1.34 3 3 3zm7.5 3c-1.83 0-5.5 1.07-7.25 3.2C7.03 18.23 7 19.06 7 20h9c0-.94-.03-1.77-.25-2.8-.83-3.33-4.5-5.2-7.25-5.2zM2 20h12v-2H2c-.46 0-.82-.37-.82-.82 0-2.31 2.56-3.69 4.54-4.82C5.97 11.85 5 10.02 5 8c0-3.31 2.69-6 6-6s6 2.69 6 6h-2c0-2.21-1.79-4-4-4s-4 1.79-4 4c0 1.98.97 3.81 2.45 4.86-1.98 1.13-4.54 2.51-4.54 4.82 0 .45-.36.82-.82.82H2z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold mb-2">Customer Centricity:</h3>
+                        <p class="text-gray-600">Everything that we do is keeping customer at the center. Not just understanding customer's current needs but also anticipating their evolving needs and designing products and services to cater to them.</p>
+                    </div>
+                    <div class="core-value-card">
+                        <!-- Icon for Inclusivity (Leaf/Growth) -->
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.5c-2.58 0-4.66-2.09-4.66-4.66 0-2.4 1.83-4.38 4.14-4.63l.52-.05v-2.1c0-.28.22-.5.5-.5s.5.22.5.5v2.1l.52.05c2.31.25 4.14 2.23 4.14 4.63 0 2.57-2.08 4.66-4.66 4.66zM12 5.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold mb-2">Inclusivity:</h3>
+                        <p class="text-gray-600">Ensuring that we move ahead together and not alone. Together with our partners, our customers, society and with nature.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GreenInfinity Journey Section - Updated to Carousel -->
+        <section class="bg-gray-800 py-16 px-6 md:px-12 text-white">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header !text-white mb-10">GreenInfinity Journey</h2>
+                <div class="carousel-wrapper">
+                    <div id="journey-carousel" class="carousel-container">
+                        <!-- Journey Card 1: 1984 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">1984</h3>
+                            <p class="text-gray-700">Mr. Rajesh Mittal starts operations with a saw mill</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22 20V4c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zM11 15H9.5V8H11v7zm2-9c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V6zM18 15h-1.5V8H18v7zm2-9c0-.55-.45-1-1-1h-5c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V6z"/>
+                                <!-- Simple factory icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 2: 1988 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">1988</h3>
+                            <p class="text-gray-700">Setting up 1st plywood unit in Tizit, Nagaland</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                <!-- Star/Award icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 3: 1990 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">1990</h3>
+                            <p class="text-gray-700">Incorporated as company under the name Mittal Laminates Pvt. Ltd</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 10h-2V7h-4V5h4V2h2v3h3v2h-3v3zM10 12c-1.1 0-2-.9-2-2V4h2v6h-2c0 1.1.9 2 2 2zM14 16h-4v-2h4v2zm-4 4h4v-2h-4v2zM16 13V3H8v10h8zM6 6H4v14c0 1.1.9 2 2 2h14v-2H6V6z"/>
+                                <!-- Building icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 4: 1994 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">1994</h3>
+                            <p class="text-gray-700">Transformed into public limited company - Mittal Laminated Limited</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 14c-1.1 0-2-.9-2-2V4h2v8c0 1.1.9 2 2 2zM12 16c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM16 13V3H8v10h8zM6 6H4v14c0 1.1.9 2 2 2h14v-2H6V6z"/>
+                                <!-- Document/Company icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 5: 1996 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">1996</h3>
+                            <p class="text-gray-700">Name changed Greenply Industries Limited</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                <!-- Star/Award icon -->
+                            </svg>
+                        </div>
+                         <!-- Journey Card 6: 1997 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">1997</h3>
+                            <p class="text-gray-700">Launch of Greenply brand (Flagship Premium Brand)</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm-1.5 15h3V9h-3v8zm0-10.5h3V6h-3v.5z"/>
+                                <!-- Tag/Brand icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 7: 2005 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2005</h3>
+                            <p class="text-gray-700">Amalgamation of worthy plywood, now Kriparamour factory</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- Handshake icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 8: 2007 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2007</h3>
+                            <p class="text-gray-700">Acquisition of two plywood units in Gujarat, now in Bamanbore Factory</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h2v6zm0-8h2V7h-2v2z"/>
+                                <!-- Factory/Acquisition icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 9: 2008 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2008</h3>
+                            <p class="text-gray-700">Implementation of SAP and launch of Optima Brand & flush doors</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- Software/Gear icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 10: 2014 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2014</h3>
+                            <p class="text-gray-700">Commenced production of Face Veneer in Myanmar</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- Production/Factory icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 11: 2015 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2015</h3>
+                            <p class="text-gray-700">Demerger of Decorative Business comprising of Laminates and allied products into Greenlam</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- Merge icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 12: 2017 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2017</h3>
+                            <p class="text-gray-700">Face Veneer plant with capacity of 36,000 CBM has commenced production at Gabon in West Africa</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- Lightbulb/Innovation icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 13: 2018 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2018</h3>
+                            <p class="text-gray-700">Production of Decorative Veneers starts at Bamanbore Plant</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- Production/Plant icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 14: 2019 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2019</h3>
+                            <p class="text-gray-700">Demerger of MDF Business and Pantnagar Plywood Unit into Greenpanel</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- Club/Community icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 15: 2020 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2020</h3>
+                            <p class="text-gray-700">Introduction of E-Zero Range</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- Zero Emission icon -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 16: 2021 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2021</h3>
+                            <p class="text-gray-700">Foray into MDF segment</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- MDF icon (generic) -->
+                            </svg>
+                        </div>
+                        <!-- Journey Card 17: 2023 -->
+                        <div class="carousel-card">
+                            <h3 class="text-lg font-semibold text-gray-900">2023</h3>
+                            <p class="text-gray-700">Greenplys entry into future fittings with the launch of Greenply Samet Pvt. Ltd</p>
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                                <!-- New Product/Launch icon -->
+                            </svg>
+                        </div>
+                    </div>
+                    <button id="prev-journey" class="carousel-nav-button left">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button id="next-journey" class="carousel-nav-button right">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Company Management Section -->
+        <section class="bg-white py-16 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header">Company Management</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Management Member 1: Rajesh Mittal -->
+                    <div class="management-card">
+                        <img src="https://placehold.co/400x300/F0F0F0/000000?text=Rajesh+Mittal" alt="Rajesh Mittal" class="management-card-image">
+                        <h3 class="text-xl font-semibold text-gray-900">Rajesh Mittal</h3>
+                        <p class="title text-gray-700">Chairman & Managing Director</p>
+                        <p class="bio-summary">
+                            Mr. Rajesh Mittal, the Managing Director of Greenply Industries Limited (GIL), is popularly known as the plywood manufacturing baron of India, and there are legitimate reasons behind giving this influential personality the name. With a leadership foresight and strategic management, Rajesh Mittal has carved out an unprecedented growth path for Greenply. Since 1984, he has been working towards spreading the company’s wings in different pockets of India and abroad including Myanmar and Gabon, Africa. Today, Greenply enjoys the largest market share amongst the organized players along with the title of India’s No.1 manufacturer offering a comprehensive range of plywood, blockboard, decorative veneer, flush door, PVC board & doors as well as other specialized application products.
+                        </p>
+                        <p class="full-bio">
+                            Mr. Rajesh Mittal, the Managing Director of Greenply Industries Limited (GIL), is popularly known as the plywood manufacturing baron of India, and there are legitimate reasons behind giving this influential personality the name. With a leadership foresight and strategic management, Rajesh Mittal has carved out an unprecedented growth path for Greenply. Since 1984, he has been working towards spreading the company’s wings in different pockets of India and abroad including Myanmar and Gabon, Africa. Today, Greenply enjoys the largest market share amongst the organized players along with the title of India’s No.1 manufacturer offering a comprehensive range of plywood, blockboard, decorative veneer, flush door, PVC board & doors as well as other specialized application products.
+                        </p>
+                        <div class="arrow-icon-wrapper" data-target="rajesh-bio">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Management Member 2: Manoj Tulsian -->
+                    <div class="management-card">
+                        <img src="https://placehold.co/400x300/F0F0F0/000000?text=Manoj+Tulsian" alt="Manoj Tulsian" class="management-card-image">
+                        <h3 class="text-xl font-semibold text-gray-900">Manoj Tulsian</h3>
+                        <p class="title text-gray-700">Joint Managing Director & CEO</p>
+                        <p class="bio-summary">
+                            Known for his experience across categories, Mr Manoj Tulsian is highly regarded for his out of box solutions. Honoured with the Brand Slam CFO Award in 2017, he is a regular speaker at the CFO forum while also speaking on subjects such as Infrastructure and EPC business. With his multi-faceted experience in the past on brands such as Kalpataru, VIP industries and Gabriel India Ltd, he intends to take the business to new heights.
+                        </p>
+                        <p class="full-bio">
+                            Known for his experience across categories, Mr Manoj Tulsian is highly regarded for his out of box solutions. Honoured with the Brand Slam CFO Award in 2017, he is a regular speaker at the CFO forum while also speaking on subjects such as Infrastructure and EPC business. With his multi-faceted experience in the past on brands such as Kalpataru, VIP industries and Gabriel India Ltd, he intends to take the business to new heights.
+                        </p>
+                        <div class="arrow-icon-wrapper" data-target="manoj-bio">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Management Member 3: Sanidhya Mittal -->
+                    <div class="management-card">
+                        <img src="https://placehold.co/400x300/F0F0F0/000000?text=Sanidhya+Mittal" alt="Sanidhya Mittal" class="management-card-image">
+                        <h3 class="text-xl font-semibold text-gray-900">Sanidhya Mittal</h3>
+                        <p class="title text-gray-700">Joint Managing Director</p>
+                        <p class="bio-summary">
+                            Sanidhya Mittal’s journey with Greenply Industries Limited started in the year 2012, when he decided to dedicate his time and energy to the enterprise at the very grassroots. He focused on the factory floor, learning about the manufacturing process and the technical features of products, not to mention various other quality tests which allowed him to receive a deeper understanding of the fundamentals of the business. Since 2017, he has taken the mantle of the business. His vision
+                        </p>
+                        <p class="full-bio">
+                            Sanidhya Mittal’s journey with Greenply Industries Limited started in the year 2012, when he decided to dedicate his time and energy to the enterprise at the very grassroots. He focused on the factory floor, learning about the manufacturing process and the technical features of products, not to mention various other quality tests which allowed him to receive a deeper understanding of the fundamentals of the business. Since 2017, he has taken the mantle of the business. His vision is to establish Greenply as one of the most sustainable plywood manufacturers worldwide. He aims to achieve this by streamlining processes, fostering a culture of innovation, and expanding Greenply's global footprint while upholding the highest standards of environmental responsibility.
+                        </p>
+                        <div class="arrow-icon-wrapper" data-target="sanidhya-bio">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Greenply at a Glance Section -->
+        <section class="bg-gray-100 py-16 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header">GreenInfinity at a Glance</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <p class="text-5xl font-bold text-red-600 mb-2">50+</p>
+                        <p class="text-lg font-medium text-gray-800">Years of Experience</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <p class="text-5xl font-bold text-red-600 mb-2">10+</p>
+                        <p class="text-lg font-medium text-gray-800">Manufacturing Units</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <p class="text-5xl font-bold text-red-600 mb-2">2000+</p>
+                        <p class="text-lg font-medium text-gray-800">Strong Workforce</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <p class="text-5xl font-bold text-red-600 mb-2">1M+</p>
+                        <p class="text-lg font-medium text-gray-800">Happy Customers</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards and Certifications Section -->
+        <section id="awards-section" class="bg-white py-16 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header !text-gray-800 mb-10">Awards & Certifications</h2>
+                <p class="text-center text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+                    Hard work always pays off. We at Greenply abide by this principle, thereby rightfully earning rewards for our excellent performance in the plywood industry of India.
+                </p>
+                <div class="carousel-wrapper">
+                    <div id="awards-carousel" class="carousel-container">
+                        <!-- Award Card 1: 2009 Ranked as Number One Brand -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Award+2009" alt="Award: Ranked as the Number One Brand 2009" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2009</h3>
+                            <p class="text-gray-700">Greenply was ranked the number one brand, being recognized as one of the plywood company in terms of the construction world.</p>
+                        </div>
+                        <!-- Award Card 2: 2010 Chosen as a Power Brand -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Power+Brand" alt="Award: Chosen as a Power Brand 2010" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2010</h3>
+                            <p class="text-gray-700">Chosen as a 'Power Brand' by Indian consumer.</p>
+                        </div>
+                        <!-- Award Card 3: 2012 Dun & Bradstreet Corporate Awards -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Dun+%26+Bradstreet" alt="Award: Dun & Bradstreet Corporate Awards 2012" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2012</h3>
+                            <p class="text-gray-700">Recognized as the largest Indian Company in the Plywood sector at the Dun & Bradstreet Corporate Awards.</p>
+                        </div>
+                        <!-- Award Card 4: 2013 Limca Book of Records -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Limca+Book" alt="Award: Limca Book of Records 2013" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2013</h3>
+                            <p class="text-gray-700">The brand gave rise to a lasting impression with India's largest graffiti wall (960 x 5.25 ft) - Greenply Always Hoyenga. It was also featured in the Limca Book of Records (National record).</p>
+                        </div>
+                        <!-- Award Card 5: 2014 The Brand Trust Report Award -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Brand+Trust" alt="Award: The Brand Trust Report Award 2014" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2014</h3>
+                            <p class="text-gray-700">Greenply Industries Ltd. was honoured with 'The Brand Trust Report Award' for being the most trusted plywood brand. The same year also witnessed the brand being awarded the 'Dun & Bradstreet Manappuram Finance Limited Corporate Award' in the plywood sector.</p>
+                        </div>
+                        <!-- Award Card 6: 2015 Dun & Bradstreet Corporate Awards -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Dun+%26+Bradstreet" alt="Award: Dun & Bradstreet Corporate Awards 2015" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2015</h3>
+                            <p class="text-gray-700">2015 Dun & Bradstreet (D&B) (the world’s leading provider of global business information, knowledge and insight) presented the Dun & Bradstreet Corporate Awards 2015’ to Greenply Industries Limited under the nomination of ‘wood & wood products’ sector.</p>
+                        </div>
+                        <!-- Award Card 7: 2019 Economic Times for the Best Brand of 2019 -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Economic+Times" alt="Award: Economic Times for the Best Brand of 2019" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2019</h3>
+                            <p class="text-gray-700">Received an award by Economic Times for the Best Brand of 2019 in the plywood manufacturing category.</p>
+                        </div>
+                        <!-- Award Card 8: 2020 Recognized as the Great Place to Work -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Great+Place+To+Work" alt="Award: Recognized as the Great Place to Work 2020" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2020</h3>
+                            <p class="text-gray-700">Recognized as the Great Place to Work</p>
+                        </div>
+                        <!-- Award Card 9: 2020 Green Gold Platinum & Wood Crest Platinum are CARB certified. -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=CARB" alt="Certification: CARB certified 2020" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2020</h3>
+                            <p class="text-gray-700">Green Gold Platinum & Wood Crest Platinum are CARB certified.</p>
+                        </div>
+                        <!-- Award Card 10: 2021 Certified as Great Place to Work second time in a row! -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Great+Place+To+Work" alt="Award: Great Place to Work 2021" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2021</h3>
+                            <p class="text-gray-700">Certified as Great Place to Work second time in a row!</p>
+                        </div>
+                        <!-- Award Card 11: 2022 Most Trusted Brands of India -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=Most+Trusted+Brands" alt="Award: Most Trusted Brands of India 2022" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2022</h3>
+                            <p class="text-gray-700">Greenply Industries Ltd. recognized as one of the Most Trusted Brands of India.</p>
+                        </div>
+                        <!-- Award Card 12: 2022 Best Green Manufacturing Company award by National Feather Awards. -->
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/150x150/FFFFFF/000000?text=National+Feather" alt="Award: Best Green Manufacturing Company 2022" class="carousel-card-image">
+                            <h3 class="text-lg font-semibold text-gray-900">2022</h3>
+                            <p class="text-gray-700">Greenply Industries Ltd. was conferred the Best Green Manufacturing Company award by National Feather Awards.</p>
+                        </div>
+                    </div>
+                    <button id="prev-awards" class="carousel-nav-button left">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button id="next-awards" class="carousel-nav-button right">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Greenply Foundation Section -->
+        <section class="greenply-foundation-section">
+            <div class="greenply-foundation-content">
+                <div class="video-wrapper">
+                    <!-- Embedded YouTube Video -->
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&modestbranding=1&rel=0"
+                            title="Greenply Foundation Video"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="text-content greenply-foundation-text-content">
+                    <h2>Greenply Foundation</h2>
+                    <p>
+                        At Greenply Foundation, we strive to bring about a positive change in the
+                        society as we tackle widespread issues such as health, education and skill
+                        development. Laying emphasis on environmental sustainability as well, our
+                        focus extends across all-round development of both nature and mankind.
+                        Under the Greenply Foundation, healthcare is recognized as a segment that
+                        requires attention. We decided to take necessary steps to address this issue
+                        by providing requisite healthcare support to bring about a change in the lives
+                        of people around us.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section (Same as Front Page) -->
+    <footer class="bg-gray-800 text-white py-10 px-6 md:px-12 rounded-t-lg">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-red-400">Products</h4>
+                <ul>
+                    <li><h5 class="footer-list-header">Categories</h5></li>
+                    <ul class="ml-4 text-sm text-gray-300 space-y-1">
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">Plywood & Blockboard</a></li>
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">Doors</a></li>
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">Veneers</a></li>
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">MDF</a></li>
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">Speciality Plywood</a></li>
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">PVC</a></li>
+                    </ul>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-red-400">Speciality Feature</h4>
+                <ul>
+                    <ul class="ml-4 text-sm text-gray-300 space-y-1">
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">Water Proof</a></li>
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">Fire Retardant</a></li>
+                        <li class="footer-list-item"><a href="#" class="hover:text-red-200">Zero Emission</a></li>
+                    </ul>
+                </ul>
+            </div>
+            <!-- New Brands Column -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-red-400">Brands</h4>
+                <ul class="ml-4 text-sm text-gray-300 space-y-1">
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">GreenInfinity</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Ecotec</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Optima G</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">GreenInfinity Ndure</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Wood Crrest</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">GreenInfinity MDF</a></li>
+                </ul>
+            </div>
+            <!-- New Furniture Type Column -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-red-400">Furniture Type</h4>
+                <ul class="ml-4 text-sm text-gray-300 space-y-1">
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Chair</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Study Table</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Sofa</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Bed</a></li>
+                </ul>
+            </div>
+            <!-- Quick Links & More (now the last column, right-aligned) -->
+            <div class="md:text-right">
+                <h4 class="text-lg font-semibold mb-4 text-red-400">Quick Links & More</h4>
+                <ul class="ml-4 md:ml-0 text-sm text-gray-300 space-y-1 md:text-right">
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">About Us</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Contact Us</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Investors</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Sustainability</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Blogs</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">FAQ</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Privacy Policy</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Disclaimer</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Social Media Links moved to bottom center, under a new full-width div -->
+        <div class="flex flex-col items-center justify-center mt-8">
+            <h4 class="text-lg font-semibold mb-4 text-red-400">Follow us on</h4>
+            <div class="flex space-x-4">
+                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.505 1.492-3.89 3.776-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 20.424a10.875 10.875 0 0014.28 0 10.875 10.875 0 008.232-10.424V7.5a.5.5 0 00-.5-.5h-2.875a.5.5 0 00-.5.5v2.5a.5.5 0 01-.5.5h-2.5a.5.5 0 01-.5-.5v-2.5a.5.5 0 00-.5-.5H8.5a.5.5 0 00-.5.5v2.5a.5.5 0 01-.5.5h-2.5a.5.5 0 01-.5-.5v-2.5a.5.5 0 00-.5-.5H.5a.5.5 0 00-.5.5v2.5A10.875 10.875 0 00.057 20.424zM12 21a9 9 0 110-18 9 9 0 010 18z"></path><path fill-rule="evenodd" d="M10.75 11.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5zM13.25 11.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" clip-rule="evenodd"></path></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.234 2.76 7.828 6.593 9.117.48.087.653-.208.653-.466v-1.603c-2.684.582-3.252-1.29-3.252-1.29-.44-.946-.902-1.196-.902-1.196-.738-.504.056-.494.056-.494.815.057 1.243.838 1.243.838.724 1.24 1.895.88 2.355.676.073-.526.284-.88.517-1.077-1.8-.204-3.69-1.008-3.69-4.004 0-.886.315-1.61.83-2.176-.083-.204-.36-.968.077-2.148 0 0 .676-.217 2.21.829a7.067 7.067 0 011.884-.254c.635 0 1.27.085 1.884.254 1.534-1.046 2.21-.829 2.21-.829.437 1.18.158 1.944.077 2.148.515.566.83 1.29.83 2.176 0 2.997-1.894 3.798-3.696 4.002.29.25.55.738.55 1.488v2.203c0 .258.172.553.658.466C19.24 19.828 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.297 10.963a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1h-12a1 1 0 01-1-1v-2z"></path><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.75 8.25a.75.75 0 00-.75-.75h-3.5a.75.75 0 00-.75.75v3.5a.75.75 0 00.75.75h3.5a.75.75 0 00.75-.75v-3.5z" clip-rule="evenodd"></path></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.331 6.81a.5.5 0 00-.5-.5h-8.662a.5.5 0 00-.5.5v6.38a.5.5 0 00.5.5h8.662a.5.5 0 00.5-.5V8.81z"></path><path fill-rule="evenodd" d="M15.5 12a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0zM12 10a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"></path></svg>
+                </a>
+            </div>
+        </div>
+        <div class="text-center text-sm text-gray-400 mt-8">
+            Copyright &copy; 2025 GreenInfinity.com. All Rights Reserved<br>
+            Digital agency Tonic Worldwide
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle (same as front page)
+        const menuButton = document.getElementById('menu-button');
+        const navbarMenu = document.getElementById('navbar-menu');
+
+        if (menuButton && navbarMenu) {
+            menuButton.addEventListener('click', () => {
+                navbarMenu.classList.toggle('hidden');
+                navbarMenu.classList.toggle('flex');
+                navbarMenu.classList.toggle('flex-col');
+            });
+        }
+
+        // Manual scroll functionality for any carousel (no auto-scroll or hover effects)
+        function setupManualCarouselScroll(carouselElement, prevButton, nextButton) {
+            let currentCardIndex = 0;
+            const cards = Array.from(carouselElement.querySelectorAll('.carousel-card'));
+
+            if (cards.length === 0) return;
+
+            function scrollToCard(index) {
+                if (index >= cards.length) {
+                    index = 0;
+                } else if (index < 0) {
+                    index = cards.length - 1;
+                }
+                currentCardIndex = index;
+                cards[currentCardIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            if (prevButton) {
+                prevButton.addEventListener('click', () => {
+                    scrollToCard(currentCardIndex - 1);
+                });
+            }
+
+            if (nextButton) {
+                nextButton.addEventListener('click', () => {
+                    scrollToCard(currentCardIndex + 1);
+                });
+            }
+        }
+
+        // Setup GreenInfinity Journey Carousel for manual scrolling
+        const journeyCarousel = document.getElementById('journey-carousel');
+        const prevJourney = document.getElementById('prev-journey');
+        const nextJourney = document.getElementById('next-journey');
+        setupManualCarouselScroll(journeyCarousel, prevJourney, nextJourney);
+
+        // Setup Awards Carousel for manual scrolling
+        const awardsCarousel = document.getElementById('awards-carousel');
+        const prevAwards = document.getElementById('prev-awards');
+        const nextAwards = document.getElementById('next-awards');
+        setupManualCarouselScroll(awardsCarousel, prevAwards, nextAwards);
+
+
+        // Company Management: Toggle bio text visibility
+        document.querySelectorAll('.arrow-icon-wrapper').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.management-card');
+                const bioSummary = card.querySelector('.bio-summary');
+                const fullBio = card.querySelector('.full-bio');
+                const arrowIcon = this.querySelector('svg');
+
+                if (fullBio.style.display === 'none' || fullBio.style.display === '') {
+                    bioSummary.style.display = 'none';
+                    fullBio.style.display = 'block';
+                    this.classList.add('expanded');
+                } else {
+                    bioSummary.style.display = '-webkit-box'; /* Re-apply webkit for truncation */
+                    fullBio.style.display = 'none';
+                    this.classList.remove('expanded');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

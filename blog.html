@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeninfinity Blog - History & Insights</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+        /* Updated header styles */
+        .header-bg {
+            background-color: #f3f4f6; /* Light gray from image */
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .greeninfinity-button {
+            background-color: #ef4444; /* Red from image */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* Rounded corners */
+            font-weight: 600;
+        }
+        .nav-link {
+            color: #4b5563; /* Dark gray for header links */
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #ef4444; /* Red on hover */
+        }
+
+        /* Updated footer specific styles */
+        .footer-dark-bg {
+            background-color: #212529; /* Dark grey/blue from the image */
+            color: #ffffff; /* White text for contrast */
+        }
+        .footer-dark-bg .footer-heading {
+            color: #ffffff; /* White for headings in the footer */
+            font-weight: 600;
+        }
+        .footer-dark-bg .footer-link {
+            color: #9ca3af; /* Light gray for footer links */
+            transition: color 0.2s;
+        }
+        .footer-dark-bg .footer-link:hover {
+            color: #ffffff; /* White on hover */
+        }
+        .social-icon-footer {
+            background-color: #4b5563; /* Darker gray for social icons background */
+            color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 50%;
+            transition: background-color 0.2s, color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem; /* Fixed width for consistent circle */
+            height: 3rem; /* Fixed height for consistent circle */
+        }
+        .social-icon-footer:hover {
+            background-color: #ef4444; /* Red on hover */
+            color: #ffffff;
+        }
+
+        .blog-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .blog-card-content {
+            padding: 1.5rem;
+        }
+        .featured-label {
+            background-color: #ffc107;
+            color: #333;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .read-more-link {
+            color: #dc3545;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .read-more-link:hover {
+            color: #b02a37;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .blog-card.horizontal {
+                flex-direction: row;
+            }
+            .blog-card.horizontal img {
+                width: 40%;
+                height: auto;
+                border-top-left-radius: 0.5rem;
+                border-bottom-left-radius: 0.5rem;
+                border-top-right-radius: 0;
+            }
+            .blog-card.horizontal .blog-card-content {
+                width: 60%;
+            }
+            .blog-card.horizontal.reverse {
+                flex-direction: row-reverse;
+            }
+            .blog-card.horizontal.reverse img {
+                border-top-right-radius: 0.5rem;
+                border-bottom-right-radius: 0.5rem;
+                border-top-left-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Header Section -->
+    <header class="header-bg shadow-sm py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Greeninfinity Button -->
+            <a href="#" class="greeninfinity-button">Greeninfinity</a>
+            <nav>
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="#" class="nav-link">Consumer</a></li>
+                    <li><a href="#" class="nav-link">Investors</a></li>
+                    <li><a href="#" class="nav-link">About Us</a></li>
+                    <li><a href="#" class="nav-link">Inspiration</a></li>
+                    <li><a href="#" class="nav-link">Products</a></li>
+                    <!-- Keeping Blog as a page, assuming it's part of the main navigation -->
+                    <li><a href="#" class="nav-link text-red-theme font-semibold">Blog</a></li>
+                </ul>
+                <button class="md:hidden text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section for Blog Page -->
+    <section class="bg-gray-100 py-20 px-6 md:px-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">Greeninfinity Blog</h1>
+        <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">Explore our insights, news, and history in sustainable living and innovation.</p>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="py-12 px-6 md:px-12 container mx-auto">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Latest Articles</h2>
+
+        <!-- Featured Blog Post -->
+        <div class="mb-10 p-4 blog-card horizontal rounded-lg">
+            <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Greenply+Products" alt="From Forest to Furniture: The Responsible Journey of Greenply Products" class="rounded-l-lg md:rounded-r-none">
+            <div class="blog-card-content flex flex-col justify-between">
+                <div>
+                    <span class="featured-label">Featured</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mt-4 mb-2">From Forest to Furniture: The Responsible Journey of Greenply Products</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 3, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">This is where being eco-conscious comes in. It's not just a buzzword. It's a way of living responsibly, of choosing materials that do not harm the environment.</p>
+                </div>
+                <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Blog Post 1 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=Plywood+Quality" alt="How to Identify Fake or Low-Quality Plywood: A Buyer's Guide" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">How to Identify Fake or Low-Quality Plywood: A Buyer's Guide</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 20, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Plywood is one of the most essential building materials in modern interiors. From furniture and wardrobes to modular kitchens and wall panelling, everything rests on the strength and quality of those simple plywood boards. But not all that looks sturdy is built to last.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 2 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Window+Seat+Ideas" alt="20 Dreamy Window Seat Ideas That Maximize Light, Comfort & Style" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">20 Dreamy Window Seat Ideas That Maximize Light, Comfort & Style</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 19, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">If you've been scrolling through modern window seat ideas on social media or flipping through design magazines, you'll know they're not just about looks anymore. They're multi-functional, stylish, and perfect for making memories or simply daydreaming while sipping your morning coffee.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 3 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Wooden+Almirah+Designs" alt="Wooden Almirah Designs for Every Indian Home That Combine Style and Storage" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Wooden Almirah Designs for Every Indian Home That Combine Style and Storage</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 19, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Walk-in wardrobes may be having their big moment, but there's something undeniably special about good old wooden almirahs. The kind you'd find in your nani's house. Heavy. Sturdy. And always smelling faintly of camphor and nostalgia.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 4 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=Panel+Doors" alt="Panel Doors for Your Home Interiors: Styles, Materials & Modern Trends" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Panel Doors for Your Home Interiors: Styles, Materials & Modern Trends</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 18, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">When building or renovating a home, we often turn to friends' houses, online mood boards, or even hotel stays for design ideas. From tiles to lighting, we try to piece together what feels right. But there's one element that quietly ties the entire interior together, your doors.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 5 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Kitchen+Door+Designs" alt="Customized Kitchen Door Designs: Smart Ideas for Indian Homes" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Customized Kitchen Door Designs: Smart Ideas for Indian Homes</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">The kitchen is not just another room in a house; it's the heart of a home. It's where morning chai brews, family recipes are passed down, and weekend feasts are lovingly prepared. Whether small or sprawling, every kitchen holds stories.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 6 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Veneer+Furniture" alt="How Veneer Furniture Fits into Minimalist, Industrial, and Modern Interior Designs" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">How Veneer Furniture Fits into Minimalist, Industrial, and Modern Interior Designs</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Whether it's a sleek modern bedroom interior design, an open interior modern kitchen, or a stylish modern stairs design indoor, veneer fits perfectly. It compliments industrial interior designs and brings warmth to any office interior modern space.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 7 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=Veneer+vs+Solid+Wood" alt="Veneer Sheets vs. Solid Wood: Which Is Better for Your Next Interior Project?" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Veneer Sheets vs. Solid Wood: Which Is Better for Your Next Interior Project?</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 5, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">When it comes to giving your home a fresh and charming makeover, redoing the interiors often tops the list. And if you're anything like us, you've probably created a moodboard filled with cozy, wooden touches that scream timeless elegance.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 8 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=MDF+vs+HDF+vs+Particle+Board" alt="Greenply MDF vs HDF vs Particle Board: What's the Difference?" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Greenply MDF vs HDF vs Particle Board: What's the Difference?</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Fibreboards are frequently the talk of the town when it comes to engineered wood. They give us strong, smooth, and adaptable boards by compressing wood fibres with resins under intense pressure. Fibreboards have a consistent core, in contrast to ordinary plywood, which is created by layering wood veneers.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 9 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Flexi+Plywood" alt="The Structural Possibilities of Flexi Plywood in Interior and Spatial Design" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">The Structural Possibilities of Flexi Plywood in Interior and Spatial Design</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Do you ever wonder how those perfect curves and elegant waves are made in modern interior designs using plywood? The secret lies in a very special kind of material, flexible plywood. Yes, there are countless types of plywood available today, but when it comes to turning creative ideas into reality while ensuring durability and strength, flexi plywood takes the spotlight.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 10 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=Ecotec+Plywood" alt="Ecotec 710 Plywood: Durable, Waterproof, and Built to Resist Fungus & Termites" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Ecotec 710 Plywood: Durable, Waterproof, and Built to Resist Fungus & Termites</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">When it comes to choosing the right plywood for your interiors, one name that stands tall in terms of durability and waterproof strength is 710 plywood. But what exactly is 710 plywood, and what makes it different from the rest?</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+             <!-- Blog Post 11 -->
+             <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=MR+Plywood" alt="Why MR Plywood is the Best Choice for Interior Walls and Partitions" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Why MR Plywood is the Best Choice for Interior Walls and Partitions</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Moisture Resistant, or MR plywood, is specially made to handle moisture in the air and light water exposure. It doesn't absorb water as quickly as regular plywood, which means it won't swell, warp, or lose strength that easily.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 12 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Waterproof+Plywood" alt="The Environmental Benefits of Choosing Waterproof Plywood for Your Projects" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">The Environmental Benefits of Choosing Waterproof Plywood for Your Projects</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Water is great in your glass, but not so much in your walls or under your cabinets. And when it comes to interiors, the tiniest moisture seepage can turn your carefully crafted space into a repair project waiting to happen. That's why waterproof materials matter, and plywood is right at the center of this conversation.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 13 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=MDF+Board+Uses" alt="Everything You Need to Know About MDF Board and Its Uses in Interior Design" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Everything You Need to Know About MDF Board and Its Uses in Interior Design</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">MDF stands for Medium Density Fiberboard, a man-made engineered wood product created by compressing wood fibers with resin under high pressure and temperature.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 14 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=PVC+Bathroom+Doors" alt="Stylish and Functional: PVC Bathroom Doors That Add Value to Your Home" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Stylish and Functional: PVC Bathroom Doors That Add Value to Your Home</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Whether you're building from scratch or upgrading an old space, switching to Greenply PVC doors could be the home makeover you never knew you needed. From</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 15 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=PVC+Wall+Panels" alt="PVC Wall Panels vs. Traditional Paint: Which is Best for Your Master Bedroom?" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">PVC Wall Panels vs. Traditional Paint: Which is Best for Your Master Bedroom?</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">We've expanded our base from master bedrooms, so why not master that space not just livable, but also looking beautiful and aesthetic, and most importantly, why not?</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+             <!-- Blog Post 16 -->
+             <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=Kitchen+Interiors" alt="Affordable Luxury: Plywood Kitchen Interiors That Don't Compromise on Style" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Affordable Luxury: Plywood Kitchen Interiors That Don't Compromise on Style</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">If you're dreaming of a kitchen that looks high-end but stays within budget, plywood interiors might be your best-kept secret. With the right choices, you can have a kitchen that's both beautiful and functional without breaking the bank. </p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 17 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Types+of+Plywood" alt="The Best Types of Plywood for Interior Design: A Complete Guide" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">The Best Types of Plywood for Interior Design: A Complete Guide</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">When it comes to designing the interiors of a home, every detail matters. From the wall colour to the furniture, every design decision plays a vital role. Choosing the right type of plywood is crucial for achieving your desired aesthetic and functionality.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 18 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Plywood+Versatility" alt="From Floors to Walls: The Versatility of Plywood in Interior Design" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">From Floors to Walls: The Versatility of Plywood in Interior Design</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Plywood is no longer just a support material. Today, it's a design element in itself. With stylish finishes and innovative applications, plywood transforms and redefines options for kitchens and bathrooms. Plywood has proved it can do it all!</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 19 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=Plywood+Doors+Energy" alt="How Plywood Doors Can Improve Your Home's Energy Efficiency" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">How Plywood Doors Can Improve Your Home's Energy Efficiency</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Let's explore how plywood doors can improve traditional doors, why they're becoming so much more energy-efficient, and why their features and durability can save you money on your energy bills.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 20 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Green+Gold+Plywood" alt="Green Gold Plywood vs. Traditional Plywood: What Makes it the Superior Choice?" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Green Gold Plywood vs. Traditional Plywood: What Makes it the Superior Choice?</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Choosing plywood isn't just a construction decision; it's a lifestyle choice. Green Gold Plywood redefines what homeowners can expect from a plywood sheet. It brings together strength, sustainability, health, and design, leaving traditional plywood behind in almost every metric.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+            
+            <!-- Blog Post 21 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Using+Plywood+Room" alt="Using Plywood in Kitchens, Bedrooms, and Beyond: A Room-by-Room Guide" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Using Plywood in Kitchens, Bedrooms, and Beyond: A Room-by-Room Guide</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">When it comes to building or renovating a home, many material you choose plays a role in shaping not just your space looks, but how you live in it. From Kitchen to Bedroom, every room has unique requirements for material choices, and plywood fits in all of them.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 22 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/FEE2E2/EF4444?text=Plywood+Office+Makeover" alt="Why Plywood is the Secret to a Stylish & Affordable Office Makeover" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Why Plywood is the Secret to a Stylish & Affordable Office Makeover</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">Plywood is an engineered wood product made by layering thin sheets of wood veneers, glued together with the grain running in alternating directions.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 23 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Smart+Homes" alt="Exploring the Synergy Between PVC and Modern Interior Design Trends in Smart Homes" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Exploring the Synergy Between PVC and Modern Interior Design Trends in Smart Homes</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">The rise of PVC has greatly influenced modern interior design. From sleek and minimalist aesthetics to bold and futuristic designs, PVC has changed the way we approach smart home interiors.</p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Blog Post 24 -->
+            <div class="blog-card rounded-lg">
+                <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Sofa+Styles" alt="10 Sofa Styles That Perfectly Complement Every Interior Theme" class="rounded-t-lg">
+                <div class="blog-card-content">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">10 Sofa Styles That Perfectly Complement Every Interior Theme</h3>
+                    <p class="text-sm text-gray-500 mb-4">Jun 6, 2025</p>
+                    <p class="text-gray-700 leading-relaxed mb-4">A sofa is not just another piece of furniture; it's the heart of your living room. It's where you lounge after a long day, host friends, binge-watch your favorite series, and sometimes even eat your meals. It's an investment that needs careful consideration, and a good sofa can elevate your home's aesthetic. </p>
+                    <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer-dark-bg py-10 px-6 md:px-12 mt-12 text-sm">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 text-center md:text-left">
+            <!-- Column 1: Products -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Products</h4>
+                <div class="grid grid-cols-1 gap-y-2"> <!-- Adjusted grid for single column on mobile -->
+                    <div>
+                        <h5 class="font-semibold text-white mb-2">Categories</h5>
+                        <ul class="space-y-1">
+                            <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                            <li><a href="#" class="footer-link">Doors</a></li>
+                            <li><a href="#" class="footer-link">Veneers</a></li>
+                            <li><a href="#" class="footer-link">MDF</a></li>
+                            <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                            <li><a href="#" class="footer-link">PVC</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Speciality Feature -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Speciality Feature</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Brands -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Brands</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Greeninfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">Greeninfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crest</a></li>
+                    <li><a href="#" class="footer-link">Greeninfinity MDF</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Furniture Type -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Furniture Type</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 5: Quick Links & More -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Quick Links & More</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Social Media and Copyright -->
+        <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+            <h5 class="font-semibold text-white mb-4">Follow us on</h5>
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="#" class="social-icon-footer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fas fa-globe"></i></a> <!-- Using a globe icon for the generic web icon -->
+            </div>
+            <p class="text-gray-400 text-sm">&copy; Copyright 2025 Greeninfinity.com. All Rights Reserved</p>
+            <p class="text-gray-400 text-sm">Digital agency Tonic Worldwide</p>
+        </div>
+    </footer>
+
+</body>
+</html>

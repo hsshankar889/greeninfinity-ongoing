@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeninfinity</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* Header styles */
+        .header-bg {
+            background-color: #f3f4f6; /* Light gray from image */
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .greeninfinity-button {
+            background-color: #ef4444; /* Red from image */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem; /* Rounded corners */
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+            transition: all 0.2s ease-in-out; /* Added transition for hover */
+        }
+        .greeninfinity-button:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        .nav-link {
+            color: #4b5563; /* Dark gray for header links */
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #ef4444; /* Red on hover */
+        }
+        .text-red-theme {
+            color: #ef4444;
+        }
+
+        /* Top-level navigation icons (WhatsApp in this case) */
+        .top-nav-icon {
+            background-color: #2D4F32; /* Dark green from image */
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+            transition: all 0.2s ease-in-out; /* Added transition for hover */
+            position: fixed; /* Fixed position */
+            right: 1.5rem; /* Adjust as needed */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Adjust for vertical centering */
+            z-index: 1000; /* Ensure it's on top */
+        }
+        .top-nav-icon:hover {
+            background-color: #3A6641; /* Slightly lighter green on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+            transform: translateY(-50%) scale(1.05); /* Slight lift and scale on hover */
+        }
+
+        /* Section Specific Styles */
+
+        /* Hero / Contact Form Section */
+        .hero-contact-section {
+            background-image: url('https://placehold.co/1920x800/808080/FFFFFF?text=Modern+Interior');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            height: 700px; /* Adjust height as needed */
+            display: flex;
+            align-items: flex-end; /* Align content to the bottom */
+            justify-content: center;
+            padding-bottom: 5rem; /* Space for the form */
+        }
+        .hero-contact-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2); /* Subtle overlay */
+            z-index: 0;
+        }
+        .contact-form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 1100px; /* Limit max width */
+        }
+        .form-input-group {
+            position: relative;
+            flex: 1; /* Allow items to grow */
+            min-width: 180px; /* Minimum width for each input */
+        }
+        .form-input-group input,
+        .form-input-group select {
+            width: 100%;
+            padding: 0.75rem 0.75rem 0.75rem 2.5rem; /* Left padding for icon */
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input-group input:focus,
+        .form-input-group select:focus {
+            outline: none;
+            border-color: #ef4444; /* Red focus */
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+        .form-input-group .input-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280; /* Gray icon color */
+            font-size: 1rem;
+        }
+        .form-submit-btn {
+            background-color: #ef4444;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-submit-btn:hover {
+            background-color: #dc2626;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Section Headings with Leaf Icon */
+        .section-heading-leaf {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ef4444; /* Red color for heading and icon */
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Introduction Section */
+        .club-crests-logo {
+            width: 250px; /* Adjust size as needed */
+            height: auto;
+        }
+
+        /* Our Collection Club Crests Section */
+        .collection-sidebar {
+            background-color: #f8f8f8;
+            padding: 2rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        .collection-sidebar-item {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4b5563;
+            padding: 0.5rem 0;
+            cursor: pointer;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .collection-sidebar-item.active {
+            color: #ef4444;
+        }
+        .collection-sidebar-item:hover {
+            color: #ef4444;
+        }
+        .collection-arrow {
+            color: #ef4444;
+            font-size: 1.2rem;
+        }
+
+        .collection-content-area {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        .collection-sub-category {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .collection-sub-category-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #333333;
+        }
+        .collection-view-all {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #ef4444;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .collection-view-all:hover {
+            color: #dc2626;
+        }
+        .collection-image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns */
+            gap: 1rem;
+        }
+        .collection-image-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .collection-image-grid img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .collection-image-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        .collection-image-container {
+            position: relative;
+            border-radius: 0.5rem;
+            overflow: hidden; /* Ensures image text stays within bounds */
+        }
+         /* Responsive grid for collection images */
+        @media (min-width: 768px) {
+            .collection-image-grid {
+                grid-template-columns: repeat(2, 1fr); /* Two columns on medium screens */
+            }
+        }
+        @media (min-width: 1024px) {
+            .collection-image-grid {
+                grid-template-columns: repeat(3, 1fr); /* Three columns on large screens */
+            }
+        }
+
+
+        /* Key Features Section */
+        .key-features-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .key-features-container {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+        .feature-list-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-right: 2rem; /* Space for the vertical bar */
+            position: relative;
+        }
+        .feature-list-menu::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background-color: #e5e7eb; /* Light grey bar */
+            border-radius: 2px;
+        }
+        .feature-list-item {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #4b5563;
+            cursor: pointer;
+            padding-left: 1.5rem; /* Space from the bar */
+            transition: color 0.2s, font-size 0.2s;
+            position: relative;
+        }
+        .feature-list-item::before {
+            content: '';
+            position: absolute;
+            left: -8px; /* Position the dot over the bar */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background-color: #e5e7eb; /* Dot color */
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        .feature-list-item.active {
+            color: #ef4444;
+            font-size: 1.35rem; /* Slightly larger when active */
+        }
+        .feature-list-item.active::before {
+            background-color: #ef4444; /* Red dot when active */
+        }
+        .feature-display-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .feature-display-area {
+                flex-direction: row;
+                text-align: left;
+                width: 75%; /* Allocate space for content */
+            }
+        }
+        .feature-display-area img {
+            max-width: 300px; /* Adjust as needed */
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease-in-out;
+        }
+        .feature-display-area img:hover {
+            transform: scale(1.03);
+        }
+        .feature-details h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ef4444;
+            margin-bottom: 1rem;
+        }
+        .feature-details ul li {
+            font-size: 1rem;
+            color: #555555;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+
+        /* Product Visualizer Section */
+        .visualizer-section {
+            background-image: url('https://placehold.co/1920x1080/D3D3D3/000000?text=Product+Visualizer+Background'); /* Base image from image_11e860.jpg */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            height: 600px; /* Increased height for better visualizer area */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Ensure content stays within bounds */
+        }
+        .visualizer-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.1); /* Slight overlay for contrast */
+            z-index: 1;
+        }
+        .visualizer-main-area {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .visualizer-panel-door {
+            position: absolute;
+            width: 25%; /* Adjust to cover the door area in the background image */
+            height: 70%; /* Adjust to cover the door area */
+            background-color: #A0AEC0; /* Default color: Moonstone 166 */
+            top: 50%;
+            left: 50%; /* Adjust these to match door position in your image */
+            transform: translate(-60%, -40%); /* Fine-tune positioning */
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .visualizer-tabs button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            background-color: #e5e7eb;
+            color: #4b5563;
+            transition: all 0.2s;
+        }
+        .visualizer-tabs button.active {
+            background-color: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .visualizer-tabs button:hover:not(.active) {
+            background-color: #d1d5db;
+            transform: translateY(-1px);
+        }
+        .visualizer-panel-control {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 1.5rem;
+            position: absolute;
+            right: 2rem;
+            top: 2rem;
+            z-index: 50;
+            width: 300px;
+        }
+        .visualizer-panel-control select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .visualizer-color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out, border-color 0.1s ease-in-out;
+            border: 2px solid transparent; /* Default transparent border */
+        }
+        .visualizer-color-swatch.active {
+            border-color: #ef4444; /* Red border for active swatch */
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.4);
+            transform: scale(1.05);
+        }
+        .visualizer-color-swatch:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .visualizer-close-btn,
+        .visualizer-download-btn {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s, transform 0.2s;
+        }
+        .visualizer-close-btn:hover,
+        .visualizer-download-btn:hover {
+            background-color: #ef4444;
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+
+        /* Footer styles */
+        .footer-dark-bg {
+            background-color: #212529;
+            color: #ffffff;
+        }
+        .footer-dark-bg .footer-heading {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .footer-dark-bg .footer-link {
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+        .footer-dark-bg .footer-link:hover {
+            color: #ffffff;
+        }
+        .social-icon-footer {
+            background-color: #4b5563;
+            color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+        }
+        .social-icon-footer:hover {
+            background-color: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Header Section -->
+    <header class="header-bg shadow-sm py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Greeninfinity Button -->
+            <a href="#" class="greeninfinity-button">Greeninfinity</a>
+            <nav class="flex items-center space-x-6">
+                <ul class="hidden md:flex space-x-6 items-center">
+                    <li><a href="./index.html" class="nav-link">Consumer</a></li>
+                    <li><a href="" class="nav-link">Investors</a></li>
+                    <li><a href="./about.html" class="nav-link">About Us</a></li>
+                    <li><a href="#" class="nav-link">Inspiration</a></li>
+                    <li><a href="#" class="nav-link">Products</a></li>
+                    <li><a href="#" class="nav-link">Blogs</a></li>
+                </ul>
+                <button class="md:hidden text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Fixed WhatsApp Icon -->
+    <a href="https://wa.me/918088130010" target="_blank" class="top-nav-icon">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Hero Section with Contact Form (image_11e0bb.jpg) -->
+    <section class="hero-contact-section relative" style="background-image: url('https://placehold.co/1920x800/808080/FFFFFF?text=Modern+Interior');">
+        <div class="hero-contact-overlay"></div>
+        <div class="contact-form-container">
+            <div class="form-input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" placeholder="Enter Your Name">
+            </div>
+            <div class="form-input-group">
+                <i class="fas fa-mobile-alt input-icon"></i>
+                <input type="text" placeholder="Enter Your Mobile Number">
+            </div>
+            <div class="form-input-group">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" placeholder="Enter Your Email Id">
+            </div>
+            <div class="form-input-group">
+                <i class="fas fa-info-circle input-icon"></i>
+                <select>
+                    <option value="">Inquiry Type</option>
+                    <option value="product">Product Inquiry</option>
+                    <option value="service">Service Inquiry</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <button class="form-submit-btn">
+                SUBMIT <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Introduction Section (image_11e0fd.png) -->
+    <section class="py-16 px-6 md:px-12 container mx-auto bg-gray-50">
+        <p class="section-heading-leaf mb-8">
+            <i class="fas fa-leaf"></i> INTRODUCTION
+        </p>
+        <div class="flex flex-col md:flex-row items-start md:space-x-12">
+            <div class="md:w-1/3 flex flex-col items-center md:items-start mb-8 md:mb-0">
+                <img src="https://placehold.co/250x100/F3F4F6/DC2626?text=Club+Crests+Logo" alt="Club Crests Logo" class="club-crests-logo mb-4">
+                <p class="text-gray-600 text-sm md:text-base text-center md:text-left">Fashion Laminates from <span class="text-red-theme font-semibold">Greenply</span></p>
+            </div>
+            <div class="md:w-2/3">
+                <p class="text-lg md:text-2xl font-normal leading-relaxed text-gray-800 mb-6">
+                    THE LATEST INNOVATION FROM GREENPLY INDUSTRIES LIMITED, HERALDS A NEW ERA IN DECORATIVE SURFACES, EMBODYING BOTH INNOVATION AND EXCELLENCE. FROM GREENPLY, A LEADER IN THE WOOD PANEL INDUSTRY WITH A DISTINGUISHED HISTORY OF DELIVERING TOP-TIER PRODUCTS THAT EXCEED CUSTOMER EXPECTATIONS, CLUB CRESTS IS HERE TO REDEFINE THE DECORATIVE SURFACES LANDSCAPE.
+                </p>
+                <p class="text-sm text-gray-600">
+                    Club Crests is uber-premium collection caters to visionary designers seeking materials that embody distinctiveness and technical excellence. With a focus on creating exquisite finishes and intricate detailing, these laminates are inspired by unconventional, niche designs and materials. Experience the unparalleled quality of the Club Crests Collection, a testament to the inspiring heights of craftsmanship and innovation
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Collection Club Crests Section (image_11e140.jpg, etc.) -->
+    <section class="py-16 px-6 md:px-12 container mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <p class="section-heading-leaf">
+                <i class="fas fa-leaf"></i> OUR COLLECTION CLUB CRESTS
+            </p>
+            <a href="#" class="collection-view-all">
+                VIEW ALL <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:space-x-8">
+            <!-- Left Sidebar -->
+            <div class="md:w-1/4 collection-sidebar mb-8 md:mb-0">
+                <div class="collection-sidebar-item active" data-category="opulent">
+                    OPULENT <i class="fas fa-arrow-right collection-arrow ml-auto"></i>
+                </div>
+                <div class="collection-sidebar-item" data-category="aspire">
+                    ASPIRE <i class="fas fa-arrow-right collection-arrow ml-auto"></i>
+                </div>
+            </div>
+
+            <!-- Right Content Area -->
+            <div class="md:w-3/4 collection-content-area" id="collection-content">
+                <!-- Content for Opulent - Default Active -->
+                <div id="opulent-content" class="category-content">
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Opulent offers a diverse collection of meticulously crafted surfaces, each a masterpiece of artistry designed to bring grandeur and refinement to any space. Whether you're aiming for a bold statement or a subtle, elegant ambiance, Opulent transforms ordinary interiors into extraordinary works of art. Experience the unmatched blend of beauty, craftsmanship, and timeless elegance that only Opulent can provide, and elevate your interior design to new heights of refinement and style.
+                    </p>
+
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Pastels (52)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="collection-image-grid mb-8">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/A0AEC0/FFFFFF?text=BEAU" alt="Beau Laminate">
+                            <span class="collection-image-text">BEAU</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/6B4F4F/FFFFFF?text=UNIO" alt="Unio Laminate">
+                            <span class="collection-image-text">UNIO</span>
+                        </div>
+                    </div>
+
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Stone Surfaces (28)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="collection-image-grid mb-8">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/3A2D2B/F8F8F8?text=NATURE" alt="Nature Stone Surface">
+                            <span class="collection-image-text">NATURE</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/2D4F32/F8F8F8?text=CLASSY" alt="Classy Stone Surface">
+                            <span class="collection-image-text">CLASSY</span>
+                        </div>
+                    </div>
+
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Wood Surfaces (59)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="collection-image-grid mb-8">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/A0AEC0/FFFFFF?text=WOOD+TEXTURE" alt="Wood Texture Surface">
+                            <span class="collection-image-text">WOOD</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/6B4F4F/FFFFFF?text=WOOD+GRAIN" alt="Wood Grain Surface">
+                            <span class="collection-image-text">GRAIN</span>
+                        </div>
+                    </div>
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Wood Synchro (25)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="collection-image-grid mb-8">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/3A2D2B/F8F8F8?text=WOOD+SYNCHRO+A" alt="Wood Synchro A">
+                            <span class="collection-image-text">SYNCHRO A</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/2D4F32/F8F8F8?text=WOOD+SYNCHRO+B" alt="Wood Synchro B">
+                            <span class="collection-image-text">SYNCHRO B</span>
+                        </div>
+                    </div>
+
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Wellness (15)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="collection-image-grid">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/A0AEC0/FFFFFF?text=WELLNESS+1" alt="Wellness 1">
+                            <span class="collection-image-text">WELLNESS 1</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/6B4F4F/FFFFFF?text=WELLNESS+2" alt="Wellness 2">
+                            <span class="collection-image-text">WELLNESS 2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content for Aspire - Updated with new content -->
+                <div id="aspire-content" class="category-content hidden">
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        THESE PREMIUM PANELS OFFER A HARMONIOUS FUSION OF UNMATCHED QUALITY AND REFINED STYLE, ENSURING YOUR INTERIORS EXUDE A CHARISMATIC AURA OF DISTINCTION. EACH PANEL IS CRAFTED WITH METICULOUS ATTENTION TO DETAIL, EMBODYING THE ESSENCE OF ELEGANCE AND SOPHISTICATION THAT TRANSFORMS ANY SPACE INTO A SHOWCASE OF OPULENCE.
+                        <br><br>
+                        Discover Aspire and let your spaces reflect the pinnacle of luxury. With its innovative design and superior materials, Aspire is more than just a panel; it’s a statement of exquisite taste and high-end living. Elevate your environment to new heights of grandeur and embrace the art of living well with Aspire by Club Crests.
+                    </p>
+
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Polymer 1 (23)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        We are interior designers with a strong architectural sensibility, dedicated to enhancing everyday environments and contributing to better quality of life. Since our launch in 2009, Material Creative has focused on creating unexpected design to bring people together and command attention, which has earned us an award winning reputation both nationally and internationally.
+                    </p>
+                    <div class="collection-image-grid mb-8">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/E0E7FF/4F46E5?text=Polymer+1+A" alt="Polymer 1 A">
+                            <span class="collection-image-text">IMAGE A</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/C0C0C0/333333?text=Polymer+1+B" alt="Polymer 1 B">
+                            <span class="collection-image-text">IMAGE B</span>
+                        </div>
+                    </div>
+
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Polymer 2 (6)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        We are interior designers with a strong architectural sensibility, dedicated to enhancing everyday environments and contributing to better quality of life. Since our launch in 2009, Material Creative has focused on creating unexpected design to bring people together and command attention, which has earned us an award winning reputation both nationally and internationally.
+                    </p>
+                    <div class="collection-image-grid mb-8">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/B0B0B0/FFFFFF?text=Polymer+2+A" alt="Polymer 2 A">
+                            <span class="collection-image-text">IMAGE A</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/D0D0D0/222222?text=Polymer+2+B" alt="Polymer 2 B">
+                            <span class="collection-image-text">IMAGE B</span>
+                        </div>
+                    </div>
+
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Polymer 3 (20)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        We are interior designers with a strong architectural sensibility, dedicated to enhancing everyday environments and contributing to better quality of life. Since our launch in 2009, Material Creative has focused on creating unexpected design to bring people together and command attention, which has earned us an award winning reputation both nationally and internationally.
+                    </p>
+                    <div class="collection-image-grid mb-8">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/A0A0A0/000000?text=Polymer+3+A" alt="Polymer 3 A">
+                            <span class="collection-image-text">IMAGE A</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/808080/FFFFFF?text=Polymer+3+B" alt="Polymer 3 B">
+                            <span class="collection-image-text">IMAGE B</span>
+                        </div>
+                    </div>
+
+                    <div class="collection-sub-category">
+                        <span class="collection-sub-category-title">Polymer 4 (2)</span>
+                        <a href="#" class="collection-view-all">VIEW ALL <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        We are interior designers with a strong architectural sensibility, dedicated to enhancing everyday environments and contributing to better quality of life. Since our launch in 2009, Material Creative has focused on creating unexpected design to bring people together and command attention, which has earned us an award winning reputation both nationally and internationally.
+                    </p>
+                    <div class="collection-image-grid">
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/606060/FFFFFF?text=Polymer+4+A" alt="Polymer 4 A">
+                            <span class="collection-image-text">IMAGE A</span>
+                        </div>
+                        <div class="collection-image-container">
+                            <img src="https://placehold.co/400x300/404040/FFFFFF?text=Polymer+4+B" alt="Polymer 4 B">
+                            <span class="collection-image-text">IMAGE B</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section (image_11e500.jpg, image_11e55d.jpg) -->
+    <section class="py-16 px-6 md:px-12 container mx-auto bg-gray-50">
+        <p class="section-heading-leaf mb-8">
+            <i class="fas fa-leaf"></i> KEY FEATURES
+        </p>
+        <div class="key-features-container">
+            <!-- Left Side: Feature List Menu -->
+            <div class="feature-list-menu md:w-1/4">
+                <div class="feature-list-item active" data-feature="anti-finger">Anti-Finger Impression</div>
+                <div class="feature-list-item" data-feature="water-resistant">Water Resistant</div>
+                <div class="feature-list-item" data-feature="easy-clean">Easy To Clean</div>
+                <div class="feature-list-item" data-feature="long-durability">Long Durability</div>
+            </div>
+
+            <!-- Right Side: Feature Display Area -->
+            <div class="feature-display-area md:w-3/4">
+                <img id="feature-image" src="https://placehold.co/300x300/5D4037/FFFFFF?text=Anti-Finger" alt="Feature Image" class="key-feature-image">
+                <div class="feature-details">
+                    <h3 id="feature-title">Anti-Finger Impression</h3>
+                    <ul id="feature-list" class="list-disc list-inside">
+                        <li>Smooth, feather-like touch</li>
+                        <li>Resists smudges and fingerprints</li>
+                        <li>Maintains pristine appearance</li>
+                        <li>Enhanced surface protection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Visualizer Section (image_11e860.jpg, image_11e862.jpg) -->
+    <section class="py-16 px-6 md:px-12 relative visualizer-section" style="background-image: url('https://placehold.co/1920x1080/D3D3D3/000000?text=Product+Visualizer+Background');">
+        <div class="visualizer-overlay"></div>
+        <p class="section-heading-leaf absolute top-8 left-12 z-40">
+            PRODUCT VISUALIZER
+        </p>
+
+        <div class="visualizer-main-area">
+            <div id="visualizer-door-panel" class="visualizer-panel-door"></div>
+        </div>
+
+        <!-- Panel Control Overlay -->
+        <div class="visualizer-panel-control">
+            <div class="flex justify-between items-center mb-4">
+                <h4 class="font-bold text-gray-800">Choose Your Panel</h4>
+                <div class="flex space-x-2">
+                    <button class="visualizer-close-btn"><i class="fas fa-times"></i></button>
+                    <button class="visualizer-download-btn"><i class="fas fa-download"></i></button>
+                </div>
+            </div>
+
+            <select id="visualizer-category-select">
+                <option value="opulent">Opulent</option>
+                <option value="aspire">Aspire</option>
+            </select>
+
+            <select id="visualizer-type-select">
+                <option value="pastels">Pastels</option>
+                <option value="stone">Stone Surfaces</option>
+                <option value="wood">Wood Surfaces</option>
+                <option value="wood-synchro">Wood Synchro</option>
+                <option value="wellness">Wellness</option>
+            </select>
+
+            <div id="color-swatches" class="grid grid-cols-3 gap-2 mt-4">
+                <!-- Color swatches will be dynamically generated here -->
+            </div>
+            <div id="color-names" class="grid grid-cols-3 gap-2 mt-2 text-center text-xs text-gray-600">
+                <!-- Color names will be dynamically generated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer-dark-bg py-10 px-6 md:px-12 mt-12 text-sm">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 text-center md:text-left">
+            <!-- Column 1: Products -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Products</h4>
+                <div class="grid grid-cols-1 gap-y-2">
+                    <div>
+                        <h5 class="font-semibold text-white mb-2">Categories</h5>
+                        <ul class="space-y-1">
+                            <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                            <li><a href="#" class="footer-link">Doors</a></li>
+                            <li><a href="#" class="footer-link">Veneers</a></li>
+                            <li><a href="#" class="footer-link">MDF</a></li>
+                            <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                            <li><a href="#" class="footer-link">PVC</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Speciality Feature -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Speciality Feature</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Brands -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Brands</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Greeninfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">Greeninfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crest</a></li>
+                    <li><a href="#" class="footer-link">Greeninfinity MDF</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Furniture Type -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Furniture Type</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 5: Quick Links & More -->
+            <div>
+                <h4 class="text-lg font-semibold footer-heading mb-4">Quick Links & More</h4>
+                <ul class="space-y-1">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Social Media and Copyright -->
+        <div class="mt-12 pt-8 border-t border-gray-700 text-center">
+            <h5 class="font-semibold text-white mb-4">Follow us on</h5>
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="#" class="social-icon-footer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fas fa-globe"></i></a>
+            </div>
+            <p class="text-gray-400 text-sm">&copy; Copyright 2025 Greeninfinity.com. All Rights Reserved</p>
+            <p class="text-gray-400 text-sm">Digital agency Tonic Worldwide</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Club Crests Collection Category Switching
+            const sidebarItems = document.querySelectorAll('.collection-sidebar-item');
+            const categoryContents = document.querySelectorAll('.category-content');
+
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    sidebarItems.forEach(si => si.classList.remove('active'));
+                    this.classList.add('active');
+
+                    categoryContents.forEach(cc => cc.classList.add('hidden'));
+                    const targetCategory = this.dataset.category;
+                    document.getElementById(targetCategory + '-content').classList.remove('hidden');
+                });
+            });
+
+            // Key Features Section Dynamic Content
+            const featureData = {
+                'anti-finger': {
+                    image: 'https://placehold.co/300x300/5D4037/FFFFFF?text=Anti-Finger',
+                    title: 'Anti-Finger Impression',
+                    list: [
+                        'Smooth, feather-like touch',
+                        'Resists smudges and fingerprints',
+                        'Maintains pristine appearance',
+                        'Enhanced surface protection'
+                    ]
+                },
+                'water-resistant': {
+                    image: 'https://placehold.co/300x300/4CAF50/FFFFFF?text=Water+Resistant',
+                    title: 'Water Resistant',
+                    list: [
+                        'Protects against moisture',
+                        'Ideal for kitchens & bathrooms',
+                        'Prevents warping & swelling',
+                        'Ensures long-lasting finish'
+                    ]
+                },
+                'easy-clean': {
+                    image: 'https://placehold.co/300x300/FFC107/333333?text=Easy+Clean',
+                    title: 'Easy To Clean',
+                    list: [
+                        'Wipe clean with a damp cloth',
+                        'Resistant to common stains',
+                        'Low maintenance required',
+                        'Hygienic surface for daily use'
+                    ]
+                },
+                'long-durability': {
+                    image: 'https://placehold.co/300x300/DC3545/FFFFFF?text=Durable',
+                    title: 'Long Durability',
+                    list: [
+                        'Resistant to scratches and abrasions',
+                        'Withstands daily wear and tear',
+                        'Maintains integrity over time',
+                        'Ideal for high-traffic areas'
+                    ]
+                }
+            };
+
+            const featureListItems = document.querySelectorAll('.feature-list-item');
+            const featureImage = document.getElementById('feature-image');
+            const featureTitle = document.getElementById('feature-title');
+            const featureList = document.getElementById('feature-list');
+
+            function updateFeatureDisplay(featureKey) {
+                const data = featureData[featureKey];
+                if (data) {
+                    featureImage.src = data.image;
+                    featureImage.alt = data.title;
+                    featureTitle.textContent = data.title;
+                    featureList.innerHTML = ''; // Clear existing list items
+                    data.list.forEach(itemText => {
+                        const li = document.createElement('li');
+                        li.textContent = itemText;
+                        featureList.appendChild(li);
+                    });
+                }
+            }
+
+            featureListItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    featureListItems.forEach(li => li.classList.remove('active'));
+                    this.classList.add('active');
+                    updateFeatureDisplay(this.dataset.feature);
+                });
+            });
+
+            // Initialize with the first feature
+            updateFeatureDisplay('anti-finger');
+
+            // Product Visualizer Logic
+            const visualizerDoorPanel = document.getElementById('visualizer-door-panel');
+            const visualizerCategorySelect = document.getElementById('visualizer-category-select');
+            const visualizerTypeSelect = document.getElementById('visualizer-type-select');
+            const colorSwatchesContainer = document.getElementById('color-swatches');
+            const colorNamesContainer = document.getElementById('color-names');
+
+            // Define colors for different categories/types
+            const visualizerColors = {
+                opulent: {
+                    pastels: [
+                        { name: 'Moonstone 166', color: '#A0AEC0' },
+                        { name: 'Gothic Grey 118', color: '#4B5563' },
+                        { name: 'Pluto 119', color: '#6B4F4F' }
+                    ],
+                    stone: [
+                        { name: 'Stone Grey', color: '#546E7A' },
+                        { name: 'Sandstone Beige', color: '#BCAAA4' }
+                    ],
+                    wood: [
+                        { name: 'Light Oak', color: '#D2B48C' },
+                        { name: 'Dark Walnut', color: '#5C4033' }
+                    ],
+                    'wood-synchro': [
+                        { name: 'Synchro Light', color: '#F5DEB3' },
+                        { name: 'Synchro Dark', color: '#6F4F28' }
+                    ],
+                    wellness: [
+                        { name: 'Sky Blue', color: '#87CEEB' },
+                        { name: 'Mint Green', color: '#98FB98' }
+                    ]
+                },
+                aspire: {
+                    'polymer-1': [
+                        { name: 'Polymer 1A', color: '#888B8D' }, /* Placeholder colors */
+                        { name: 'Polymer 1B', color: '#A9A9A9' }
+                    ],
+                    'polymer-2': [
+                        { name: 'Polymer 2A', color: '#6A5ACD' },
+                        { name: 'Polymer 2B', color: '#483D8B' }
+                    ],
+                    'polymer-3': [
+                        { name: 'Polymer 3A', color: '#B0E0E6' },
+                        { name: 'Polymer 3B', color: '#87CEEB' }
+                    ],
+                    'polymer-4': [
+                        { name: 'Polymer 4A', color: '#F0E68C' },
+                        { name: 'Polymer 4B', color: '#DAA520' }
+                    ]
+                }
+            };
+
+
+            function populateColorSwatches() {
+                colorSwatchesContainer.innerHTML = '';
+                colorNamesContainer.innerHTML = '';
+
+                const category = visualizerCategorySelect.value;
+                const type = visualizerTypeSelect.value;
+                const colors = visualizerColors[category]?.[type] || [];
+
+                if (colors.length > 0) {
+                    colors.forEach((colorData, index) => {
+                        const swatch = document.createElement('div');
+                        swatch.className = 'visualizer-color-swatch';
+                        swatch.style.backgroundColor = colorData.color;
+                        swatch.dataset.color = colorData.color;
+                        swatch.dataset.name = colorData.name;
+                        if (index === 0) {
+                            swatch.classList.add('active'); // Set first swatch as active
+                            visualizerDoorPanel.style.backgroundColor = colorData.color; // Set initial door color
+                        }
+                        colorSwatchesContainer.appendChild(swatch);
+
+                        const nameSpan = document.createElement('span');
+                        nameSpan.textContent = colorData.name;
+                        colorNamesContainer.appendChild(nameSpan);
+                    });
+                } else {
+                    colorSwatchesContainer.innerHTML = '<p class="text-center col-span-3 text-gray-500">No colors available for this selection.</p>';
+                }
+            }
+
+            function updateVisualizerTypes() {
+                visualizerTypeSelect.innerHTML = '';
+                const category = visualizerCategorySelect.value;
+                const types = Object.keys(visualizerColors[category] || {});
+
+                types.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = type.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); // Capitalize and remove hyphens
+                    visualizerTypeSelect.appendChild(option);
+                });
+                populateColorSwatches(); // Repopulate swatches after types change
+            }
+
+            // Event Listeners for Product Visualizer
+            visualizerCategorySelect.addEventListener('change', updateVisualizerTypes);
+            visualizerTypeSelect.addEventListener('change', populateColorSwatches);
+            colorSwatchesContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('visualizer-color-swatch')) {
+                    document.querySelectorAll('.visualizer-color-swatch').forEach(s => s.classList.remove('active'));
+                    event.target.classList.add('active');
+                    visualizerDoorPanel.style.backgroundColor = event.target.dataset.color;
+                    console.log('Selected Color:', event.target.dataset.name, event.target.dataset.color);
+                }
+            });
+
+            // Initial population of visualizer types and swatches
+            updateVisualizerTypes();
+        });
+    </script>
+</body>
+</html>

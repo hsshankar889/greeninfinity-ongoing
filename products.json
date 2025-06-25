@@ -1,0 +1,79 @@
+[
+    {
+        "name": "Greenply Club 700 Plywood",
+        "image": "https://placehold.co/400x250/2D4F32/FFFFFF?text=Plywood+700",
+        "features": ["Water Proof", "Fire Retardant", "Termite Proof"],
+        "material": "Plywood & Blockboard",
+        "brand": "Green"
+    },
+    {
+        "name": "Greenply Club 500 Plywood",
+        "image": "https://placehold.co/400x250/5C4033/FFFFFF?text=Plywood+500",
+        "features": ["Water Proof", "Borer Proof"],
+        "material": "Plywood & Blockboard",
+        "brand": "Green"
+    },
+    {
+        "name": "Greenply Platinum Plywood",
+        "image": "https://placehold.co/400x250/7A4A28/FFFFFF?text=Plywood+Platinum",
+        "features": ["Water Proof", "Lifetime Warranty", "Anti Bacterial"],
+        "material": "Plywood & Blockboard",
+        "brand": "Green"
+    },
+    {
+        "name": "Greenply Gold Plywood",
+        "image": "https://placehold.co/400x250/FFD700/333333?text=Plywood+Gold",
+        "features": ["Water Proof", "Zero Emission"],
+        "material": "Plywood & Blockboard",
+        "brand": "Green"
+    },
+    {
+        "name": "Greenply Gold 2.0 Plywood",
+        "image": "https://placehold.co/400x250/B87333/FFFFFF?text=Plywood+Gold+2.0",
+        "features": ["Water Proof", "Structural Grade"],
+        "material": "Plywood & Blockboard",
+        "brand": "Green"
+    },
+    {
+        "name": "Greenply 710 Marine Plywood",
+        "image": "https://placehold.co/400x250/008B8B/FFFFFF?text=Plywood+Marine",
+        "features": ["Water Proof", "Weather Resistant"],
+        "material": "Plywood & Blockboard",
+        "brand": "Green"
+    },
+    {
+        "name": "Ecotec Doors",
+        "image": "https://placehold.co/400x250/8B4513/FFFFFF?text=Ecotec+Door",
+        "features": ["Fire Retardant", "Acoustic"],
+        "material": "Doors",
+        "brand": "Ecotec"
+    },
+    {
+        "name": "Optima G Veneers",
+        "image": "https://placehold.co/400x250/A0522D/FFFFFF?text=Optima+Veneer",
+        "features": ["Lead Free", "Easy To Clean"],
+        "material": "Veneers",
+        "brand": "Optima G"
+    },
+    {
+        "name": "Green MDF Board",
+        "image": "https://placehold.co/400x250/708090/FFFFFF?text=Green+MDF",
+        "features": ["Moisture Resistant"],
+        "material": "MDF and Board",
+        "brand": "Green MDF"
+    },
+    {
+        "name": "Green Ndure Speciality Plywood",
+        "image": "https://placehold.co/400x250/3CB371/FFFFFF?text=Ndure+Plywood",
+        "features": ["Fire Safe", "Calibrated"],
+        "material": "Speciality Plywood",
+        "brand": "Green Ndure"
+    },
+    {
+        "name": "Wood Crest PVC Panel",
+        "image": "https://placehold.co/400x250/D2691E/FFFFFF?text=Wood+Crest+PVC",
+        "features": ["Water Proof"],
+        "material": "PVC",
+        "brand": "Wood Crest"
+    }
+]
