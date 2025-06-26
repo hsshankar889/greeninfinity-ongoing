@@ -294,12 +294,12 @@
             <a href="index.html" class="greeninfinity-button">Greeninfinity</a>
             <nav class="flex items-center space-x-6">
                 <ul class="hidden md:flex space-x-6 items-center">
-                    <li><a href="#" class="nav-link">Consumer</a></li>
+                    <li><a href="./index.html" class="nav-link">Consumer</a></li>
                     <li><a href="investors.html" class="nav-link text-red-theme font-semibold">Investors</a></li>
-                    <li><a href="#" class="nav-link">About Us</a></li>
-                    <li><a href="#" class="nav-link">Inspiration</a></li>
-                    <li><a href="#" class="nav-link">Products</a></li>
-                    <li><a href="#" class="nav-link">Blogs</a></li>
+                    <li><a href="./about.html" class="nav-link">About Us</a></li>
+                    <li><a href="./Inspiration.html" class="nav-link">Inspiration</a></li>
+                    <li><a href="./products.html" class="nav-link">Products</a></li>
+                    <li><a href="./blog.html" class="nav-link">Blogs</a></li>
                 </ul>
                 <button class="md:hidden text-gray-700 focus:outline-none">
                     <i class="fas fa-bars text-xl"></i>
@@ -309,7 +309,7 @@
     </header>
 
     <!-- Fixed WhatsApp Icon -->
-    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="top-nav-icon">
+    <a href="https://wa.me/+918088130010" target="_blank" class="top-nav-icon">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -346,7 +346,8 @@
 
             <!-- Central Image/Video Placeholder -->
             <div class="glance-central-image-wrapper">
-                <img id="glance-image" src="https://placehold.co/600x350/B0D9B1/3A6641?text=Greenply+Titli+Plant" alt="Greenply Titli Plant" class="glance-central-image">
+                <!-- <img id="glance-image" src="https://placehold.co/600x350/B0D9B1/3A6641?text=Greenply+Titli+Plant" alt="Greenply Titli Plant" class="glance-central-image"> -->
+                <iframe width="965" height="542" src="https://www.youtube.com/embed/NV66S2RtAxs" title="Quest for the Next - The Greenply India Story, Featured in History TV18" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 <div class="glance-slider-info">
                     <span>Greenply Titli Plant</span>
                     <div class="glance-slider-dots" id="glance-dots">
@@ -388,7 +389,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Rajesh Mittal Card -->
             <div class="leader-card">
-                <img src="https://placehold.co/150x150/ef4444/ffffff?text=Rajesh+Mittal" alt="Rajesh Mittal" class="leader-img">
+                <img src="https://www.greenply.com:5001/image1714375279507-9959.jpg" alt="Rajesh Mittal" class="leader-img">
                 <h3 class="leader-name">Rajesh Mittal</h3>
                 <p class="leader-title">Chairman & Managing Director</p>
                 <div class="leader-bio-toggle" data-leader="rajesh-mittal">
@@ -398,7 +399,7 @@
 
             <!-- Manoj Tulsian Card -->
             <div class="leader-card">
-                <img src="https://placehold.co/150x150/2D4F32/ffffff?text=Manoj+Tulsian" alt="Manoj Tulsian" class="leader-img">
+                <img src="https://www.greenply.com:5001/image1714375293797-4622.jpg" alt="Manoj Tulsian" class="leader-img">
                 <h3 class="leader-name">Manoj Tulsian</h3>
                 <p class="leader-title">Joint Managing Director & CEO</p>
                 <div class="leader-bio-toggle" data-leader="manoj-tulsian">
@@ -408,7 +409,7 @@
 
             <!-- Sanidhya Mittal Card -->
             <div class="leader-card">
-                <img src="https://placehold.co/150x150/4CAF50/ffffff?text=Sanidhya+Mittal" alt="Sanidhya Mittal" class="leader-img">
+                <img src="https://www.greenply.com:5001/image1716816561146-4250.jpg" alt="Sanidhya Mittal" class="leader-img">
                 <h3 class="leader-name">Sanidhya Mittal</h3>
                 <p class="leader-title">Joint Managing Director</p>
                 <div class="leader-bio-toggle" data-leader="sanidhya-mittal">
@@ -517,9 +518,9 @@
             const glanceImage = document.getElementById('glance-image');
             const glanceDots = document.querySelectorAll('#glance-dots .glance-dot');
             const glanceImages = [
-                'https://placehold.co/600x350/B0D9B1/3A6641?text=Greenply+Titli+Plant',
-                'https://placehold.co/600x350/8BC34A/FFFFFF?text=Greenply+Factory+View',
-                'https://placehold.co/600x350/AED581/2D4F32?text=Greenply+Innovation'
+                'https://www.greenply.com:5001/thumbnail1709200007825-6162.jpg',
+                'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSO9D6nWHB5pBbZHTaJ_Wh5-pACkQZjBWLuuq4Pe3_ZD1rrRm42',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2L0-3LCpbq6DrmLQv5wGBybJaaSH7kvT2DYCQ6VPoex1XXRK20K8mpxWcW-BbY3S_7wM&usqp=CAU'
             ];
             let currentGlanceImage = 0;
             let glanceInterval;
