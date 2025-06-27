@@ -3,51 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenInfinity Inspired Front Page</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Greeninfinity - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            color: #333333;
         }
-        /* Custom styles for hero section to contain the carousel */
+
+        /* Header styles */
+        .header-bg {
+            background-color: #f3f4f6;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .greeninfinity-button {
+            background-color: #ef4444;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+        .greeninfinity-button:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .nav-link {
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #ef4444;
+        }
+        .text-red-theme {
+            color: #ef4444;
+        }
+
+        /* Hero Section Carousel - UPDATED FOR FADE EFFECT */
         .hero-section {
             position: relative;
-            height: 80vh; /* Adjust height as needed */
-            display: flex;
-            align-items: flex-end; /* Align content to the bottom */
-            justify-content: center;
-            overflow: hidden; /* Hide overflowing parts of images */
+            width: 100%;
+            height: 600px; /* Adjust height as needed */
+            overflow: hidden;
         }
+
+        .hero-section .carousel-container {
+            /* Removed display: flex and transition as slides are now absolutely positioned */
+            position: relative; /* Container for absolute slides */
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-section .carousel-slide {
+            position: absolute; /* Stack slides on top of each other */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0; /* Hidden by default */
+            transition: opacity 1s ease-in-out; /* Smooth fade transition */
+        }
+
+        .hero-section .carousel-slide.active {
+            opacity: 1; /* Show active slide */
+        }
+
         .hero-overlay {
-            background-color: rgba(0, 0, 0, 0.3); /* Dark overlay */
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 5; /* Ensure overlay is above images */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
         }
 
-        /* Inquiry Form Modal Styles */
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-dot.active {
+            background-color: #ef4444; /* Red for active dot */
+        }
+
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Darker overlay for modal backdrop */
+            background-color: rgba(0, 0, 0, 0.7);
             display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 999; /* Ensure it's above everything */
+            align-items: center;
+            z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         }
 
         .modal-overlay.active {
@@ -56,385 +130,191 @@
         }
 
         .inquiry-form-modal {
-            position: relative;
-            background-color: rgba(255, 255, 255, 0.9); /* White with reduced clarity */
-            padding: 1.5rem 2rem; /* Reduced padding for smaller fields */
-            border-radius: 1rem; /* Rounded corners */
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2); /* Deeper shadow for modal */
-            border: 1px solid #e5e7eb; /* Light border */
-            z-index: 1000; /* Above the overlay */
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             width: 90%;
-            max-width: 1000px;
-            transform: translateY(20px); /* Initial slight offset for animation */
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            max-width: 500px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-in-out;
         }
 
         .modal-overlay.active .inquiry-form-modal {
             transform: translateY(0);
-            opacity: 1;
-        }
-
-        .inquiry-form-modal form {
-            display: flex;
-            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-            gap: 1rem; /* Spacing between form fields */
-            align-items: center;
-            justify-content: center; /* Center items in the row */
-        }
-
-        .inquiry-form-modal input,
-        .inquiry-form-modal select,
-        .inquiry-form-modal button {
-            flex-grow: 1; /* Allow items to grow to fill space */
-            flex-basis: auto; /* Allow items to determine their own base width */
-            min-width: 120px; /* Minimum width for fields before wrapping */
-            padding: 0.5rem 0.75rem; /* Reduced padding for smaller fields */
-            border-radius: 0.5rem; /* Consistent rounded corners */
-            font-size: 0.9rem; /* Slightly smaller font size */
         }
 
         .modal-close-button {
             position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
+            top: 1rem;
+            right: 1rem;
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: #EF4444; /* Red-500 for close button */
             cursor: pointer;
-            padding: 0.25rem;
-            line-height: 1;
-            transition: color 0.2s ease;
+            color: #6b7280;
+            transition: color 0.2s;
         }
+
         .modal-close-button:hover {
-            color: #DC2626; /* Red-700 on hover */
+            color: #ef4444;
         }
 
-
-        @media (min-width: 768px) {
-            .inquiry-form-modal {
-                width: 70%;
-                padding: 1.5rem 2.5rem; /* Restore slightly more padding on larger screens */
-            }
-            .inquiry-form-modal form {
-                flex-wrap: nowrap; /* Prevent wrapping on large screens */
-            }
-        }
-        @media (min-width: 1024px) { /* Adjust for even larger screens if needed */
-            .inquiry-form-modal input,
-            .inquiry-form-modal select {
-                max-width: 180px; /* Max width to keep fields from becoming too wide */
-            }
-            .inquiry-form-modal button {
-                max-width: 200px; /* Max width for the button */
-            }
-        }
-
-
-        /* Carousel specific styles */
-        .carousel-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .carousel-slide {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 1s ease-in-out; /* Smooth fade transition */
-            object-fit: cover; /* Ensure images cover the area */
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-        }
-
-        .carousel-dots {
-            position: absolute;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
-            z-index: 15; /* Above carousel and overlay */
-        }
-
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .carousel-dot.active {
-            background-color: white;
-        }
-
-        /* Product Visualizer specific styles (styles for elements removed) */
-        /* .visualizer-nav-item {
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            white-space: nowrap;
-        }
-        .visualizer-nav-item.active {
-            background-color: #EF4444;
-            color: white;
-            font-weight: 500;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .visualizer-room {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            background-size: cover;
-            background-position: center;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            transition: background-image 0.5s ease-in-out;
-        }
-
-        .visualizer-door {
-            position: absolute;
-            left: 17.5%;
-            top: 21%;
-            width: 15%;
-            height: 60%;
-            background-color: #A3A3A3;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s ease;
-            opacity: 0.7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .visualizer-desk {
-            position: absolute;
-            right: 18%;
-            bottom: 20%;
-            width: 30%;
-            height: 25%;
-            background-color: #A3A3A3;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s ease;
-            opacity: 0.7;
-        }
-
-        .red-dot {
-            width: 1.5rem;
-            height: 1.5rem;
-            background-color: #EF4444;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        } */
-
-        /* Panel Selector Modal */
-        .panel-selector-modal {
+        /* Custom Message Box Styles */
+        .message-box-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
-            align-items: center;
             justify-content: center;
-            z-index: 1000;
+            align-items: center;
+            z-index: 1001; /* Higher than other modals */
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         }
 
-        .panel-selector-modal.active {
+        .message-box-overlay.active {
             opacity: 1;
             visibility: visible;
         }
 
-        .panel-selector-content {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 600px;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            position: relative;
-        }
-
-        .panel-selector-modal.active .panel-selector-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .panel-swatch {
-            width: 100px; /* Adjust size as needed */
-            height: 100px; /* Adjust size as needed */
-            border-radius: 0.5rem;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border-color 0.2s ease, transform 0.2s ease;
-        }
-
-        .panel-swatch.selected {
-            border-color: #EF4444; /* Red border for selected */
-            transform: scale(1.05);
-        }
-
-        /* Key Features Vertical Slider */
-        .key-features-image-slider {
-            position: relative;
-            width: 100%;
-            height: 350px; /* Fixed height for the slider container */
-            overflow: hidden;
+        .message-box-content {
+            background-color: #ffffff;
+            padding: 2rem;
             border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease-in-out;
         }
 
-        .key-features-image-slide {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            object-fit: cover;
-            display: flex; /* To center placeholder text */
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 1.5rem;
-            font-weight: bold;
+        .message-box-overlay.active .message-box-content {
+            transform: translateY(0);
         }
 
-        .key-features-image-slide.active {
-            opacity: 1;
-        }
-
-        .key-features-nav-arrow {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border-radius: 50%;
-            padding: 0.5rem;
-            cursor: pointer;
-            z-index: 20;
-            transition: background-color 0.3s ease;
-        }
-
-        .key-features-nav-arrow:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .key-features-nav-arrow.up {
-            top: 0.5rem;
-        }
-
-        .key-features-nav-arrow.down {
-            bottom: 0.5rem;
-        }
-
-        /* Blogs Section horizontal scroll */
-        .blog-carousel-container {
-            overflow-x: scroll;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
-            display: flex; /* Use flex for horizontal layout */
-            gap: 1.5rem; /* Gap between blog cards */
-            padding-bottom: 1rem; /* Space for potential scrollbar */
-        }
-        .blog-carousel-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
-        .blog-card {
-            min-width: 280px; /* Minimum width for each card */
-            max-width: 320px; /* Maximum width for each card */
-            flex-shrink: 0; /* Prevent cards from shrinking */
-        }
-
-        /* Styles for mini-carousels within Polymer cards */
+        /* Our Collection Club Crests Section */
         .mini-carousel-container {
-            position: relative;
             width: 100%;
-            padding-top: 66.66%; /* Maintain 3:2 aspect ratio for images (250/400) */
+            height: 200px; /* Fixed height for mini carousel images */
             overflow: hidden;
-            border-radius: 0.5rem; /* Match card rounded corners */
-            margin-bottom: 1rem; /* Space below image */
+            position: relative;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
         }
-
         .mini-carousel-slide {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
-            object-fit: cover;
         }
-
         .mini-carousel-slide.active {
             opacity: 1;
         }
 
-        /* Navbar specific styles for single line and left alignment */
-        @media (min-width: 768px) {
-            .navbar-menu { /* Now directly targeting navbar-menu for single row */
-                flex-direction: row; /* Display items in a single row */
-                align-items: center; /* Vertically align items */
-                justify-content: flex-start; /* Align items to the left */
-                width: auto;
-                flex-grow: 1; /* Allow it to take available space */
-                margin-left: 1rem; /* Add some margin from the logo */
-            }
-
-            .navbar-menu .nav-item {
-                padding: 0.5rem 1rem; /* Add padding for spacing */
-                border-right: 1px solid #e5e7eb; /* Add dividers between items */
-            }
-
-            .navbar-menu .nav-item:last-child {
-                border-right: none; /* No border on the last item */
-            }
-
-            /* Remove unused row styling */
-            .navbar-top-row, .navbar-bottom-row {
-                display: contents; /* Makes children participate directly in the flex layout of parent */
-            }
+        /* Key Features Section */
+        .key-features-image-slider {
+            width: 100%;
+            height: 400px; /* Fixed height for the image slider */
+            overflow: hidden;
+            position: relative;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .key-features-image-slide {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .key-features-image-slide.active {
+            opacity: 1;
+        }
+        .key-features-nav-arrow {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #ffffff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            opacity: 0.8;
+            transition: opacity 0.2s, background-color 0.2s;
+        }
+        .key-features-nav-arrow:hover {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
-        /* Specific styles for footer list items for proper alignment */
+        /* Blog Carousel */
+        .blog-carousel-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            gap: 2rem;
+            padding-bottom: 1rem;
+        }
+        .blog-carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+        .blog-card {
+            flex-shrink: 0;
+            width: 300px; /* Fixed width for blog cards */
+            scroll-snap-align: start;
+        }
+
+        /* Footer specific styles */
         .footer-list-header {
-            font-weight: 500; /* Medium font weight for sub-headings */
-            color: #F87171; /* Red-400 for sub-headings */
-            margin-top: 1rem; /* Space above sub-headings */
-            margin-bottom: 0.5rem; /* Space below sub-headings */
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
         }
-        .footer-list-item {
-            margin-bottom: 0.25rem; /* Small space between list items */
+        .footer-list-item a {
+            transition: color 0.2s ease-in-out;
         }
-
+        .social-icon-footer {
+            background-color: #4b5563;
+            color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+        }
+        .social-icon-footer:hover {
+            background-color: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -449,7 +329,7 @@
         <!-- Updated Navigation Structure: Single row -->
         <nav id="navbar-menu" class="hidden md:flex flex-row md:items-center md:space-x-4 w-full md:w-auto">
             <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
-            <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            <a href="./investors.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
             <a href="./about.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">About Us</a>
             <a href="./Inspiration.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
             <a href="./products.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
@@ -491,6 +371,14 @@
                 </select>
                 <button type="button" id="submit-inquiry-button" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Submit Inquiry</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="message-box-overlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <p id="message-box-text" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="message-box-close" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out">OK</button>
         </div>
     </div>
 
@@ -543,7 +431,7 @@
                 <!-- Content Area - scrolls with the main page -->
                 <div class="md:w-3/4 bg-gray-100 p-6 rounded-xl shadow-lg relative">
                     <div id="opulent-content">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">THE ULTIMATE EXPRESSION OF ULTRA-LUXURIOUS DECORATIVE SURFACES. DISCOVER RICH TEXTURES AND DESIGNS THAT REDEFINE SOPHISTICATION AND ELEGANCE.</h3>
+                        <h3 class="text-2xl text-gray-900 mb-4">THE ULTIMATE EXPRESSION OF ULTRA-LUXURIOUS DECORATIVE SURFACES. DISCOVER RICH TEXTURES AND DESIGNS THAT REDEFINE SOPHISTICATION AND ELEGANCE.</h3>
                         <p class="text-gray-600 leading-relaxed mb-6">
                             Opulent offers a diverse collection of meticulously crafted surfaces, each a masterpiece of artistry designed to bring grandeur and refinement to any space. Whether you're aiming for a bold statement or a subtle, elegant ambiance, Opulent transforms ordinary interiors into extraordinary works of art. Experience the unparalleled blend of beauty, craftsmanship, and timeless elegance that only Opulent can provide, and elevate your interior design to new heights of refinement and style.
                         </p>
@@ -580,10 +468,17 @@
                                 <p class="text-gray-600 text-sm mb-3">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                 <a href="#" class="text-red-600 hover:underline text-sm font-medium">VIEW ALL</a>
                             </div>
+                            <!-- New Wellness Card -->
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <img src="https://clubcrests.greenply.com/wp-content/uploads/Wellness.jpg" alt="Wellness Image" class="rounded-lg mb-4 w-full h-auto object-cover">
+                                <h4 class="text-lg font-semibold text-gray-800 mb-2">Wellness (15)</h4>
+                                <p class="text-gray-600 text-sm mb-3">Transform your interiors with our 1.5mm acrylic laminates, blending vibrant hues with effortless elegance. Enjoy captivating spaces that remain impressive and easy to maintain.</p>
+                                <a href="#" class="text-red-600 hover:underline text-sm font-medium">VIEW ALL</a>
+                            </div>
                         </div>
                     </div>
                     <div id="aspire-content" class="hidden">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">THESE PREMIUM PANELS OFFER A HARMONIOUS FUSION OF UNMATCHED QUALITY AND REFINED STYLE, ENSURING YOUR INTERIORS EXUDE A CHARISMATIC AURA OF DISTINCTION. EACH PANEL IS CRAFTED WITH METICULOUS ATTENTION TO DETAIL, EMBODYING THE ESSENCE OF ELEGANCE AND SOPHISTICATION THAT TRANSFORMS ANY SPACE INTO A SHOWCASE OF OPULENCE.</h3>
+                        <h3 class="text-2xl text-gray-900 mb-4">THESE PREMIUM PANELS OFFER A HARMONIOUS FUSION OF UNMATCHED QUALITY AND REFINED STYLE, ENSURING YOUR INTERIORS EXUDE A CHARISMATIC AURA OF DISTINCTION. EACH PANEL IS CRAFTED WITH METICULOUS ATTENTION TO DETAIL, EMBODYING THE ESSENCE OF ELEGANCE AND SOPHISTICATION THAT TRANSFORMS ANY SPACE INTO A SHOWCASE OF OPULENCE.</h3>
                         <p class="text-gray-600 leading-relaxed mb-6">
                             Discover Aspire and let your spaces reflect the pinnacle of luxury. With its innovative design and superior materials, Aspire is more than just a panel; it’s a statement of exquisite taste and high-end living. Elevate your environment to new heights of grandeur and embrace the art of living well with Aspire by Club Crests.
                         </p>
@@ -624,7 +519,8 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
     <!-- Key Features Section - Enhanced with Vertical Slider -->
     <section class="py-16 px-6 md:px-12 bg-gray-100">
@@ -705,14 +601,14 @@
                         <a href="#" class="mt-4 inline-block text-red-600 hover:underline">Read More &rarr;</a>
                     </div>
                     <!-- Blog Card 4 -->
-                    <div class="bg-white rounded-xl shadow-lg p-6 blog-card">
+                    <div class="bg-white p-4 rounded-lg shadow-sm blog-card">
                         <img src="https://www.greenply.com:5001/originalthumbnail1749794671082-2861.png" alt="Blog Image 4" class="rounded-lg mb-4 w-full object-cover">
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">Innovations in Wood Panels</h3>
                         <p class="text-gray-600 text-sm">Stay updated on the latest advancements and technologies in wood panel manufacturing.</p>
                         <a href="#" class="mt-4 inline-block text-red-600 hover:underline">Read More &rarr;</a>
                     </div>
                      <!-- Blog Card 5 -->
-                    <div class="bg-white rounded-xl shadow-lg p-6 blog-card">
+                    <div class="bg-white p-4 rounded-lg shadow-sm blog-card">
                         <img src="https://www.greenply.com:5001/originalthumbnail1750338743966-2921.jpg" class="rounded-lg mb-4 w-full object-cover" alt="Blog Image 5">
                         <h3 class="text-xl font-semibold text-gray-900 mb-2">Maximizing Small Spaces</h3>
                         <p class="text-gray-600 text-sm">Clever design tips and product solutions for making the most out of compact living areas.</p>
@@ -779,406 +675,280 @@
                     <li class="footer-list-item"><a href="#" class="hover:text-red-200">Bed</a></li>
                 </ul>
             </div>
-            <!-- Quick Links & More (now the last column, right-aligned) -->
-            <div class="md:text-right">
+            <!-- Quick Links & More Column -->
+            <div>
                 <h4 class="text-lg font-semibold mb-4 text-red-400">Quick Links & More</h4>
-                <ul class="ml-4 md:ml-0 text-sm text-gray-300 space-y-1 md:text-right">
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">About Us</a></li>
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Contact Us</a></li>
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Investors</a></li>
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Sustainability</a></li>
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Blogs</a></li>
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">FAQ</a></li>
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Privacy Policy</a></li>
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">Disclaimer</a></li>
-                    <li class="footer-list-item"><a href="#" class="hover:text-red-200 transition-colors duration-200 ease-in-out text-sm">HKS Award</a></li>
+                <ul class="ml-4 text-sm text-gray-300 space-y-1">
+                    <li class="footer-list-item"><a href="./about.html" class="hover:text-red-200">About Us</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Contact Us</a></li>
+                    <li class="footer-list-item"><a href="./investors.html" class="hover:text-red-200">Investors</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Sustainability</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Blogs</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">FAQ</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Privacy Policy</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">Disclaimer</a></li>
+                    <li class="footer-list-item"><a href="#" class="hover:text-red-200">HKS Award</a></li>
                 </ul>
             </div>
         </div>
-        <!-- Social Media Links moved to bottom center, under a new full-width div -->
-        <div class="flex flex-col items-center justify-center mt-8">
-            <h4 class="text-lg font-semibold mb-4 text-red-400">Follow us on</h4>
-            <div class="flex space-x-4">
-                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.505 1.492-3.89 3.776-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
-                </a>
-                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 20.424a10.875 10.875 0 0014.28 0 10.875 10.875 0 008.232-10.424V7.5a.5.5 0 00-.5-.5h-2.875a.5.5 0 00-.5.5v2.5a.5.5 0 01-.5.5h-2.5a.5.5 0 01-.5-.5v-2.5a.5.5 0 00-.5-.5H8.5a.5.5 0 00-.5.5v2.5a.5.5 0 01-.5.5h-2.5a.5.5 0 01-.5-.5v-2.5a.5.5 0 00-.5-.5H.5a.5.5 0 00-.5.5v2.5A10.875 10.875 0 00.057 20.424zM12 21a9 9 0 110-18 9 9 0 010 18z"></path><path fill-rule="evenodd" d="M10.75 11.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5zM13.25 11.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" clip-rule="evenodd"></path></svg>
-                </a>
-                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.234 2.76 7.828 6.593 9.117.48.087.653-.208.653-.466v-1.603c-2.684.582-3.252-1.29-3.252-1.29-.44-.946-.902-1.196-.902-1.196-.738-.504.056-.494.056-.494.815.057 1.243.838 1.243.838.724 1.24 1.895.88 2.355.676.073-.526.284-.88.517-1.077-1.8-.204-3.69-1.008-3.69-4.004 0-.886.315-1.61.83-2.176-.083-.204-.36-.968.077-2.148 0 0 .676-.217 2.21.829a7.067 7.067 0 011.884-.254c.635 0 1.27.085 1.884.254 1.534-1.046 2.21-.829 2.21-.829.437 1.18.158 1.944.077 2.148.515.566.83 1.29.83 2.176 0 2.997-1.894 3.798-3.696 4.002.29.25.55.738.55 1.488v2.203c0 .258.172.553.658.466C19.24 19.828 22 16.991 22 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg>
-                </a>
-                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.297 10.963a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1h-12a1 1 0 01-1-1v-2z"></path><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.75 8.25a.75.75 0 00-.75-.75h-3.5a.75.75 0 00-.75.75v3.5a.75.75 0 00.75.75h3.5a.75.75 0 00.75-.75v-3.5z" clip-rule="evenodd"></path></svg>
-                </a>
-                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors duration-200 ease-in-out">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.331 6.81a.5.5 0 00-.5-.5h-8.662a.5.5 0 00-.5.5v6.38a.5.5 0 00.5.5h8.662a.5.5 0 00.5-.5V8.81z"></path><path fill-rule="evenodd" d="M15.5 12a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0zM12 10a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"></path></svg>
-                </a>
+        <div class="mt-8 pt-6 border-t border-gray-700 text-center text-gray-400 text-sm">
+            <h5 class="font-semibold text-white mb-3">Follow us on</h5>
+            <div class="flex justify-center space-x-4 mb-4">
+                <a href="#" class="social-icon-footer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-footer"><i class="fas fa-globe"></i></a>
             </div>
-        </div>
-        <div class="text-center text-sm text-gray-400 mt-8">
-            Copyright &copy; 2025 GreenInfinity.com. All Rights Reserved<br>
-            Digital agency Tonic Worldwide
+            <p>&copy; Copyright 2025 Greeninfinity.com. All Rights Reserved</p>
+            <p>Digital agency Tonic Worldwide</p>
         </div>
     </footer>
 
     <script>
-        // JavaScript for mobile menu toggle
-        const menuButton = document.getElementById('menu-button');
-        const navbarMenu = document.getElementById('navbar-menu');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuButton = document.getElementById('menu-button');
+            const navbarMenu = document.getElementById('navbar-menu');
 
-        if (menuButton && navbarMenu) {
             menuButton.addEventListener('click', () => {
                 navbarMenu.classList.toggle('hidden');
                 navbarMenu.classList.toggle('flex');
-                navbarMenu.classList.toggle('flex-col');
+                navbarMenu.classList.toggle('flex-col'); // Stack items vertically on mobile
+                navbarMenu.classList.toggle('space-y-2'); // Add vertical spacing
             });
-        }
 
-        // Image Carousel Logic for Hero Section
-        const heroSlides = document.querySelectorAll('.carousel-slide');
-        const heroDotsContainer = document.querySelector('.carousel-dots');
+            // Hero Section Carousel Logic - UPDATED
+            const carouselSlides = document.querySelectorAll('.hero-section .carousel-slide');
+            const carouselDotsContainer = document.querySelector('.hero-section .carousel-dots');
+            let currentSlide = 0;
+            let carouselInterval;
 
-        // Only proceed if essential carousel elements are found
-        if (heroSlides.length > 0 && heroDotsContainer) {
-            let currentHeroSlide = 0;
-            const heroSlideInterval = 5000; // 5 seconds
-
-            // Clear any existing dots to prevent duplicates on re-render
-            heroDotsContainer.innerHTML = '';
-
-            heroSlides.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('carousel-dot');
-                if (index === 0) {
-                    dot.classList.add('active');
-                }
-                dot.addEventListener('click', () => {
-                    showHeroSlide(index);
-                    resetHeroInterval();
+            function showSlide(index) {
+                carouselSlides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
                 });
-                heroDotsContainer.appendChild(dot);
-            });
-
-            const heroDots = document.querySelectorAll('.carousel-dot'); // Re-select dots after they are appended
-
-            function showHeroSlide(index) {
-                // Ensure previous elements exist before removing classes
-                if (heroSlides[currentHeroSlide]) {
-                    heroSlides[currentHeroSlide].classList.remove('active');
-                }
-                if (heroDots[currentHeroSlide]) {
-                    heroDots[currentHeroSlide].classList.remove('active');
-                }
-
-                currentHeroSlide = (index + heroSlides.length) % heroSlides.length;
-
-                // Ensure new elements exist before adding classes
-                if (heroSlides[currentHeroSlide]) {
-                    heroSlides[currentHeroSlide].classList.add('active');
-                }
-                if (heroDots[currentHeroSlide]) {
-                    heroDots[currentHeroSlide].classList.add('active');
-                }
+                updateDots(index);
             }
 
-            function nextHeroSlide() {
-                showHeroSlide(currentHeroSlide + 1);
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % carouselSlides.length;
+                showSlide(currentSlide);
             }
 
-            let heroIntervalId = setInterval(nextHeroSlide, heroSlideInterval);
-
-            function resetHeroInterval() {
-                clearInterval(heroIntervalId);
-                heroIntervalId = setInterval(nextHeroSlide, heroSlideInterval);
+            function updateDots(activeIndex) {
+                carouselDotsContainer.innerHTML = ''; // Clear existing dots
+                carouselSlides.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('carousel-dot');
+                    if (i === activeIndex) {
+                        dot.classList.add('active');
+                    }
+                    dot.addEventListener('click', () => {
+                        currentSlide = i;
+                        showSlide(currentSlide);
+                        resetCarouselInterval();
+                    });
+                    carouselDotsContainer.appendChild(dot);
+                });
             }
 
-            // Initialize hero carousel on window load
-            window.addEventListener('load', () => {
-                showHeroSlide(0); // Ensure the first slide is visible initially
-            });
-        }
+            function startCarousel() {
+                carouselInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+            }
 
+            function resetCarouselInterval() {
+                clearInterval(carouselInterval);
+                startCarousel();
+            }
 
-        // Inquiry Modal Logic
-        const openInquiryModalBtn = document.getElementById('open-inquiry-modal');
-        const closeInquiryModalBtn = document.getElementById('close-inquiry-modal');
-        const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
+            showSlide(currentSlide); // Initialize first slide
+            startCarousel(); // Start auto-scrolling
 
-        if (openInquiryModalBtn && closeInquiryModalBtn && inquiryModalOverlay) {
-            openInquiryModalBtn.addEventListener('click', () => {
+            // Inquiry Modal Logic
+            const openInquiryModalButton = document.getElementById('open-inquiry-modal');
+            const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
+            const closeInquiryModalButton = document.getElementById('close-inquiry-modal');
+            const submitInquiryButton = document.getElementById('submit-inquiry-button');
+
+            // Custom Message Box Elements
+            const messageBoxOverlay = document.getElementById('message-box-overlay');
+            const messageBoxText = document.getElementById('message-box-text');
+            const messageBoxCloseButton = document.getElementById('message-box-close');
+
+            // Function to show custom message box
+            function showMessageBox(message) {
+                messageBoxText.textContent = message;
+                messageBoxOverlay.classList.add('active');
+            }
+
+            // Function to hide custom message box
+            function hideMessageBox() {
+                messageBoxOverlay.classList.remove('active');
+            }
+
+            openInquiryModalButton.addEventListener('click', () => {
                 inquiryModalOverlay.classList.add('active');
             });
 
-            closeInquiryModalBtn.addEventListener('click', () => {
+            closeInquiryModalButton.addEventListener('click', () => {
                 inquiryModalOverlay.classList.remove('active');
             });
 
-            // Close modal when clicking outside the form (on the overlay)
-            inquiryModalOverlay.addEventListener('click', (e) => {
-                if (e.target === inquiryModalOverlay) {
+            inquiryModalOverlay.addEventListener('click', (event) => {
+                if (event.target === inquiryModalOverlay) {
                     inquiryModalOverlay.classList.remove('active');
                 }
             });
-        }
+
+            submitInquiryButton.addEventListener('click', () => {
+                // Here you would typically collect form data and send it
+                // For this example, we'll show a custom message and then close the modal
+                showMessageBox('Inquiry submitted successfully!');
+                inquiryModalOverlay.classList.remove('active');
+            });
+
+            messageBoxCloseButton.addEventListener('click', hideMessageBox);
+            messageBoxOverlay.addEventListener('click', (event) => {
+                if (event.target === messageBoxOverlay) {
+                    hideMessageBox();
+                }
+            });
 
 
-        // Tab switching logic for Opulent and Aspire (Club Crests section)
-        const opulentTab = document.getElementById('opulent-tab');
-        const aspireTab = document.getElementById('aspire-tab');
-        const opulentContent = document.getElementById('opulent-content');
-        const aspireContent = document.getElementById('aspire-content');
+            // Mini Carousel Logic for "Our Collection Club Crests"
+            function setupMiniCarousel(carouselId) {
+                const miniCarousel = document.getElementById(carouselId);
+                if (!miniCarousel) return;
 
-        if (opulentTab && aspireTab && opulentContent && aspireContent) {
-            function activateClubCrestsTab(tabToActivate, contentToShow, tabToDeactivate, contentToHide) {
-                tabToActivate.classList.add('bg-red-600', 'text-white', 'shadow-md');
-                tabToActivate.classList.remove('text-gray-700', 'hover:bg-gray-200');
-                contentToShow.classList.remove('hidden');
+                const slides = miniCarousel.querySelectorAll('.mini-carousel-slide');
+                let currentMiniSlide = 0;
+                let miniCarouselInterval;
 
-                tabToDeactivate.classList.remove('bg-red-600', 'text-white', 'shadow-md');
-                tabToDeactivate.classList.add('text-gray-700', 'hover:bg-gray-200');
-                contentToHide.classList.add('hidden');
+                function showMiniSlide(index) {
+                    slides.forEach((slide, i) => {
+                        slide.classList.remove('active');
+                        if (i === index) {
+                            slide.classList.add('active');
+                        }
+                    });
+                }
+
+                function nextMiniSlide() {
+                    currentMiniSlide = (currentMiniSlide + 1) % slides.length;
+                    showMiniSlide(currentMiniSlide);
+                }
+
+                function startMiniCarousel() {
+                    miniCarouselInterval = setInterval(nextMiniSlide, 3000); // Change slide every 3 seconds
+                }
+
+                // Start mini carousel for each instance
+                showMiniSlide(currentMiniSlide);
+                startMiniCarousel();
             }
+
+            setupMiniCarousel('opulent-p1-carousel');
+            setupMiniCarousel('aspire-p1-carousel');
+
+
+            // Tabs Logic for "Our Collection Club Crests"
+            const opulentTab = document.getElementById('opulent-tab');
+            const aspireTab = document.getElementById('aspire-tab');
+            const opulentContent = document.getElementById('opulent-content');
+            const aspireContent = document.getElementById('aspire-content');
 
             opulentTab.addEventListener('click', (e) => {
                 e.preventDefault();
-                activateClubCrestsTab(opulentTab, opulentContent, aspireTab, aspireContent);
+                opulentTab.classList.add('bg-red-600', 'text-white');
+                opulentTab.classList.remove('text-gray-700', 'hover:bg-gray-200');
+                aspireTab.classList.remove('bg-red-600', 'text-white');
+                aspireTab.classList.add('text-gray-700', 'hover:bg-gray-200');
+
+                opulentContent.classList.remove('hidden');
+                aspireContent.classList.add('hidden');
             });
 
             aspireTab.addEventListener('click', (e) => {
                 e.preventDefault();
-                activateClubCrestsTab(aspireTab, aspireContent, opulentTab, opulentContent);
+                aspireTab.classList.add('bg-red-600', 'text-white');
+                aspireTab.classList.remove('text-gray-700', 'hover:bg-gray-200');
+                opulentTab.classList.remove('bg-red-600', 'text-white');
+                opulentTab.classList.add('text-gray-700', 'hover:bg-gray-200');
+
+                aspireContent.classList.remove('hidden');
+                opulentContent.classList.add('hidden');
             });
 
-            // Initialize with Opulent tab active
-            window.addEventListener('DOMContentLoaded', () => {
-                activateClubCrestsTab(opulentTab, opulentContent, aspireTab, aspireContent);
-            });
-        }
+            // Key Features Vertical Slider Logic
+            const featureListItems = document.querySelectorAll('#key-features-list li');
+            const featureImageSlides = document.querySelectorAll('.key-features-image-slide');
+            const keyFeaturesUpButton = document.getElementById('key-features-up');
+            const keyFeaturesDownButton = document.getElementById('key-features-down');
+            let currentFeatureIndex = 0;
 
+            function showFeature(index) {
+                featureListItems.forEach((item, i) => {
+                    item.classList.remove('active');
+                    if (i === index) {
+                        item.classList.add('active');
+                    }
+                });
 
-        // Key Features Vertical Slider Logic
-        const featureSlides = document.querySelectorAll('.key-features-image-slide');
-        const featureListItems = document.querySelectorAll('#key-features-list li');
-        const featureUpArrow = document.getElementById('key-features-up');
-        const featureDownArrow = document.getElementById('key-features-down');
-
-        // Only proceed if essential feature elements are found
-        if (featureSlides.length > 0 && featureListItems.length > 0 && featureUpArrow && featureDownArrow) {
-            let currentFeatureSlide = 0;
-            const featureSlideInterval = 3000; // 3 seconds for auto-scroll
-
-            function showFeatureSlide(index) {
-                // Deactivate current slide and list item
-                if (featureSlides[currentFeatureSlide]) {
-                    featureSlides[currentFeatureSlide].classList.remove('active');
-                }
-                if (featureListItems[currentFeatureSlide]) {
-                    featureListItems[currentFeatureSlide].classList.remove('font-bold', 'text-red-700');
-                    featureListItems[currentFeatureSlide].classList.add('text-gray-700');
-                }
-
-                // Calculate new slide index
-                currentFeatureSlide = (index + featureSlides.length) % featureSlides.length;
-
-                // Activate new slide and list item
-                if (featureSlides[currentFeatureSlide]) {
-                    featureSlides[currentFeatureSlide].classList.add('active');
-                }
-                if (featureListItems[currentFeatureSlide]) {
-                    featureListItems[currentFeatureSlide].classList.add('font-bold', 'text-red-700');
-                    featureListItems[currentFeatureSlide].classList.remove('text-gray-700');
-                }
+                featureImageSlides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
             }
 
-            // Auto-scroll for Key Features
-            let featureAutoScrollInterval = setInterval(() => {
-                showFeatureSlide(currentFeatureSlide + 1);
-            }, featureSlideInterval);
-
-            // Manual navigation for Key Features
-            featureUpArrow.addEventListener('click', () => {
-                clearInterval(featureAutoScrollInterval); // Stop auto-scroll on manual interaction
-                showFeatureSlide(currentFeatureSlide - 1);
-                // Optionally restart interval after a short delay
-                featureAutoScrollInterval = setInterval(() => { showFeatureSlide(currentFeatureSlide + 1); }, featureSlideInterval);
-            });
-
-            featureDownArrow.addEventListener('click', () => {
-                clearInterval(featureAutoScrollInterval); // Stop auto-scroll on manual interaction
-                showFeatureSlide(currentFeatureSlide + 1);
-                // Optionally restart interval after a short delay
-                featureAutoScrollInterval = setInterval(() => { showFeatureSlide(currentFeatureSlide + 1); }, featureSlideInterval);
-            });
-
-            // Click on list item to change slide
             featureListItems.forEach((item, index) => {
                 item.addEventListener('click', () => {
-                    clearInterval(featureAutoScrollInterval);
-                    showFeatureSlide(index);
-                    // Optionally restart interval after a short delay
-                    featureAutoScrollInterval = setInterval(() => { showFeatureSlide(currentFeatureSlide + 1); }, featureSlideInterval);
+                    currentFeatureIndex = index;
+                    showFeature(currentFeatureIndex);
                 });
             });
 
-            // Initialize Key Features slider on window load
-            window.addEventListener('load', () => {
-                showFeatureSlide(0); // Ensure the first slide/item is active
+            keyFeaturesUpButton.addEventListener('click', () => {
+                currentFeatureIndex = (currentFeatureIndex - 1 + featureListItems.length) % featureListItems.length;
+                showFeature(currentFeatureIndex);
             });
-        }
+
+            keyFeaturesDownButton.addEventListener('click', () => {
+                currentFeatureIndex = (currentFeatureIndex + 1) % featureListItems.length;
+                showFeature(currentFeatureIndex);
+            });
+
+            showFeature(currentFeatureIndex); // Initialize the first feature
 
 
-        // Blog Carousel Horizontal Scroll Logic (Now with Auto-scroll)
-        const blogCarousel = document.getElementById('blog-carousel');
-        const blogScrollLeftBtn = document.getElementById('blog-scroll-left');
-        const blogScrollRightBtn = document.getElementById('blog-scroll-right');
+            // Blog Carousel Logic
+            const blogCarousel = document.getElementById('blog-carousel');
+            const blogScrollLeftBtn = document.getElementById('blog-scroll-left');
+            const blogScrollRightBtn = document.getElementById('blog-scroll-right');
 
-        if (blogCarousel) {
-            let blogAutoScrollInterval;
-            const blogScrollAmount = 320; // Adjust based on card width + gap
-            const blogScrollIntervalTime = 4000; // 4 seconds
+            if (blogCarousel && blogScrollLeftBtn && blogScrollRightBtn) {
+                const scrollAmountBlog = 350; // Adjust based on card width + gap
 
-            function startBlogAutoScroll() {
-                clearInterval(blogAutoScrollInterval); // Clear any existing interval
-                blogAutoScrollInterval = setInterval(() => {
-                    // Check if we've reached the end of the scrollable content
-                    if (blogCarousel.scrollLeft + blogCarousel.clientWidth >= blogCarousel.scrollWidth - 1) {
-                        blogCarousel.scrollTo({ left: 0, behavior: 'smooth' }); // Scroll back to start
-                    } else {
-                        blogCarousel.scrollBy({ left: blogScrollAmount, behavior: 'smooth' });
-                    }
-                }, blogScrollIntervalTime);
-            }
-
-            // Start auto-scroll on load
-            window.addEventListener('load', startBlogAutoScroll);
-
-            // Manual navigation for Blog Carousel
-            if (blogScrollLeftBtn) {
                 blogScrollLeftBtn.addEventListener('click', () => {
-                    clearInterval(blogAutoScrollInterval); // Stop auto-scroll on manual interaction
                     blogCarousel.scrollBy({
-                        left: -blogScrollAmount,
+                        left: -scrollAmountBlog,
                         behavior: 'smooth'
                     });
-                    startBlogAutoScroll(); // Restart auto-scroll after manual interaction
                 });
-            }
 
-            if (blogScrollRightBtn) {
                 blogScrollRightBtn.addEventListener('click', () => {
-                    clearInterval(blogAutoScrollInterval); // Stop auto-scroll on manual interaction
                     blogCarousel.scrollBy({
-                        left: blogScrollAmount,
+                        left: scrollAmountBlog,
                         behavior: 'smooth'
                     });
-                    startBlogAutoScroll(); // Restart auto-scroll after manual interaction
                 });
             }
-        }
-
-
-        // Mini Carousel Logic for Polymer cards in Opulent/Aspire sections
-        function initMiniCarousel(carouselId) {
-            const carouselContainer = document.getElementById(carouselId);
-            if (!carouselContainer) return;
-
-            const slides = carouselContainer.querySelectorAll('.mini-carousel-slide');
-            if (slides.length <= 1) return; // No need for carousel if 1 or zero slides
-
-            let currentSlide = 0;
-            const slideInterval = 3000; // 3 seconds for auto-scroll
-
-            function showSlide(index) {
-                if (slides[currentSlide]) {
-                    slides[currentSlide].classList.remove('active');
-                }
-                currentSlide = (index + slides.length) % slides.length;
-                if (slides[currentSlide]) {
-                    slides[currentSlide].classList.add('active');
-                }
-            }
-
-            setInterval(() => {
-                showSlide(currentSlide + 1);
-            }, slideInterval);
-        }
-
-        // Initialize mini-carousels on window load
-        window.addEventListener('load', () => {
-            initMiniCarousel('opulent-p1-carousel');
-            initMiniCarousel('aspire-p1-carousel');
         });
-
-        // WhatsApp Integration for Inquiry Form
-        const submitInquiryButton = document.getElementById('submit-inquiry-button');
-        const inquiryNameInput = document.getElementById('inquiry-name');
-        const inquiryMobileInput = document.getElementById('inquiry-mobile');
-        const inquiryEmailInput = document.getElementById('inquiry-email');
-        const inquiryTypeSelect = document.getElementById('inquiry-type');
-
-        if (submitInquiryButton) {
-            submitInquiryButton.addEventListener('click', () => {
-                const name = inquiryNameInput.value;
-                const mobile = inquiryMobileInput.value;
-                const email = inquiryEmailInput.value;
-                const inquiryType = inquiryTypeSelect.value;
-
-                // Construct the message
-                let message = `Hello GreenInfinity Team,\n\n`;
-                message += `I have an inquiry:\n`;
-                message += `Name: ${name}\n`;
-                message += `Mobile: ${mobile}\n`;
-                message += `Email: ${email}\n`;
-                message += `Inquiry Type: ${inquiryType || 'Not specified'}\n\n`;
-                message += `Please get back to me as soon as possible.`;
-
-                // Encode the message for URL
-                const encodedMessage = encodeURIComponent(message);
-
-                // IMPORTANT: Replace 'YOUR_WHATSAPP_NUMBER' with your actual WhatsApp number including country code (e.g., 91XXXXXXXXXX)
-                const whatsappUrl = `https://wa.me/+918088130010?text=${encodedMessage}`;
-
-                // Open WhatsApp in a new tab
-                window.open(whatsappUrl, '_blank');
-
-                // Optionally, close the modal after submission attempt
-                inquiryModalOverlay.classList.remove('active');
-            });
-        }
-
-        // New: Featured Products Section Logic
-        const productType1Tab = document.getElementById('product-type-1-tab');
-        const productType2Tab = document.getElementById('product-type-2-tab');
-        const productType1Content = document.getElementById('product-type-1-content');
-        const productType2Content = document.getElementById('product-type-2-content');
-
-        if (productType1Tab && productType2Tab && productType1Content && productType2Content) {
-            function activateFeaturedProductTab(tabToActivate, contentToShow, tabToDeactivate, contentToHide) {
-                tabToActivate.classList.add('bg-red-600', 'text-white', 'shadow-md');
-                tabToActivate.classList.remove('text-gray-700', 'hover:bg-gray-200');
-                contentToShow.classList.remove('hidden');
-
-                tabToDeactivate.classList.remove('bg-red-600', 'text-white', 'shadow-md');
-                tabToDeactivate.classList.add('text-gray-700', 'hover:bg-gray-200');
-                contentToHide.classList.add('hidden');
-            }
-
-            productType1Tab.addEventListener('click', (e) => {
-                e.preventDefault();
-                activateFeaturedProductTab(productType1Tab, productType1Content, productType2Tab, productType2Content);
-            });
-
-            productType2Tab.addEventListener('click', (e) => {
-                e.preventDefault();
-                activateFeaturedProductTab(productType2Tab, productType2Content, productType1Tab, productType1Content);
-            });
-
-            // Initialize with Product Type 1 tab active on page load
-            window.addEventListener('DOMContentLoaded', () => {
-                activateFeaturedProductTab(productType1Tab, productType1Content, productType2Tab, productType2Content);
-            });
-        }
     </script>
 </body>
 </html>
