@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greeninfinity - Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Green Infinity - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -44,7 +45,7 @@
             color: #ef4444;
         }
 
-        /* Hero Section Carousel - UPDATED FOR FADE EFFECT */
+        /* Hero Section Carousel */
         .hero-section {
             position: relative;
             width: 100%;
@@ -53,7 +54,6 @@
         }
 
         .hero-section .carousel-container {
-            /* Removed display: flex and transition as slides are now absolutely positioned */
             position: relative; /* Container for absolute slides */
             width: 100%;
             height: 100%;
@@ -315,6 +315,176 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
+
+        /* Product Visualizer Styles */
+        .visualizer-container {
+            font-family: 'Inter', sans-serif; /* Ensure Inter font is applied */
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; /* Adjusted for embedding */
+            margin: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            width: 100%; /* Make it take full width of its container */
+            max-width: 1200px; /* Max width for larger screens */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .visualizer-header { /* Renamed to avoid conflict */
+            background-color: #f8f9fa;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .visualizer-main-content { /* Renamed to avoid conflict */
+            display: flex;
+            flex-grow: 1;
+            position: relative;
+            width: 100%;
+            min-height: 500px; /* Ensure scene has height */
+        }
+        .scene {
+            flex-grow: 1;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Ensure content doesn't spill */
+            transition: background-image 0.5s ease-in-out; /* Smooth transition for background */
+        }
+        .product-panel {
+            width: 440px;
+            height: 550px;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, left 0.5s ease, top 0.5s ease; /* Smooth transition for panel position */
+            position: absolute;
+            transform: translate(-50%, -50%); /* Always center relative to its calculated position */
+        }
+        .color-picker-modal {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            z-index: 10;
+            width: 300px;
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .color-picker-modal.active {
+            display: flex;
+        }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .color-option {
+            width: 80px;
+            height: 80px;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #4a5568;
+            transition: border-color 0.2s ease;
+        }
+        .color-option:hover {
+            border-color: #a0aec0;
+        }
+        .color-option.selected {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+        .color-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.25rem;
+            margin-bottom: 0.25rem;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .dropdown-select {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e0;
+            background-color: #f7fafc;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #2d3748;
+        }
+        .dropdown-arrow {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #a0aec0;
+        }
+        .close-button:hover {
+            color: #4a5568;
+        }
+        .toggle-picker-button {
+            background-color: #4299e1;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 5;
+        }
+        .toggle-picker-button:hover {
+            background-color: #3182ce;
+            transform: translateY(-2px);
+        }
+        .toggle-picker-button svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -329,10 +499,9 @@
         <!-- Updated Navigation Structure: Single row -->
         <nav id="navbar-menu" class="hidden md:flex flex-row md:items-center md:space-x-4 w-full md:w-auto">
             <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
-            <a href="./investors.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
-            <a href="./about.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">About Us</a>
-            <a href="./Inspiration.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
-            <a href="./products.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
+            <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            <a href="./about.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Visualizer</a>
         </nav>
     </header>
 
@@ -359,17 +528,17 @@
         <div class="inquiry-form-modal">
             <button class="modal-close-button" id="close-inquiry-modal">&times;</button>
             <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Inquire Now</h3>
-            <form>
-                <input type="text" id="inquiry-name" placeholder="Enter Your Name" class="p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
-                <input type="text" id="inquiry-mobile" placeholder="Enter Your Mobile Number" class="p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
-                <input type="email" id="inquiry-email" placeholder="Enter Your Email Id" class="p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
-                <select id="inquiry-type" class="p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+            <form class="flex flex-wrap gap-4">
+                <input type="text" id="inquiry-name" placeholder="Enter Your Name" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="text" id="inquiry-mobile" placeholder="Enter Your Mobile Number" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="email" id="inquiry-email" placeholder="Enter Your Email Id" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <select id="inquiry-type" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
                     <option value="">Select Inquiry Type</option>
                     <option value="product">Product Inquiry</option>
                     <option value="support">Support</option>
                     <option value="other">Other</option>
                 </select>
-                <button type="button" id="submit-inquiry-button" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Submit Inquiry</button>
+                <button type="button" id="submit-inquiry-button" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Submit Inquiry</button>
             </form>
         </div>
     </div>
@@ -387,12 +556,12 @@
     <section class="py-16 px-6 md:px-12 bg-gray-100">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
            <div class="md:w-auto flex justify-center mb-8 md:mb-0">
-            <!-- 
+            <!--
               - The width and height are now 300px.
               - The 'object-contain' class ensures the entire image is visible without being cropped.
             -->
-            <img src="https://clubcrests.greenply.com/wp-content/uploads/Club_Crests_Logo.png" 
-                 alt="Club Crests Logo/Image" 
+            <img src="https://clubcrests.greenply.com/wp-content/uploads/Club_Crests_Logo.png"
+                 alt="Club Crests Logo/Image"
                  class="rounded-xl shadow-lg w-[300px] h-[300px] object-contain"
                  onerror="this.onerror=null;this.src='https://placehold.co/300x300/e2e8f0/4a5568?text=Image+Not+Found';">
         </div>
@@ -468,7 +637,7 @@
                                 <p class="text-gray-600 text-sm mb-3">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                 <a href="#" class="text-red-600 hover:underline text-sm font-medium">VIEW ALL</a>
                             </div>
-                            <!-- New Wellness Card -->
+                            <!-- Wellness Card -->
                             <div class="bg-white p-4 rounded-lg shadow-sm">
                                 <img src="https://clubcrests.greenply.com/wp-content/uploads/Wellness.jpg" alt="Wellness Image" class="rounded-lg mb-4 w-full h-auto object-cover">
                                 <h4 class="text-lg font-semibold text-gray-800 mb-2">Wellness (15)</h4>
@@ -572,6 +741,67 @@
         </div>
     </section>
 
+    <!-- Product Visualizer Section -->
+    <section class="py-16 px-6 md:px-12 bg-gray-200">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">PRODUCT VISUALIZER</h2>
+            <div class="visualizer-container">
+                <div class="visualizer-header">
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-red-500">
+                            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12 1.5a8.25 8.25 0 1 0 0 16.5 8.25 8.25 0 0 0 0-16.5ZM12 7.5a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V8.25A.75.75 0 0 1 12 7.5ZM12 15a.75.75 0 0 0-.75.75v.008a.75.75 0 0 0 1.5 0v-.008A.75.75 0 0 0 12 15Z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="text-lg font-semibold text-gray-800">PRODUCT VISUALIZER</span>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        <!-- Room type select dropdown is removed -->
+                    </div>
+                </div>
+
+                <div class="visualizer-main-content">
+                    <div id="scene" class="scene">
+                        <!-- Only one product panel div is needed now -->
+                        <div id="productPanel" class="product-panel" style="left: 25%; top: 50%;"></div>
+
+                        <button id="togglePickerButton" class="toggle-picker-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.979-1.077 2.427 0l.717 1.725 1.453.377a1.5 1.5 0 0 1 1.023 1.023l.377 1.453 1.725.717c1.077.448 1.077 1.979 0 2.427l-1.725.717-.377 1.453a1.5 1.5 0 0 1-1.023 1.023l-1.453.377-.717 1.725c-.448 1.077-1.979 1.077-2.427 0l-.717-1.725-1.453-.377a1.5 1.5 0 0 1-1.023-1.023l-.377-1.453-1.725-.717c-1.077-.448-1.077-1.979 0-2.427l1.725-.717.377-1.453a1.5 1.5 0 0 1 1.023-1.023l1.453-.377.717-1.725ZM15.375 16.05a2.25 2.25 0 0 1-3 3m3-3h.008v.008H15.375ZM12 12.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                            </svg>
+                            Choose Your Panel
+                        </button>
+                    </div>
+
+                    <div id="colorPickerModal" class="color-picker-modal">
+                        <button class="close-button" id="closeModalButton">&times;</button>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Choose Your Panel</h3>
+
+                        <div class="flex gap-4 mb-4">
+                            <div class="dropdown flex-1">
+                                <select id="panelTypeSelect" class="dropdown-select">
+                                    <option value="opulent">Opulent</option>
+                                    <option value="modern">Modern</option>
+                                    <option value="classic">Classic</option>
+                                </select>
+                                <span class="dropdown-arrow">&#9662;</span>
+                            </div>
+                            <div class="dropdown flex-1">
+                                <select id="panelStyleSelect" class="dropdown-select">
+                                    <option value="pastels">Pastels</option>
+                                    <option value="neutrals">Neutrals</option>
+                                    <option value="vibrant">Vibrant</option>
+                                </select>
+                                <span class="dropdown-arrow">&#9662;</span>
+                            </div>
+                        </div>
+
+                        <div id="colorGrid" class="color-grid">
+                            <!-- Color options will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Our Blogs Section -->
     <section class="py-16 px-6 md:px-12 bg-gray-100">
@@ -653,7 +883,7 @@
                     </ul>
                 </ul>
             </div>
-            <!-- New Brands Column -->
+            <!-- Brands Column -->
             <div>
                 <h4 class="text-lg font-semibold mb-4 text-red-400">Brands</h4>
                 <ul class="ml-4 text-sm text-gray-300 space-y-1">
@@ -665,7 +895,7 @@
                     <li class="footer-list-item"><a href="#" class="hover:text-red-200">GreenInfinity MDF</a></li>
                 </ul>
             </div>
-            <!-- New Furniture Type Column -->
+            <!-- Furniture Type Column -->
             <div>
                 <h4 class="text-lg font-semibold mb-4 text-red-400">Furniture Type</h4>
                 <ul class="ml-4 text-sm text-gray-300 space-y-1">
@@ -718,7 +948,7 @@
                 navbarMenu.classList.toggle('space-y-2'); // Add vertical spacing
             });
 
-            // Hero Section Carousel Logic - UPDATED
+            // Hero Section Carousel Logic
             const carouselSlides = document.querySelectorAll('.hero-section .carousel-slide');
             const carouselDotsContainer = document.querySelector('.hero-section .carousel-dots');
             let currentSlide = 0;
@@ -879,16 +1109,18 @@
                 opulentTab.classList.remove('bg-red-600', 'text-white');
                 opulentTab.classList.add('text-gray-700', 'hover:bg-gray-200');
 
-                aspireContent.classList.remove('hidden');
-                opulentContent.classList.add('hidden');
+                opulentContent.classList.remove('hidden');
+                aspireContent.classList.add('hidden');
             });
 
             // Key Features Vertical Slider Logic
             const featureListItems = document.querySelectorAll('#key-features-list li');
+            const featureImageSlider = document.querySelector('.key-features-image-slider');
             const featureImageSlides = document.querySelectorAll('.key-features-image-slide');
             const keyFeaturesUpButton = document.getElementById('key-features-up');
             const keyFeaturesDownButton = document.getElementById('key-features-down');
             let currentFeatureIndex = 0;
+            let featureAutoScrollInterval;
 
             function showFeature(index) {
                 featureListItems.forEach((item, i) => {
@@ -906,39 +1138,88 @@
                 });
             }
 
+            function nextFeatureSlide() {
+                currentFeatureIndex = (currentFeatureIndex + 1) % featureListItems.length;
+                showFeature(currentFeatureIndex);
+            }
+
+            function startFeatureAutoScroll() {
+                stopFeatureAutoScroll(); // Clear any existing interval
+                featureAutoScrollInterval = setInterval(nextFeatureSlide, 3000); // Change slide every 3 seconds
+            }
+
+            function stopFeatureAutoScroll() {
+                clearInterval(featureAutoScrollInterval);
+            }
+
             featureListItems.forEach((item, index) => {
                 item.addEventListener('click', () => {
                     currentFeatureIndex = index;
                     showFeature(currentFeatureIndex);
+                    stopFeatureAutoScroll(); // Stop auto-scroll on manual interaction
                 });
             });
 
             keyFeaturesUpButton.addEventListener('click', () => {
                 currentFeatureIndex = (currentFeatureIndex - 1 + featureListItems.length) % featureListItems.length;
                 showFeature(currentFeatureIndex);
+                stopFeatureAutoScroll(); // Stop auto-scroll on manual interaction
             });
 
             keyFeaturesDownButton.addEventListener('click', () => {
                 currentFeatureIndex = (currentFeatureIndex + 1) % featureListItems.length;
                 showFeature(currentFeatureIndex);
+                stopFeatureAutoScroll(); // Stop auto-scroll on manual interaction
             });
 
+            // Pause/resume auto-scroll on hover
+            featureImageSlider.addEventListener('mouseover', stopFeatureAutoScroll);
+            featureImageSlider.addEventListener('mouseleave', startFeatureAutoScroll);
+            featureListItems.forEach(item => {
+                item.addEventListener('mouseover', stopFeatureAutoScroll);
+                item.addEventListener('mouseleave', startFeatureAutoScroll);
+            });
+
+
             showFeature(currentFeatureIndex); // Initialize the first feature
+            startFeatureAutoScroll(); // Start auto-scrolling for key features
 
 
             // Blog Carousel Logic
             const blogCarousel = document.getElementById('blog-carousel');
             const blogScrollLeftBtn = document.getElementById('blog-scroll-left');
             const blogScrollRightBtn = document.getElementById('blog-scroll-right');
+            let blogAutoScrollInterval;
+            const scrollAmountBlog = 350; // Adjust based on card width + gap
+
+            function scrollBlogCarousel() {
+                if (blogCarousel.scrollLeft + blogCarousel.clientWidth >= blogCarousel.scrollWidth) {
+                    // If at the end, jump to the beginning (or smoothly scroll back)
+                    blogCarousel.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    blogCarousel.scrollBy({
+                        left: scrollAmountBlog,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            function startBlogAutoScroll() {
+                stopBlogAutoScroll(); // Clear any existing interval
+                blogAutoScrollInterval = setInterval(scrollBlogCarousel, 4000); // Scroll every 4 seconds
+            }
+
+            function stopBlogAutoScroll() {
+                clearInterval(blogAutoScrollInterval);
+            }
 
             if (blogCarousel && blogScrollLeftBtn && blogScrollRightBtn) {
-                const scrollAmountBlog = 350; // Adjust based on card width + gap
-
                 blogScrollLeftBtn.addEventListener('click', () => {
                     blogCarousel.scrollBy({
                         left: -scrollAmountBlog,
                         behavior: 'smooth'
                     });
+                    stopBlogAutoScroll(); // Stop auto-scroll on manual interaction
                 });
 
                 blogScrollRightBtn.addEventListener('click', () => {
@@ -946,8 +1227,175 @@
                         left: scrollAmountBlog,
                         behavior: 'smooth'
                     });
+                    stopBlogAutoScroll(); // Stop auto-scroll on manual interaction
                 });
+
+                // Pause/resume auto-scroll on hover
+                blogCarousel.addEventListener('mouseover', stopBlogAutoScroll);
+                blogCarousel.addEventListener('mouseleave', startBlogAutoScroll);
+
+                startBlogAutoScroll(); // Start auto-scrolling for blog
             }
+
+            // Product Visualizer Logic
+            const scene = document.getElementById('scene');
+            const productPanel = document.getElementById('productPanel'); // Reference to the single product panel
+
+            const sceneConfiguration = {
+                backgroundImage: 'https://clubcrests.greenply.com/wp-content/uploads/office-image-left.png', // Fixed background image
+                productPanelPosition: { left: '65%', top: '50%' } // Fixed panel position
+            };
+
+            function updateVisualizerScene() {
+                scene.style.backgroundImage = `url('${sceneConfiguration.backgroundImage}')`;
+                productPanel.style.left = sceneConfiguration.productPanelPosition.left;
+                productPanel.style.top = sceneConfiguration.productPanelPosition.top;
+                productPanel.style.display = 'block'; // Ensure the panel is visible
+            }
+
+            const colorData = {
+                opulent: {
+                    pastels: [
+                        { name: "Moonstone 166", hex: "#A0AEC0" },
+                        { name: "Gothic Grey 118", hex: "#718096" },
+                        { name: "Pluto 119", hex: "#4A5568" },
+                        { name: "Leaf Green 174", hex: "#2F855A" },
+                        { name: "Summer Song 170", hex: "#38A169" },
+                        { name: "Prairie Blue 164", hex: "#3182CE" }
+                    ],
+                    neutrals: [
+                        { name: "Creamy White", hex: "#F7FAFC" },
+                        { name: "Light Beige", hex: "#EDF2F7" },
+                        { name: "Stone Grey", hex: "#CBD5E0" },
+                        { name: "Dark Taupe", hex: "#A0AEC0" },
+                        { name: "Charcoal", hex: "#4A5568" },
+                        { name: "Black", hex: "#1A202C" }
+                    ]
+                },
+                modern: {
+                    pastels: [
+                        { name: "Sky Blue", hex: "#90CDF4" },
+                        { name: "Mint Green", hex: "#68D391" },
+                        { name: "Lavender", hex: "#B794F4" },
+                        { name: "Coral Pink", hex: "#FBB6CE" },
+                        { name: "Soft Yellow", hex: "#F6E05E" },
+                        { name: "Peach", hex: "#FBD38D" }
+                    ],
+                    vibrant: [
+                        { name: "Electric Blue", hex: "#00BFFF" },
+                        { name: "Lime Green", hex: "#32CD32" },
+                        { name: "Deep Purple", hex: "#8A2BE2" },
+                        { name: "Hot Pink", hex: "#FF69B4" },
+                        { name: "Sunny Orange", hex: "#FFA500" },
+                        { name: "Crimson Red", hex: "#DC143C" }
+                    ]
+                }
+            };
+
+            const colorPickerModal = document.getElementById('colorPickerModal');
+            const togglePickerButton = document.getElementById('togglePickerButton');
+            const closeModalButton = document.getElementById('closeModalButton');
+            const panelTypeSelect = document.getElementById('panelTypeSelect');
+            const panelStyleSelect = document.getElementById('panelStyleSelect');
+            const colorGrid = document.getElementById('colorGrid');
+
+            let currentPanelType = panelTypeSelect.value;
+            let currentPanelStyle = panelStyleSelect.value;
+
+            // Function to render color options based on selected type and style
+            function renderColorOptions() {
+                colorGrid.innerHTML = ''; // Clear existing options
+                const colors = colorData[currentPanelType]?.[currentPanelStyle] || [];
+
+                if (colors.length === 0) {
+                    colorGrid.innerHTML = '<p class="text-gray-500 text-center col-span-3">No colors available for this selection.</p>';
+                    return;
+                }
+
+                colors.forEach(color => {
+                    const colorOption = document.createElement('div');
+                    colorOption.classList.add('color-option', 'rounded-lg', 'cursor-pointer', 'p-2', 'transition-all', 'duration-200', 'ease-in-out');
+                    colorOption.innerHTML = `
+                        <div class="color-box w-16 h-16 rounded-md mb-2 border border-gray-200" style="background-color: ${color.hex};"></div>
+                        <span class="text-xs font-medium text-gray-700">${color.name}</span>
+                    `;
+                    colorOption.dataset.hex = color.hex;
+                    colorOption.dataset.name = color.name;
+
+                    colorOption.addEventListener('click', () => {
+                        // Remove 'selected' class from all options
+                        document.querySelectorAll('.color-option').forEach(option => {
+                            option.classList.remove('selected');
+                        });
+                        // Add 'selected' class to the clicked option
+                        colorOption.classList.add('selected');
+                        // Ensure productPanel is not null before trying to set its style
+                        if (productPanel) {
+                            productPanel.style.backgroundColor = color.hex;
+                        }
+                    });
+                    colorGrid.appendChild(colorOption);
+                });
+
+                // Automatically select the first color if available
+                if (colors.length > 0) {
+                    const firstColorOption = colorGrid.querySelector('.color-option');
+                    if (firstColorOption) {
+                        firstColorOption.click(); // Simulate click to apply color and selected state
+                    }
+                }
+            }
+
+            // Event listeners for dropdowns
+            panelTypeSelect.addEventListener('change', (event) => {
+                currentPanelType = event.target.value;
+                // Reset panel style to default if the new type doesn't have the current style
+                if (!colorData[currentPanelType]?.[currentPanelStyle]) {
+                    const availableStyles = Object.keys(colorData[currentPanelType] || {});
+                    if (availableStyles.length > 0) {
+                        currentPanelStyle = availableStyles[0];
+                        panelStyleSelect.value = currentPanelStyle;
+                    } else {
+                        currentPanelStyle = ''; // No styles available
+                    }
+                }
+                // Update panel style options
+                updatePanelStyleOptions();
+                renderColorOptions();
+            });
+
+            panelStyleSelect.addEventListener('change', (event) => {
+                currentPanelStyle = event.target.value;
+                renderColorOptions();
+            });
+
+            // Function to update panel style options based on selected panel type
+            function updatePanelStyleOptions() {
+                panelStyleSelect.innerHTML = ''; // Clear existing options
+                const styles = Object.keys(colorData[currentPanelType] || {});
+                styles.forEach(style => {
+                    const option = document.createElement('option');
+                    option.value = style;
+                    option.textContent = style.charAt(0).toUpperCase() + style.slice(1); // Capitalize first letter
+                    panelStyleSelect.appendChild(option);
+                });
+                // Set the selected value after updating options
+                panelStyleSelect.value = currentPanelStyle;
+            }
+
+            // Toggle modal visibility
+            togglePickerButton.addEventListener('click', () => {
+                colorPickerModal.classList.toggle('active');
+            });
+
+            closeModalButton.addEventListener('click', () => {
+                colorPickerModal.classList.remove('active');
+            });
+
+            // Initial render for visualizer
+            updateVisualizerScene(); // Set initial scene based on default mode
+            updatePanelStyleOptions(); // Populate style dropdown initially
+            renderColorOptions(); // Render initial colors
         });
     </script>
 </body>
