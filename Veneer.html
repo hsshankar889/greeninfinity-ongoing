@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenInfinity Veneer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+        }
+        .bg-red-theme {
+            background-color: #e53e3e; /* A shade of red */
+        }
+        .text-red-theme {
+            color: #e53e3e;
+        }
+        .border-red-theme {
+            border-color: #e53e3e;
+        }
+        .hover-red-theme:hover {
+            background-color: #c53030;
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+        .accordion-button {
+            cursor: pointer;
+            padding: 1rem;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: background-color 0.3s ease; /* Smooth transition for background */
+        }
+        .accordion-button.active {
+            background-color: #f0fdf4; /* Light green background when active */
+            border-bottom: 1px solid #34d399; /* Green border when active */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, border 0.3s ease-out;
+            padding: 0 1rem;
+            background-color: #f9f9f9;
+            border-left: 5px solid transparent; /* Default transparent border */
+            border-radius: 0 0 8px 8px; /* Rounded corners only at bottom */
+        }
+        .accordion-content.active {
+            padding: 1rem;
+            border-left-color: #34d399; /* Green border when active */
+        }
+        .rotate-icon {
+            transform: rotate(45deg); /* Rotates plus to an 'x' or minus-like symbol */
+            transition: transform 0.3s ease;
+        }
+        /* Custom styles for footer social icons */
+        .social-icon-circle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for circles */
+            transition: background-color 0.3s ease;
+        }
+        .social-icon-circle:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        /* Updated styles for fixed navigation bar */
+        .fixed-navbar {
+            position: fixed; /* Changed to fixed */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20; /* Ensure it's above other content */
+            background-color: white; /* Changed background to white */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
+        }
+        .fixed-navbar .nav-link {
+            color: #333; /* Make links dark for contrast on white background */
+        }
+        .fixed-navbar .nav-link:hover {
+            color: #e53e3e; /* Red on hover */
+        }
+
+        /* Styles for the inquiry modal */
+        .inquiry-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .inquiry-modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Navigation Bar (Fixed at top with white background) -->
+    <nav class="fixed-navbar py-4 px-6 flex justify-between items-center">
+        <div class="flex items-center">
+            <!-- GreenInfinity Logo/Brand as a button -->
+            <a href="#" class="bg-red-theme text-white py-2 px-6 rounded-md font-semibold text-lg hover-red-theme transition duration-300">GreenInfinity Veneer</a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="#" class="nav-link hover:text-red-theme font-medium">Consumer</a>
+            <a href="#" class="nav-link hover:text-red-theme font-medium">Investors</a>
+            <a href="#" class="nav-link hover:text-red-theme font-medium">Products</a>
+            <a href="#" class="nav-link hover:text-red-theme font-medium">Visualizer</a>
+        </div>
+        <!-- Mobile menu button (if needed, not explicitly in image but good practice) -->
+        <div class="md:hidden">
+            <button class="text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Header/Hero Section for Veneer -->
+    <header class="relative bg-gray-200 h-96 overflow-hidden">
+        <img src="https://placehold.co/1920x400/cccccc/ffffff?text=GreenInfinity+Veneer+Hero+Image" alt="GreenInfinity Veneer Interior" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="relative z-10 flex items-center h-full pl-16 text-white">
+            <div>
+                <h1 class="text-5xl font-bold mb-2">A Range of 1100+ Exotic Veneer Designs</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation/Breadcrumb -->
+    <nav class="bg-gray-100 py-3 px-6 shadow-sm">
+        <div class="container mx-auto flex items-center text-sm text-gray-600">
+            <a href="#" class="hover:text-red-theme">Home</a>
+            <span class="mx-2">/</span>
+            <span>Veneer</span>
+        </div>
+    </nav>
+
+    <!-- Inquiry Form Section (Now part of the modal) -->
+    <section class="py-12 bg-white hidden" id="inquiryFormSection">
+        <!-- This section is now hidden and its content moved to the modal -->
+    </section>
+
+    <!-- WoodCrrests Veneer Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:space-x-12">
+            <div class="lg:w-1/2 mb-8 lg:mb-0">
+                <img src="https://placehold.co/600x400/d1d5db/4b5563?text=WoodCrrests+Veneer" alt="WoodCrrests Veneer" class="rounded-lg shadow-lg w-full h-auto">
+            </div>
+            <div class="lg:w-1/2">
+                <h2 class="text-4xl font-bold text-red-theme mb-6">WoodCrrests Veneer</h2>
+                <p class="mb-4 text-gray-700">At GreenInfinity, we believe that veneers are not just surface treatments; they are expressions of artistry. Our team of skilled craftsmen in state-of-the-art and largest decorative manufacturing unit at Bamanbore, Rajkot, Gujarat has leveraged technology to enhance the beauty and functionality of our veneer products, ensuring that every surface tells a unique story.</p>
+                <p class="mb-4 text-gray-700">Woodcrrests veneers by GreenInfinity, sourced from European forests, offer exquisite luxury with natural grains and patterns. More than decor, Woodcrrests veneers elevate your home with unmatched sophistication and uniqueness. Elevate your spaces to unparalleled elegance, where beauty knows no bounds. Discover a collection that transcends time, welcoming you to a realm of luxury without limits.</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mt-8">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/60x60/d1d5db/4b5563?text=E0" alt="E0-Certification" class="mb-2">
+                        <span class="text-sm text-gray-600">E0-Certification</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/60x60/d1d5db/4b5563?text=Heavy" alt="Heavy Duty Home Ply" class="mb-2">
+                        <span class="text-sm text-gray-600">Heavy Duty Home Ply</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/60x60/d1d5db/4b5563?text=Water" alt="Boiling Water Proof Back Ply" class="mb-2">
+                        <span class="text-sm text-gray-600">Boiling Water Proof Back Ply</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/60x60/d1d5db/4b5563?text=Borer" alt="Borer Proof & Termite Resistant" class="mb-2">
+                        <span class="text-sm text-gray-600">Borer Proof & Termite Resistant</span>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/60x60/d1d5db/4b5563?text=BIS" alt="BIS Certified" class="mb-2">
+                        <span class="text-sm text-gray-600">BIS Certified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories Section for Veneer -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Natural+Veneers" alt="Natural Veneers" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <h3 class="text-xl font-semibold mb-2">Natural Veneers</h3>
+                    <p class="text-gray-600">Explore our range of natural wood veneers.</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Teak+Veneers" alt="Teak Veneers" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <h3 class="text-xl font-semibold mb-2">Teak Veneers</h3>
+                    <p class="text-gray-600">Premium quality teak veneers.</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Engineered+Veneers" alt="Engineered Veneers" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <h3 class="text-xl font-semibold mb-2">Engineered Veneers</h3>
+                    <p class="text-gray-600">Advanced engineered veneer designs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Veneer Backings Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-12">Veneer backings</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <img src="https://placehold.co/150x100/d1d5db/4b5563?text=Plywood" alt="Plywood" class="mb-2">
+                    <span class="text-md font-medium">Plywood</span>
+                </div>
+                <div class="flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <img src="https://placehold.co/150x100/d1d5db/4b5563?text=Flexi+Plywood" alt="Flexi Plywood" class="mb-2">
+                    <span class="text-md font-medium">Flexi Plywood</span>
+                </div>
+                <div class="flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <img src="https://placehold.co/150x100/d1d5db/4b5563?text=HDMR+710" alt="HDMR 710" class="mb-2">
+                    <span class="text-md font-medium">HDMR 710</span>
+                </div>
+                <div class="flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <img src="https://placehold.co/150x100/d1d5db/4b5563?text=MDF" alt="MDF" class="mb-2">
+                    <span class="text-md font-medium">MDF</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Products Carousel for Veneer -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-12">Explore products</h2>
+            <div class="flex items-center justify-center space-x-4">
+                <button class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                    <i class="fas fa-arrow-left text-gray-700"></i>
+                </button>
+                <div class="carousel-container flex overflow-x-scroll snap-x snap-mandatory space-x-6 w-full max-w-6xl">
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=SAPELE+POMMELI" alt="SAPELE POMMELI" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">SAPELE POMMELI</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=DRACON+EBONY" alt="DRACON EBONY" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">DRACON EBONY</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+FAGUS+BOSOM" alt="ROASTED FAGUS BOSOM" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED FAGUS BOSOM</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+BIBOLO" alt="ROASTED BIBOLO" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED BIBOLO</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+CHERRY+BLOSSOM" alt="ROASTED CHERRY BLOSSOM" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED CHERRY BLOSSOM</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+CHESTNUT" alt="ROASTED CHESTNUT" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED CHESTNUT</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+CHILLAN+ROSEWOOD" alt="ROASTED CHILLAN ROSEWOOD" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED CHILLAN ROSEWOOD</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+EBIARA" alt="ROASTED EBIARA" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED EBIARA</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+EUCALYPTUS" alt="ROASTED EUCALYPTUS" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED EUCALYPTUS</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+EUCALYPTUS+POMMELI" alt="ROASTED EUCALYPTUS POMMELI" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED EUCALYPTUS POMMELI</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Trending</span>
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=ROASTED+CLARO+WALNUT" alt="ROASTED CLARO WALNUT" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">ROASTED CLARO WALNUT</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                </div>
+                <button class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                    <i class="fas fa-arrow-right text-gray-700"></i>
+                </button>
+            </div>
+            <button class="mt-8 border border-red-theme text-red-theme py-2 px-6 rounded-full hover:bg-red-theme hover:text-white transition duration-300">View All <i class="fas fa-arrow-right ml-2"></i></button>
+        </div>
+    </section>
+
+    <!-- Certified By Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-12">Certified by</h2>
+            <div class="flex flex-wrap justify-center items-center gap-8">
+                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=CARB" alt="CARB Certified" class="h-16">
+                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=ISO" alt="ISO Certified" class="h-16">
+                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=CE" alt="CE Certified" class="h-16">
+                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=Forest" alt="Forest Stewardship Council" class="h-16">
+                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=GreenGuard" alt="GreenGuard Certified" class="h-16">
+            </div>
+        </div>
+    </section>
+
+    <!-- Interior Guide Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold">Interior Guide</h2>
+                <button class="border border-red-theme text-red-theme py-2 px-6 rounded-full hover:bg-red-theme hover:text-white transition duration-300">Read all <i class="fas fa-arrow-right ml-2"></i></button>
+            </div>
+            <div class="flex items-center justify-center space-x-4">
+                <button class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                    <i class="fas fa-arrow-left text-gray-700"></i>
+                </button>
+                <div class="carousel-container flex overflow-x-scroll snap-x snap-mandatory space-x-6 w-full max-w-6xl">
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Wood+Veneers+vs+Laminates" alt="Wood Veneers vs Laminates" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">Wood Veneers vs Laminates - Pick the Best for Interiors</h3>
+                        <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Water+Proof+Ply" alt="Water Proof Ply" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">Best Applications of Water Proof Ply with Green Platinum</h3>
+                        <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Healthy+Interiors" alt="Healthy Interiors" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">A Guide to Healthy Interiors with E0 Plywood in Festive Season</h3>
+                        <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Kitchen+Cabinets" alt="Kitchen Cabinets" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">7 Ways to Protect Kitchen Plywood Cabinets from Water Damage</h3>
+                        <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Interior+Guide+3" alt="Interior Guide 3" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">Another Interior Design Tip</h3>
+                        <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+                <button class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                    <i class="fas fa-arrow-right text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transform Spaces with Premium Decorative Veneers by GreenInfinity Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-6">Transform Spaces with Premium Decorative Veneers by GreenInfinity</h2>
+            <p class="mb-4 text-gray-700">Veneers have emerged as a preferred choice for modern interior styling, offering the charm of natural wood in a more sustainable and versatile format. Whether you’re revamping your living room, designing plush office interiors, or crafting statement furniture, veneer sheets bring warmth, texture, and elegance to any surface they grace. With the rising demand for premium finishes, the popularity of wood veneer sheets has grown significantly, redefining how spaces are perceived and experienced.</p>
+            <p class="mb-4 text-gray-700">Today’s homeowners and designers alike are drawn to decorative veneer for its ability to add character and sophistication without overwhelming the senses. Be it wall veneer panelling designs, cabinetry, or furniture veneer sheets, these surfaces seamlessly blend aesthetics with practicality. GreenInfinity’s veneer collection captures the essence of fine craftsmanship, bringing nature’s artistry indoors.</p>
+        </div>
+    </section>
+
+    <!-- Why Choose GreenInfinity? Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-6">Why Choose GreenInfinity?</h2>
+            <p class="mb-4 text-gray-700">GreenInfinity is one of the most trusted veneer brand in India, known for delivering excellence in both design and durability. Each sheet is thoughtfully crafted to mirror the timeless beauty of real wood, sourced from responsibly managed European forests. Our latest veneer designs speak of elegance and innovation, adding a rich depth to every setting. With GreenInfinity, you’re not just choosing a product, but a legacy of quality that enhances the appeal of your spaces.</p>
+            <p class="mb-4 text-gray-700">Our veneers stand out not only in appearance but also in performance. Engineered at our cutting-edge decorative manufacturing facility in Bamanbore, Rajkot, every sheet is created with precision, maintaining superior quality standards. The result? A collection that goes beyond decor, offering a blend of luxury and endurance that lasts for years.</p>
+
+            <h3 class="text-2xl font-bold mb-4">Backed by Unmatched Quality Standards</h3>
+            <p class="mb-4 text-gray-700">At GreenInfinity, safety and sustainability go hand in hand with style. Our veneers come with E0-certification, ensuring extremely low formaldehyde emissions, making your interiors healthier and safer. The boiling water proof back ply offers added stability, especially in high-moisture areas like kitchens and bathrooms. Each sheet is also borer proof and termite resistant, keeping your investments protected from common threats. Moreover, our products are BIS certified, reinforcing our commitment to quality and performance.</p>
+            <p class="mb-4 text-gray-700">With a competitive veneer sheet cost, transparent veneer rate, and consistent veneer wood price, GreenInfinity offers unmatched value without compromising on aesthetics or innovation.</p>
+            <p class="mb-4 text-gray-700">Explore the elegance of nature through our curated range of decorative sheets. Discover the perfect blend of design and durability with GreenInfinity’s finest wood veneer sheets price collection, where every grain tells a story.</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section for Veneer -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 flex flex-col lg:flex-row lg:space-x-12">
+            <div class="lg:w-1/3 mb-8 lg:mb-0">
+                <div class="flex items-center mb-4">
+                    <h2 class="text-4xl font-bold mr-4">Frequently Asked Questions</h2>
+                    <span class="bg-red-theme text-white text-sm px-3 py-1 rounded-full">General</span>
+                </div>
+                <p class="text-gray-700 mb-6">Need Answers? We got them</p>
+                <img src="https://www.greenply.com/assets/images/veneer/faq.png" alt="FAQ" class="rounded-lg shadow-lg w-full h-auto">
+            </div>
+            <div class="lg:w-2/3">
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            What are wood veneers?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Wood veneer sheets are thin sheets of wood that is obtained by peeling the log of a tree. These wood veneers are a widely used surfacing material in both residential and commercial properties. A veneer sheet is glued onto the surface of wooden furniture to enhance its aesthetic appeal, durability, and sturdiness.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            What are advantages of using Veneers in Interiors?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Wood veneer sheets have several advantages when used in interior design:</p>
+                            <p class="py-2 text-gray-700"><strong>Strength:</strong> Bonded to solid supports, wood veneer sheets create a durable, long-lasting finish, resistant to warping and cracking.</p>
+                            <p class="py-2 text-gray-700"><strong>Limitless design possibilities:</strong> Wood type and finish choices on offer enable veneer sheets to be adapted to suit unlimited design possibilities, allowing intricate patterns and personalized looks for wood veneer furniture.</p>
+                            <p class="py-2 text-gray-700"><strong>Premium Looks:</strong> Veneers achieve the luxurious appearance of solid wood, bringing sophistication and glamour to interiors at a fraction of the price.</p>
+                            <p class="py-2 text-gray-700"><strong>Low Maintenance:</strong> Veneered finishes are simple to dust and polish, demanding little in the way of maintenance beyond the occasional polish to keep them looking their best.</p>
+                            <p class="py-2 text-gray-700"><strong>Environmentally Safe:</strong> Using thin slices of wood, veneers sheets can maximize timber resources, making them the eco-friendly alternative to solid wood.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            What is difference between Wood Veneers and Laminates?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Wood veneers and laminates are widely believed to be superior choices for surface finishes in the interior design scenario, each with its own characteristics.</p>
+                            <p class="py-2 text-gray-700"><strong>Aesthetics:</strong> Wood veneers are thin veneers of real wood glued onto a substrate, exposing true grain patterns that give a luxurious, upscale, and warm look. Laminates are man-made materials designed to replicate a range of surfaces, including wood; however, they may not have the depth and inherent aesthetic appeal of true wood grains.</p>
+                            <p class="py-2 text-gray-700"><strong>Composition:</strong> Veneers sheets are made up of true wood layers, thus maintaining the natural look of wood. Laminates are man-made materials, typically comprising printed surfaces that do or do not replicate wood, glued onto composite substrates.</p>
+                            <p class="py-2 text-gray-700"><strong>Sustainability:</strong> Wood veneers can be more eco-friendly to use, especially when purchased from suppliers with FSC or E0 certifications, which ensure sustainable forestry management and low formaldehyde emissions. Laminates, being man-made, lack the same environmental assurance.</p>
+                            <p class="py-2 text-gray-700"><strong>Maintenance and Longevity:</strong> Veneer finish surfaces may require occasional polishing to maintain their gloss and can be refinished in the case of damage, thus maximizing their lifespan. Laminates, however, are simpler to maintain, requiring only routine cleaning; however, they cannot be refinished in the case of damage.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            What are most common species available?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Wood veneers are thin slices of wood applied to surfaces for decorative purposes. Common species include:</p>
+                            <p class="py-2 text-gray-700"><strong>Oak Veneer:</strong> Known for its prominent grain and durability, oak veneer adds a classic and robust appearance to interiors.</p>
+                            <p class="py-2 text-gray-700"><strong>Walnut Veneer:</strong> Valued for its rich, dark tones and fine grain, walnut veneer imparts a sense of luxury and warmth.</p>
+                            <p class="py-2 text-gray-700"><strong>Ash Veneer:</strong> Featuring a light color and straight grain, ash veneer offers a clean and contemporary look.</p>
+                            <p class="py-2 text-gray-700"><strong>Sapele Veneer:</strong> With its reddish-brown hue and interlocking grain, sapele veneer provides an exotic and dynamic aesthetic.</p>
+                            <p class="py-2 text-gray-700">Other popular species include maple, cherry, and mahogany, each chosen for their unique grain patterns and colors. These veneers are favored for their ability to enhance the visual appeal of furniture and interiors while being more cost-effective and environmentally friendly than solid wood.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            How thick are veneer sheets?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Thickness of veneer range from 0.5 mm to 3 mm thick. The net panel thickness, including the backing material, might be either plywood or MDF, and it will be anywhere from 3.5 mm to 18 mm, depending on the construction technique and the manufacturer. Thicker veneer layers may offer more resilience and deeper aesthetic appeal.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            What are common Applications of Wood Veneer?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Wood veneer is a versatile material used in various interior applications:</p>
+                            <p class="py-2 text-gray-700"><strong>Furniture:</strong> Veneer furniture enhances the appearance of tables, chairs, dressers, and cabinets by providing a high-quality wood finish.</p>
+                            <p class="py-2 text-gray-700"><strong>Ceilings:</strong> Ceiling with veneer adds warmth and elegance to interior spaces when applied to ceiling surfaces.</p>
+                            <p class="py-2 text-gray-700"><strong>Flooring:</strong> Veneer flooring offers an attractive and cost-effective alternative to solid wood floors.</p>
+                            <p class="py-2 text-gray-700"><strong>Wall Paneling:</strong> Provides a sophisticated look to interior walls, enhancing overall aesthetics.</p>
+                            <p class="py-2 text-gray-700"><strong>Partitions:</strong> Used in creating stylish and functional room dividers with a natural wood appearance.</p>
+                            <p class="py-2 text-gray-700"><strong>Doors:</strong> Applies a refined finish to doors, elevating their visual appeal.</p>
+                            <p class="py-2 text-gray-700">These applications highlight the adaptability of wood veneer in enhancing interior design.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            How many categories are there in woodcrrests?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Woodcrrests provides four main categories of veneer, designed to increase interiors with style and durability:</p>
+                            <p class="py-2 text-gray-700"><strong>Natural:</strong> These veneers are prepared from real wood, which show unique grains and natural textures. They bring heat and authenticity to furniture and interiors, making each design one way.</p>
+                            <p class="py-2 text-gray-700"><strong>Bespoke veneer:</strong> Tailor-made for luxury interiors, these veneer offers adaptation in patterns, textures and finishes. They allow homeowners and designers to create unique, high-end locations.</p>
+                            <p class="py-2 text-gray-700"><strong>Teak:</strong> Teak wood veneer is highly valuable for its strength, moisture resistance and rich, golden-brown color. It is a popular choice for premium furniture, panelling and decor.</p>
+                            <p class="py-2 text-gray-700"><strong>Engineered:</strong> Engineered veneer provide uniformity in the design while maintaining the beauty of natural wood. They are cost-effective and are available in various patterns, which they are ideal for modern interiors.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            What is process of production of Wood Veneers?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">The production of wood veneer sheets is a detailed process that ensures durability and a premium look.</p>
+                            <p class="py-2 text-gray-700"><strong>Sourcing of Logs:</strong> High-quality logs, including teak veneer sheets, are selected for veneer production.</p>
+                            <p class="py-2 text-gray-700"><strong>Cutting of Logs:</strong> Logs are cut into sections, preparing them for slicing or peeling.</p>
+                            <p class="py-2 text-gray-700"><strong>Seasoning:</strong> The wood undergoes drying to reduce moisture content, preventing warping.</p>
+                            <p class="py-2 text-gray-700"><strong>Peeling or Slicing:</strong> Thin veneer layers are obtained through rotary peeling or slicing.</p>
+                            <p class="py-2 text-gray-700"><strong>Drying:</strong> The extracted veneer sheets are further dried to stabilize the material.</p>
+                            <p class="py-2 text-gray-700"><strong>Stitching of Veneer:</strong> Small veneer pieces are joined to form large veneer boards.</p>
+                            <p class="py-2 text-gray-700"><strong>Pasting on Substrate:</strong> Veneers are glued onto plywood, MDF, or other boards.</p>
+                            <p class="py-2 text-gray-700"><strong>Sanding and Finishing:</strong> The surface is sanded and polished for a smooth and refined finish.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Products</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Categories</a></li>
+                    <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                    <li><a href="#" class="footer-link">Doors</a></li>
+                    <li><a href="#" class="footer-link">Veneers</a></li>
+                    <li><a href="#" class="footer-link">MDF</a></li>
+                    <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                    <li><a href="#" class="footer-link">PVC</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Speciality Feature</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Brands</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">GreenInfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crrest</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity MDF</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Furniture Type</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Quick Links & More</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 mt-12 border-t border-gray-700 pt-8 flex flex-col items-center">
+            <p class="text-lg font-semibold mb-4">Follow us on</p>
+            <div class="flex space-x-4 text-2xl mb-8">
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fas fa-globe"></i></a> <!-- Assuming globe for general website/linkedin -->
+            </div>
+            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+
+        <!-- Floating Info Icon -->
+        <div class="fixed bottom-8 right-8 bg-red-theme text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-red-700 transition duration-300" id="inquiryButton">
+            <i class="fas fa-info text-2xl"></i>
+        </div>
+
+        <!-- Inquiry Modal -->
+        <div id="inquiryModal" class="inquiry-modal">
+            <div class="inquiry-modal-content">
+                <span class="close-button" onclick="closeInquiryModal()">&times;</span>
+                <h2 class="text-2xl font-semibold mb-6">Inquire Now</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="modalName" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="modalName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Name">
+                    </div>
+                    <div>
+                        <label for="modalContact" class="block text-sm font-medium text-gray-700">Contact No.</label>
+                        <input type="text" id="modalContact" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Phone">
+                    </div>
+                    <div>
+                        <label for="modalPincode" class="block text-sm font-medium text-gray-700">Pincode</label>
+                        <input type="text" id="modalPincode" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Pincode">
+                    </div>
+                    <div>
+                        <label for="modalInquiryType" class="block text-sm font-medium text-gray-700">Inquiry Type</label>
+                        <select id="modalInquiryType" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme">
+                            <option>Select Type</option>
+                            <option>Product Inquiry</option>
+                            <option>Dealer Inquiry</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center mt-6">
+                    <input type="checkbox" id="modalRobotCheck" class="rounded border-gray-300 text-red-theme shadow-sm focus:border-red-theme focus:ring focus:ring-red-theme focus:ring-opacity-50">
+                    <label for="modalRobotCheck" class="ml-2 block text-sm text-gray-900">I'm not a robot</label>
+                    <a href="#" class="ml-4 text-sm text-red-theme hover:underline">Privacy Policy</a>
+                </div>
+                <button class="mt-6 bg-green-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-green-600 transition duration-300" onclick="handleModalInquirySubmit()">Inquire Now</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for Accordion (FAQ)
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach((button, index) => {
+                const accordionContent = button.nextElementSibling;
+                const icon = button.querySelector('i');
+
+                // Initialize the first accordion item to be open
+                if (index === 0) {
+                    button.classList.add('active');
+                    icon.classList.add('rotate-icon');
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                    accordionContent.classList.add('active');
+                }
+
+                button.addEventListener('click', () => {
+                    // Close all other open accordions
+                    accordionButtons.forEach((otherButton, otherIndex) => {
+                        if (otherButton !== button && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.style.maxHeight = 0;
+                            otherButton.nextElementSibling.classList.remove('active');
+                            otherButton.querySelector('i').classList.remove('rotate-icon'); // Reset icon
+                        }
+                    });
+
+                    // Toggle the clicked accordion
+                    button.classList.toggle('active');
+                    icon.classList.toggle('rotate-icon');
+
+                    if (button.classList.contains('active')) {
+                        accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                        accordionContent.classList.add('active');
+                    } else {
+                        accordionContent.style.maxHeight = 0;
+                        accordionContent.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+
+        // JavaScript for Carousel (Explore Products)
+        const carouselContainer = document.querySelector('.carousel-container');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const prevButton = document.querySelector('.carousel-prev');
+        const nextButton = document.querySelector('.carousel-next');
+
+        // Function to scroll the carousel by one item
+        function scrollCarousel(direction) {
+            if (carouselItems.length === 0) return;
+
+            // Get the width of a single item including its right margin/gap
+            // Tailwind's space-x-6 applies margin-left to all but the first.
+            const itemWidth = carouselItems[0].offsetWidth;
+            const itemStyle = getComputedStyle(carouselItems[0]);
+            // Get the margin-right of the first item, or margin-left of the second if first has no right margin.
+            const gap = parseFloat(itemStyle.marginRight) || parseFloat(getComputedStyle(carouselItems[1] || carouselItems[0]).marginLeft) || 0;
+            const scrollAmount = itemWidth + gap;
+
+            if (direction === 'next') {
+                carouselContainer.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else if (direction === 'prev') {
+                carouselContainer.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        prevButton.addEventListener('click', () => {
+            scrollCarousel('prev');
+        });
+
+        nextButton.addEventListener('click', () => {
+            scrollCarousel('next');
+        });
+
+        // Initial carousel position (no need for complex updateCarouselScroll on DOMContentLoaded
+        // as scroll-snap handles initial alignment if container is scrolled)
+        // If you want to ensure it starts at the very beginning, you could set carouselContainer.scrollLeft = 0;
+        // on DOMContentLoaded or after a short delay.
+
+        // Inquiry Form Submit Handler for Veneer Page (for modal)
+        function handleModalInquirySubmit() {
+            const name = document.getElementById('modalName').value;
+            const contact = document.getElementById('modalContact').value;
+            const pincode = document.getElementById('modalPincode').value;
+            const inquiryType = document.getElementById('modalInquiryType').value;
+
+            const message = `Hello GreenInfinity Veneer, I would like to inquire about your veneers.
+Name: ${name}
+Contact No.: ${contact}
+Pincode: ${pincode}
+Inquiry Type: ${inquiryType}`;
+
+            // Replace '91XXXXXXXXXX' with the actual WhatsApp number for veneer inquiries
+            const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+
+            window.open(whatsappUrl, '_blank');
+            closeInquiryModal(); // Close modal after submission
+        }
+
+        // Functions to open and close the inquiry modal
+        const inquiryModal = document.getElementById('inquiryModal');
+        const inquiryButton = document.getElementById('inquiryButton');
+
+        inquiryButton.addEventListener('click', () => {
+            inquiryModal.style.display = 'flex'; // Use flex to center content
+        });
+
+        function closeInquiryModal() {
+            inquiryModal.style.display = 'none';
+        }
+
+        // Close modal if user clicks outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target == inquiryModal) {
+                inquiryModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

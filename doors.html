@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenInfinity Doors</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+        }
+        .bg-red-theme {
+            background-color: #e53e3e; /* A shade of red */
+        }
+        .text-red-theme {
+            color: #e53e3e;
+        }
+        .border-red-theme {
+            border-color: #e53e3e;
+        }
+        .hover-red-theme:hover {
+            background-color: #c53030;
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+        .accordion-button {
+            cursor: pointer;
+            padding: 1rem;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: background-color 0.3s ease; /* Smooth transition for background */
+        }
+        .accordion-button.active {
+            background-color: #f0fdf4; /* Light green background when active */
+            border-bottom: 1px solid #34d399; /* Green border when active */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, border 0.3s ease-out;
+            padding: 0 1rem;
+            background-color: #f9f9f9;
+            border-left: 5px solid transparent; /* Default transparent border */
+            border-radius: 0 0 8px 8px; /* Rounded corners only at bottom */
+        }
+        .accordion-content.active {
+            padding: 1rem;
+            border-left-color: #34d399; /* Green border when active */
+        }
+        .rotate-icon {
+            transform: rotate(45deg); /* Rotates plus to an 'x' or minus-like symbol */
+            transition: transform 0.3s ease;
+        }
+        /* Custom styles for footer social icons */
+        .social-icon-circle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for circles */
+            transition: background-color 0.3s ease;
+        }
+        .social-icon-circle:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        /* Updated styles for fixed navigation bar */
+        .fixed-navbar {
+            position: fixed; /* Changed to fixed */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20; /* Ensure it's above other content */
+            background-color: white; /* Changed background to white */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
+        }
+        .fixed-navbar .nav-link {
+            color: #333; /* Make links dark for contrast on white background */
+        }
+        .fixed-navbar .nav-link:hover {
+            color: #e53e3e; /* Red on hover */
+        }
+
+        /* Styles for the inquiry modal */
+        .inquiry-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .inquiry-modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Navigation Bar (Fixed at top with white background) -->
+    <nav class="fixed-navbar py-4 px-6 flex justify-between items-center">
+        <div class="flex items-center">
+            <!-- GreenInfinity Logo/Brand as a button -->
+            <a href="#" class="bg-red-theme text-white py-2 px-6 rounded-md font-semibold text-lg hover-red-theme transition duration-300">GreenInfinity Doors</a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="#" class="nav-link hover:text-red-theme font-medium">Consumer</a>
+            <a href="#" class="nav-link hover:text-red-theme font-medium">Investors</a>
+            <a href="#" class="nav-link hover:text-red-theme font-medium">Products</a>
+            <a href="#" class="nav-link hover:text-red-theme font-medium">Visualizer</a>
+        </div>
+        <!-- Mobile menu button (if needed, not explicitly in image but good practice) -->
+        <div class="md:hidden">
+            <button class="text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Header/Hero Section for Doors -->
+    <header class="relative bg-gray-200 h-96 overflow-hidden">
+        <img src="https://placehold.co/1920x400/cccccc/ffffff?text=GreenInfinity+Doors+Hero+Image" alt="GreenInfinity Doors Interior" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="relative z-10 flex items-center h-full pl-16 text-white">
+            <div>
+                <h1 class="text-5xl font-bold mb-2">The door to healthy homes</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation/Breadcrumb -->
+    <nav class="bg-gray-100 py-3 px-6 shadow-sm">
+        <div class="container mx-auto flex items-center text-sm text-gray-600">
+            <a href="#" class="hover:text-red-theme">Home</a>
+            <span class="mx-2">/</span>
+            <span>Doors</span>
+        </div>
+    </nav>
+
+    <!-- Inquiry Form Section (Now part of the modal) -->
+    <section class="py-12 bg-white hidden" id="inquiryFormSection">
+        <!-- This section is now hidden and its content moved to the modal -->
+    </section>
+
+    <!-- Strong Doors Make Safe Homes Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:space-x-12">
+            <div class="lg:w-1/2 mb-8 lg:mb-0 relative">
+                <img src="https://placehold.co/600x400/d1d5db/4b5563?text=Open+Door+to+Nature" alt="Open Door to Nature" class="rounded-lg shadow-lg w-full h-auto">
+                <div class="absolute bottom-4 left-4 bg-white bg-opacity-90 p-4 rounded-lg shadow-md text-center">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">OPEN THE DOORWAY TO NATURE</h3>
+                    <p class="text-sm text-gray-600">ZERO EMISSION RANGE OF DOORS</p>
+                </div>
+            </div>
+            <div class="lg:w-1/2">
+                <h2 class="text-4xl font-bold text-red-theme mb-6">Strong doors make safe homes</h2>
+                <p class="mb-4 text-gray-700">Welcome to the World of GreenInfinity Doors. GreenInfinity flush doors offer strength, dimensional stability, and high impact resistance to provide security, protection and privacy. These doors are tailor-made to suit the varying needs of residential and commercial customers.</p>
+                <p class="mb-4 text-gray-700">Our plywood doors feature:</p>
+                <ul class="list-disc list-inside mb-4 text-gray-700">
+                    <li>Lock provision on both sides.</li>
+                    <li>Three varieties: One-sided decorative, both-sided decorative, and non-decorative wooden flush doors.</li>
+                </ul>
+                <p class="mb-4 text-gray-700">Experience the quality and durability of GreenInfinity plywood doors and door frames. Explore our range of readymade wooden doors and door frames to find the perfect fit for your home or business.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories Section for Doors -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Green-Doors" alt="Green-Doors" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <h3 class="text-xl font-semibold mb-2">Green-Doors</h3>
+                    <p class="text-gray-600">Explore our range of eco-friendly doors.</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Optima-G-Doors" alt="Optima-G-Doors" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <h3 class="text-xl font-semibold mb-2">Optima-G-Doors</h3>
+                    <p class="text-gray-600">Premium quality for superior strength.</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Ecotec-Doors" alt="Ecotec-Doors" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <h3 class="text-xl font-semibold mb-2">Ecotec-Doors</h3>
+                    <p class="text-gray-600">Advanced technology for enhanced durability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Your Interiors Section (Reused from Plywood page) -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-12">Design your Interiors with GreenInfinity</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div class="flex flex-col items-center">
+                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Bedroom" alt="Bedroom" class="rounded-lg shadow-md mb-4">
+                    <span class="text-lg font-medium">Bedroom</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Kitchen" alt="Kitchen" class="rounded-lg shadow-md mb-4">
+                    <span class="text-lg font-medium">Kitchen</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Living+Room" alt="Living Room" class="rounded-lg shadow-md mb-4">
+                    <span class="text-lg font-medium">Living Room</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Office" alt="Office" class="rounded-lg shadow-md mb-4">
+                    <span class="text-lg font-medium">Office</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <i class="fas fa-chair text-4xl text-red-theme mb-2"></i>
+                    <span class="text-md font-medium">Chair</span>
+                </div>
+                <div class="flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <i class="fas fa-book-open text-4xl text-red-theme mb-2"></i>
+                    <span class="text-md font-medium">Study Table</span>
+                </div>
+                <div class="flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <i class="fas fa-couch text-4xl text-red-theme mb-2"></i>
+                    <span class="text-md font-medium">Sofa</span>
+                </div>
+                <div class="flex flex-col items-center p-4 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <i class="fas fa-bed text-4xl text-red-theme mb-2"></i>
+                    <span class="text-md font-medium">Bed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Products Carousel for Doors -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-12">Explore products</h2>
+            <div class="flex items-center justify-center space-x-4">
+                <button class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                    <i class="fas fa-arrow-left text-gray-700"></i>
+                </button>
+                <div class="carousel-container flex overflow-x-scroll snap-x snap-mandatory space-x-6 w-full max-w-6xl"> <!-- Changed max-w-4xl to max-w-6xl, added overflow-x-scroll and snap classes -->
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center"> <!-- Added snap-center -->
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+Doors" alt="GreenInfinity Doors" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Doors</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=Optima+G+Doors" alt="Optima G Doors" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">Optima G Doors</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=Ecotec+Platinum+Doors" alt="Ecotec Platinum Doors" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">Ecotec Platinum Doors</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=Ecotec+Doors" alt="Ecotec Doors" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">Ecotec Doors</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+Carviah+Doors" alt="GreenInfinity Carviah Doors" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Carviah Doors</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
+                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+Decorative+Doors" alt="GreenInfinity Decorative Doors" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Decorative Doors</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                </div>
+                <button class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                    <i class="fas fa-arrow-right text-gray-700"></i>
+                </button>
+            </div>
+            <button class="mt-8 border border-red-theme text-red-theme py-2 px-6 rounded-full hover:bg-red-theme hover:text-white transition duration-300">View All <i class="fas fa-arrow-right ml-2"></i></button>
+        </div>
+    </section>
+
+    <!-- FAQ Section for Doors -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 flex flex-col lg:flex-row lg:space-x-12">
+            <div class="lg:w-1/3 mb-8 lg:mb-0">
+                <div class="flex items-center mb-4">
+                    <h2 class="text-4xl font-bold mr-4">Frequently Asked Questions</h2>
+                    <span class="bg-green-500 text-white text-sm px-3 py-1 rounded-full">General</span>
+                </div>
+                <p class="text-gray-700 mb-6">Need Answers? We got them</p>
+                <img src="https://placehold.co/300x400/d1d5db/4b5563?text=FAQ+Image" alt="FAQ" class="rounded-lg shadow-lg w-full h-auto">
+            </div>
+            <div class="lg:w-2/3">
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            Which type of wood is best for interior doors?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">For interior doors, engineered wood products like GreenInfinity flush doors are excellent choices due to their stability, durability, and resistance to warping.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            Are pre-hung doors available for easy installation?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Yes, GreenInfinity offers a range of pre-hung doors and door frames for convenient and quick installation, saving time and effort.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            Can doors be customized to specific dimensions?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">GreenInfinity doors can be customized to fit various dimensions and design preferences. Please consult with our dealers for specific customization options.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            Is plywood good for doors?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Plywood is always a good choice for doors, mainly interior doors. It is tough and lightweight, and it is cheaper than solid wood. GreenInfinity doors do not easily warp, besides having a finish that can carry different styles of designs. Exterior doors or doors that may have high moisture contact call for BWP plywood for better water resistance and durability.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            How much does it cost to make a plywood door?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">The cost of a plywood door varies depending on the type of plywood, finish, and size. For detailed pricing, please contact a GreenInfinity dealer.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            What is flush door type?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">A flush door is a simple door design with plain facings on both sides, offering a sleek and modern look. GreenInfinity provides high-quality flush doors that are durable and aesthetically pleasing.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            Are flush doors strong?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">Yes, GreenInfinity flush doors are engineered for strength and stability, providing excellent durability and resistance to impact, making them a strong choice for various applications.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            Is a plywood door good for the bathroom?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">For bathrooms, it is recommended to use BWP (Boiling Waterproof) grade plywood doors, which are highly resistant to moisture and humidity, ensuring longevity in wet environments.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            Which plywood is best for a door?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">For doors, BWP (Boiling Waterproof) grade plywood is generally considered the best due to its superior resistance to water, moisture, and termites, ensuring long-lasting performance.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            What is the ideal thickness for main doors or inside home doors?
+                            <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p class="py-2 text-gray-700">For main doors, a thickness of 30mm to 35mm is often ideal for enhanced security and durability. For inside home doors, 25mm to 30mm thickness is generally sufficient.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- High-Performance Doors for Modern Interiors Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-6">High-Performance Doors for Modern Interiors</h2>
+            <p class="mb-4 text-gray-700">Doors are more than just entryways. They’re silent sentinels standing guard over your comfort, your memories, and your peace of mind. At GreenInfinity, we understand this responsibility and bring you a curated collection of ply board doors, plywood doors, and smart ply door designs that combine strength, security, and seamless aesthetics. With a legacy of innovation and quality, GreenInfinity doors are built to last, whether you’re upgrading your home, office, or any other space that matters.</p>
+            <p class="mb-4 text-gray-700">Welcome to the universe of GreenInfinity Doors, where functionality aligns with finesse. Every plywood door manufactured by us is precision-made to provide strong dimensional stability and high impact resistance, humidity resistance, and wear resistance. From sophisticated designs to long-term finishes, our doors are designed to cater to the varied requirements of both commercial and residential spaces.</p>
+
+            <h3 class="text-2xl font-bold mb-4">Why Choose GreenInfinity?</h3>
+            <p class="mb-4 text-gray-700">GreenInfinity doors are more than just pieces of plywood—they are a promise of quality, safety, and style. Every door is manufactured with careful attention to detail and tested against the toughest standards, ensuring your investment stands the test of time. Here’s what makes our doors a top choice:</p>
+
+            <h4 class="text-xl font-semibold mb-2">1. Borer and Fungus Proof, with an Anti-Termite Guarantee</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-700">
+                <li>Say goodbye to worrying about pests and decay. Our doors come with built-in protection that ensures long-lasting durability, even in humid or insect-prone areas.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">2. 100% Pine Frame</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-700">
+                <li>Crafted from high-quality pine wood, our doors ensure structural strength and natural resistance, providing both stability and elegance in one sleek package.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">3. All-Weather Protection</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-700">
+                <li>No matter the season, GreenInfinity doors stand strong. Rain, heat, or humidity, our doors are engineered to resist all kinds of weather, making them suitable for every Indian climate.</li>
+            </ul>
+
+            <h4 class="text-xl font-semibold mb-2">4. Double Core Technology</h4>
+            <ul class="list-disc list-inside mb-4 text-gray-700">
+                <li>Experience the benefit of solid construction that offers enhanced sound insulation and a sturdy feel with every knock and push. This technology gives our doors unmatched strength without adding unnecessary weight.</li>
+            </ul>
+
+            <p class="mb-4 text-gray-700">These are just to name a few with 20+ years of warranty, built to resist the elements and designed for aesthetic appeal. GreenInfinity doors offer everything you could want - functionality, finesse, and future-ready design.</p>
+
+            <h3 class="text-2xl font-bold mb-4">Explore Our Door Range</h3>
+            <p class="mb-4 text-gray-700">At GreenInfinity, we bring to you a versatile range of doors, each created with specific needs and spaces in mind. Whether you’re looking for a durable option for the bathroom flush door, a decorative design for the living room, or a moisture-resistant door for the kitchen, we have it all.</p>
+            <ul class="list-disc list-inside mb-8 text-gray-700">
+                <li><a href="#" class="text-red-theme hover:underline">Green Doors</a></li>
+                <li><a href="#" class="text-red-theme hover:underline">Optima G-Doors</a></li>
+                <li><a href="#" class="text-red-theme hover:underline">Ecotec Doors</a></li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mb-4">Doors That Fit Perfectly in Every Corner of Your Space</h3>
+            <p class="mb-4 text-gray-700">Every room has a vibe. Why should your doors be any different? GreenInfinity doors are crafted not just to separate spaces, but to complete them. From quiet corners to high-traffic zones, here’s how our plywood doors bring out the best in every setting.</p>
+            <ul class="list-disc list-inside mb-8 text-gray-700">
+                <li><strong class="text-gray-800">Living Room – First Impressions, Nailed</strong><br>Your front or living room door sets the tone for your entire home. Make it count. Choose a decorative plywood door frame that blends timeless charm with modern strength. Whether it’s for guests or daily family life, these doors welcome everyone with grace.</li>
+                <li><strong class="text-gray-800">Bedrooms – Where Privacy Meets Peace</strong><br>Bedrooms are for unwinding, and your door should help you do just that. Opt for flush door manufacturers that provide doors with great sound insulation, smooth finishes, and designs that soothe. Think privacy, think peace, think greenInfinity.</li>
+                <li><strong class="text-gray-800">Bathrooms – Splash-Proof & Stylish</strong><br>Humidity? Not a problem. Our waterproof plywood doors for bathrooms are built to resist steam, splashes, and moisture without warping or peeling. Function meets flair, even in the most humid corners of your home.</li>
+                <li><strong class="text-gray-800">Kitchens – Built for the Heat</strong><br>The heart of your home deserves doors that can handle heat, spills, and the occasional food fight. Our kitchen-friendly options are pest-resistant and easy to clean, perfect for a space that’s always buzzing with activity.</li>
+                <li><strong class="text-gray-800">Kids’ Rooms – Safe, Fun, and Durable</strong><br>Little explorers need doors that are safe and strong. Our child-friendly doors resist wear and tear, so no matter how many times they’re slammed, pushed, or sticker-bombed, they hold their ground.</li>
+                <li><strong class="text-gray-800">Commercial Spaces – Tough on Traffic</strong><br>For offices, clinics, shops, or studios, durability is key. <a href="#" class="text-red-theme hover:underline">Optima G-Doors</a> and <a href="#" class="text-red-theme hover:underline">Green Doors</a> offer that extra strength and stability needed in high-footfall zones. Elegant, professional, and long-lasting, they leave a lasting impression.</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mb-4">Ready to Upgrade?</h3>
+            <p class="mb-4 text-gray-700">It’s time to redefine your interiors with doors that do more. Whether you’re checking ply board door price, comparing flush door prices, or browsing readymade wooden doors for home. GreenInfinity offers a wide range to suit every need and budget. With options for decorative designs, waterproof finishes, and various frames, you’re sure to find a door that fits like it was made just for you, because it was.</p>
+            <p class="mb-4 text-gray-700">Explore our complete range online and bring home the door that opens up a world of security, style, and reliability.</p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Products</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Categories</a></li>
+                    <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                    <li><a href="#" class="footer-link">Doors</a></li>
+                    <li><a href="#" class="footer-link">Veneers</a></li>
+                    <li><a href="#" class="footer-link">MDF</a></li>
+                    <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                    <li><a href="#" class="footer-link">PVC</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Speciality Feature</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Brands</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">GreenInfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crrest</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity MDF</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Furniture Type</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Quick Links & More</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 mt-12 border-t border-gray-700 pt-8 flex flex-col items-center">
+            <p class="text-lg font-semibold mb-4">Follow us on</p>
+            <div class="flex space-x-4 text-2xl mb-8">
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fas fa-globe"></i></a> <!-- Assuming globe for general website/linkedin -->
+            </div>
+            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+
+        <!-- Floating Info Icon -->
+        <div class="fixed bottom-8 right-8 bg-red-theme text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-red-700 transition duration-300" id="inquiryButton">
+            <i class="fas fa-info text-2xl"></i>
+        </div>
+
+        <!-- Inquiry Modal -->
+        <div id="inquiryModal" class="inquiry-modal">
+            <div class="inquiry-modal-content">
+                <span class="close-button" onclick="closeInquiryModal()">&times;</span>
+                <h2 class="text-2xl font-semibold mb-6">Inquire Now</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="modalName" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="modalName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Name">
+                    </div>
+                    <div>
+                        <label for="modalContact" class="block text-sm font-medium text-gray-700">Contact No.</label>
+                        <input type="text" id="modalContact" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Phone">
+                    </div>
+                    <div>
+                        <label for="modalPincode" class="block text-sm font-medium text-gray-700">Pincode</label>
+                        <input type="text" id="modalPincode" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Pincode">
+                    </div>
+                    <div>
+                        <label for="modalInquiryType" class="block text-sm font-medium text-gray-700">Inquiry Type</label>
+                        <select id="modalInquiryType" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme">
+                            <option>Select Type</option>
+                            <option>Product Inquiry</option>
+                            <option>Dealer Inquiry</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center mt-6">
+                    <input type="checkbox" id="modalRobotCheck" class="rounded border-gray-300 text-red-theme shadow-sm focus:border-red-theme focus:ring focus:ring-red-theme focus:ring-opacity-50">
+                    <label for="modalRobotCheck" class="ml-2 block text-sm text-gray-900">I'm not a robot</label>
+                    <a href="#" class="ml-4 text-sm text-red-theme hover:underline">Privacy Policy</a>
+                </div>
+                <button class="mt-6 bg-green-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-green-600 transition duration-300" onclick="handleModalInquirySubmit()">Inquire Now</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for Accordion (FAQ)
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            accordionButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    const accordionContent = button.nextElementSibling;
+                    const icon = button.querySelector('i');
+
+                    // Close all other open accordions
+                    accordionButtons.forEach((otherButton, otherIndex) => {
+                        if (otherButton !== button && otherButton.classList.contains('active')) {
+                            otherButton.classList.remove('active');
+                            otherButton.nextElementSibling.style.maxHeight = 0;
+                            otherButton.nextElementSibling.classList.remove('active');
+                            otherButton.querySelector('i').classList.remove('rotate-icon'); // Reset icon
+                        }
+                    });
+
+                    // Toggle the clicked accordion
+                    button.classList.toggle('active');
+                    icon.classList.toggle('rotate-icon');
+
+                    if (button.classList.contains('active')) {
+                        accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+                        accordionContent.classList.add('active');
+                    } else {
+                        accordionContent.style.maxHeight = 0;
+                        accordionContent.classList.remove('active');
+                    }
+                });
+
+                // Open the first accordion item by default
+                if (index === 0) {
+                    button.click(); // Simulate a click to open it
+                }
+            });
+        });
+
+
+        // JavaScript for Carousel (Explore Products)
+        const carouselContainer = document.querySelector('.carousel-container');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const prevButton = document.querySelector('.carousel-prev');
+        const nextButton = document.querySelector('.carousel-next');
+
+        // Function to scroll the carousel by one item
+        function scrollCarousel(direction) {
+            if (carouselItems.length === 0) return;
+
+            // Get the width of a single item including its right margin/gap
+            // Tailwind's space-x-6 applies margin-left to all but the first.
+            const itemWidth = carouselItems[0].offsetWidth;
+            const itemStyle = getComputedStyle(carouselItems[0]);
+            // Get the margin-right of the first item, or margin-left of the second if first has no right margin.
+            const gap = parseFloat(itemStyle.marginRight) || parseFloat(getComputedStyle(carouselItems[1] || carouselItems[0]).marginLeft) || 0;
+            const scrollAmount = itemWidth + gap;
+
+            if (direction === 'next') {
+                carouselContainer.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else if (direction === 'prev') {
+                carouselContainer.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        prevButton.addEventListener('click', () => {
+            scrollCarousel('prev');
+        });
+
+        nextButton.addEventListener('click', () => {
+            scrollCarousel('next');
+        });
+
+        // Initial carousel position (no need for complex updateCarouselScroll on DOMContentLoaded
+        // as scroll-snap handles initial alignment if container is scrolled)
+        // If you want to ensure it starts at the very beginning, you could set carouselContainer.scrollLeft = 0;
+        // on DOMContentLoaded or after a short delay.
+
+        // Inquiry Form Submit Handler for Doors Page (for modal)
+        function handleModalInquirySubmit() {
+            const name = document.getElementById('modalName').value;
+            const contact = document.getElementById('modalContact').value;
+            const pincode = document.getElementById('modalPincode').value;
+            const inquiryType = document.getElementById('modalInquiryType').value;
+
+            const message = `Hello GreenInfinity Doors, I would like to inquire about your doors.
+Name: ${name}
+Contact No.: ${contact}
+Pincode: ${pincode}
+Inquiry Type: ${inquiryType}`;
+
+            // Replace '91XXXXXXXXXX' with the actual WhatsApp number for doors inquiries
+            const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+
+            window.open(whatsappUrl, '_blank');
+            closeInquiryModal(); // Close modal after submission
+        }
+
+        // Functions to open and close the inquiry modal
+        const inquiryModal = document.getElementById('inquiryModal');
+        const inquiryButton = document.getElementById('inquiryButton');
+
+        inquiryButton.addEventListener('click', () => {
+            inquiryModal.style.display = 'flex'; // Use flex to center content
+        });
+
+        function closeInquiryModal() {
+            inquiryModal.style.display = 'none';
+        }
+
+        // Close modal if user clicks outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target == inquiryModal) {
+                inquiryModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
