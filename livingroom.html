@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenInfinity - Living Room Themes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Import Google Fonts - Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+        }
+
+        /* Custom color variables for consistency */
+        :root {
+            --green-theme: #38A169; /* Tailwind's green-600 for this page */
+            --green-theme-hover: #2F855A; /* Darker green for hover */
+            --red-theme: #e53e3e; /* Keeping red for inquiry button */
+            --red-theme-hover: #c53030;
+            --dark-green: #10B981; /* A darker green for specific elements */
+        }
+
+        /* Tailwind-like utility classes for custom colors */
+        .bg-green-theme { background-color: var(--green-theme); }
+        .text-green-theme { color: var(--green-theme); }
+        .border-green-theme { border-color: var(--green-theme); }
+        .hover-green-theme:hover { background-color: var(--green-theme-hover); }
+
+        .bg-red-theme { background-color: var(--red-theme); } /* Added for consistency */
+        .text-red-theme { color: var(--red-theme); } /* Added for consistency */
+        .border-red-theme { border-color: var(--red-theme); } /* Added for consistency */
+        .hover-red-theme:hover { background-color: var(--red-theme-hover); } /* Added for consistency */
+
+        .bg-dark-green { background-color: var(--dark-green); }
+        .text-dark-green { color: var(--dark-green); }
+
+        /* Footer link hover effect */
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Accordion styles */
+        .accordion-button {
+            cursor: pointer;
+            padding: 1rem;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: background-color 0.3s ease; /* Smooth transition for background */
+        }
+        .accordion-button.active {
+            background-color: #f0fdf4; /* Light green background when active */
+            border-bottom: 1px solid var(--green-theme); /* Green border when active */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out, border 0.3s ease-out; /* Added padding to transition */
+            padding-top: 0; /* No top padding when closed */
+            padding-bottom: 0; /* No bottom padding when closed */
+            padding-left: 1rem;
+            padding-right: 1rem;
+            background-color: #f9f9f9;
+            border-left: 5px solid transparent; /* Default transparent border */
+            border-radius: 0 0 8px 8px; /* Rounded corners only at bottom */
+        }
+        .accordion-content.active {
+            padding-top: 2rem; /* Increased top padding when active */
+            padding-bottom: 2rem; /* Increased bottom padding when active */
+            min-height: 150px; /* Minimum height for active content */
+            border-left-color: var(--green-theme); /* Green border when active */
+        }
+        .rotate-icon {
+            transform: rotate(45deg); /* Rotates plus to an 'x' or minus-like symbol */
+            transition: transform 0.3s ease;
+        }
+
+        /* Custom styles for footer social icons */
+        .social-icon-circle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for circles */
+            transition: background-color 0.3s ease;
+        }
+        .social-icon-circle:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Fixed navigation bar */
+        .fixed-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .fixed-navbar .nav-link {
+            color: #333;
+        }
+        .fixed-navbar .nav-link:hover {
+            color: var(--green-theme);
+        }
+
+        /* Inquiry Modal styles */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .inquiry-form-modal {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .modal-close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Custom Message Box Styles */
+        .message-box-overlay {
+            display: none;
+            position: fixed;
+            z-index: 101; /* Higher than inquiry modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .message-box-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Hero Section Specific Styles for Living Room Themes Page */
+        .living-room-hero {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            background-image: url('image_682c82.jpg'); /* Background image from uploaded files */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        .living-room-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4); /* Dark overlay */
+            z-index: 0;
+        }
+        .living-room-hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 0 2rem;
+        }
+        .living-room-hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .living-room-hero-content p {
+            font-size: 1.5rem;
+        }
+        .breadcrumb {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+        .breadcrumb a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Living Room Themes Grid */
+        .theme-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .theme-card:hover {
+            transform: translateY(-5px);
+        }
+        .theme-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .theme-card-content {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        /* Furniture Type Section */
+        .furniture-type-section {
+            background-color: var(--dark-green); /* Dark green background */
+            color: white;
+        }
+        .furniture-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255,255,255,0.1); /* Slightly transparent white for cards */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .furniture-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .furniture-carousel-container {
+            display: flex;
+            overflow-x: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            gap: 1.5rem;
+            padding-bottom: 1rem;
+        }
+        .furniture-carousel-item {
+            flex: 0 0 auto;
+            width: 300px; /* Fixed width for each card */
+            scroll-snap-align: start;
+        }
+        .furniture-carousel-nav-arrow {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            padding: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            z-index: 5;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .furniture-carousel-nav-arrow:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+        .furniture-carousel-nav-arrow.left {
+            left: 1rem;
+        }
+        .furniture-carousel-nav-arrow.right {
+            right: 1rem;
+        }
+
+        /* GreenSpaces Section */
+        .greenspaces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .greenspaces-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Floating Inquiry Button */
+        #open-inquiry-modal {
+            position: fixed;
+            right: 1.5rem; /* Equivalent to Tailwind's right-6 (24px) */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 99999 !important; /* Extremely high z-index to ensure it's always on top */
+            background-color: var(--red-theme); /* Tailwind's red-600 */
+            color: white;
+            padding: 1rem; /* Equivalent to p-4 */
+            border-radius: 9999px; /* Full rounded */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #open-inquiry-modal:hover {
+            background-color: var(--red-theme-hover); /* Darker red for hover */
+            transform: translateY(-2px) translateY(-50%); /* Apply hover transform while maintaining vertical center */
+        }
+        #open-inquiry-modal:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.5); /* Focus ring */
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
+        <div class="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0">
+            <img src="https://placehold.co/100x40/EF4444/FFFFFF?text=GreenInfinity" alt="GreenInfinity Logo" class="h-10 rounded">
+            <button id="menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
+            </button>
+        </div>
+        <!-- Updated Navigation Structure: Single row -->
+        <nav id="navbar-menu" class="hidden md:flex flex-row md:items-center md:space-x-4 w-full md:w-auto">
+            <a href="./index.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
+            <a href="./investers.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            <a href="./about.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
+            <a href="#" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Visualizer</a>
+        </nav>
+    </header>
+
+    <!-- Floating Inquiry Button (Right-middle) -->
+    <button id="open-inquiry-modal">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+        <span class="sr-only">Open Inquiry Form</span>
+    </button>
+
+    <!-- Inquiry Form Modal -->
+    <div id="inquiry-modal-overlay" class="modal-overlay">
+        <div class="inquiry-form-modal">
+            <button class="modal-close-button" id="close-inquiry-modal">&times;</button>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Inquire Now</h3>
+            <form class="flex flex-wrap gap-4">
+                <input type="text" id="inquiry-name" placeholder="Enter Your Name" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="text" id="inquiry-mobile" placeholder="Enter Your Mobile Number" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <!-- Added Pincode input field -->
+                <input type="text" id="inquiry-pincode" placeholder="Enter Pincode" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <select id="inquiry-type" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                    <option value="">Select Inquiry Type</option>
+                    <option value="product">Product Inquiry</option>
+                    <option value="support">Support</option>
+                    <option value="other">Other</option>
+                </select>
+                <!-- Added "I'm not a robot" checkbox and Privacy Policy link -->
+                <div class="w-full flex items-center gap-2 mt-2">
+                    <input type="checkbox" id="robot-check" class="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                    <label for="robot-check" class="text-sm text-gray-700">I'm not a robot</label>
+                    <a href="#" class="text-sm text-green-600 hover:underline ml-4">Privacy Policy</a>
+                </div>
+                <button type="button" id="submit-inquiry-button" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Inquire Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="message-box-overlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <p id="message-box-text" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="message-box-close" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out">OK</button>
+        </div>
+    </div>
+
+    <!-- Hero Section for Living Room Themes -->
+    <section class="living-room-hero">
+        <div class="breadcrumb">
+            <a href="./index.html">Home</a> > <a href="#">Living Room</a>
+        </div>
+        <div class="living-room-hero-content">
+            <h1>Living Room Themes</h1>
+            <p>Envision the penultimate living space</p>
+        </div>
+    </section>
+
+    <!-- Introduction to Living Room Themes -->
+    <section class="py-16 px-6 md:px-12 bg-white text-center">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-lg text-gray-600 leading-relaxed">
+                The living room is where everything and everyone come together under one roof. It's where you'll be spending most of your time at home and it's also the largest room in the house. With all the space and amenities it holds, the living room must feel spacious and comfortable at all times.
+            </p>
+            <p class="text-lg text-gray-600 leading-relaxed mt-4">
+                Discover gorgeous themes to recreate your perfect living space.
+            </p>
+        </div>
+    </section>
+
+    <!-- Living Room Themes Grid -->
+    <section class="py-16 px-6 md:px-12 bg-gray-100">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="theme-card bg-white">
+                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Opulent+Living+Room" alt="Opulent Living Room Theme">
+                <div class="theme-card-content">
+                    <h3 class="text-xl font-semibold text-gray-900">Opulent</h3>
+                </div>
+            </div>
+            <div class="theme-card bg-white">
+                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Artistic+Den+Living+Room" alt="Artistic Den Living Room Theme">
+                <div class="theme-card-content">
+                    <h3 class="text-xl font-semibold text-gray-900">Artistic Den</h3>
+                </div>
+            </div>
+            <div class="theme-card bg-white">
+                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Modern+Minimalism+Living+Room" alt="Modern Minimalism Living Room Theme">
+                <div class="theme-card-content">
+                    <h3 class="text-xl font-semibold text-gray-900">Modern Minimalism</h3>
+                </div>
+            </div>
+            <div class="theme-card bg-white">
+                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Indian+Ethos+Living+Room" alt="Indian Ethos Living Room Theme">
+                <div class="theme-card-content">
+                    <h3 class="text-xl font-semibold text-gray-900">Indian Ethos</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Furniture Type Section with Carousel -->
+    <section class="py-16 px-6 md:px-12 furniture-type-section">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-white text-center">Furniture Type</h2>
+            <div class="relative">
+                <div id="furniture-carousel" class="furniture-carousel-container">
+                    <!-- Furniture Card 1 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Sofa" alt="Sofa">
+                        <h3 class="text-xl font-semibold text-white">Sofa</h3>
+                    </div>
+                    <!-- Furniture Card 2 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Bookshelf" alt="Bookshelf">
+                        <h3 class="text-xl font-semibold text-white">Bookshelf</h3>
+                    </div>
+                    <!-- Furniture Card 3 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Coffee+Table" alt="Coffee Table">
+                        <h3 class="text-xl font-semibold text-white">Coffee Table</h3>
+                    </div>
+                    <!-- Furniture Card 4 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=TV+Unit" alt="TV Unit">
+                        <h3 class="text-xl font-semibold text-white">TV Unit</h3>
+                    </div>
+                     <!-- Furniture Card 5 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Accent+Chair" alt="Accent Chair">
+                        <h3 class="text-xl font-semibold text-white">Accent Chair</h3>
+                    </div>
+                    <!-- Furniture Card 6 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Sideboard" alt="Sideboard">
+                        <h3 class="text-xl font-semibold text-white">Sideboard</h3>
+                    </div>
+                    <!-- Furniture Card 7 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Ottoman" alt="Ottoman">
+                        <h3 class="text-xl font-semibold text-white">Ottoman</h3>
+                    </div>
+                </div>
+                <!-- Navigation Arrows -->
+                <button id="furniture-carousel-prev" class="furniture-carousel-nav-arrow left">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="furniture-carousel-next" class="furniture-carousel-nav-arrow right">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Greenply Products Section -->
+    <section class="py-16 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Explore Greenply Products</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Plywood+%26+Blockboard" alt="Plywood & Blockboard" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <h3 class="text-xl font-semibold text-gray-900">Plywood & Blockboard</h3>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Doors" alt="Doors" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <h3 class="text-xl font-semibold text-gray-900">Doors</h3>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Veneers" alt="Veneers" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <h3 class="text-xl font-semibold text-gray-900">Veneers</h3>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=MDF+and+Board" alt="MDF and Board" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <h3 class="text-xl font-semibold text-gray-900">MDF and Board</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- #GreenSpaces Section -->
+    <section class="py-16 px-6 md:px-12 bg-gray-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">#GreenSpaces</h2>
+                <a href="#" class="text-green-600 hover:underline flex items-center font-semibold">
+                    Discover
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path></svg>
+                </a>
+            </div>
+            <div class="greenspaces-grid">
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+1" alt="Living Room GreenSpace 1">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+2" alt="Living Room GreenSpace 2">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+3" alt="Living Room GreenSpace 3">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+4" alt="Living Room GreenSpace 4">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+5" alt="Living Room GreenSpace 5">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+6" alt="Living Room GreenSpace 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Products</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Categories</a></li>
+                    <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                    <li><a href="#" class="footer-link">Doors</a></li>
+                    <li><a href="#" class="footer-link">Veneers</a></li>
+                    <li><a href="#" class="footer-link">MDF</a></li>
+                    <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                    <li><a href="#" class="footer-link">PVC</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Speciality Feature</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Brands</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">GreenInfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crrest</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity MDF</a></li>
+                    <li><a href="#" class="footer-link">OPTIMAG</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Furniture Type</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Quick Links & More</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 mt-12 border-t border-gray-700 pt-8 flex flex-col items-center">
+            <p class="text-lg font-semibold mb-4">Follow us on</p>
+            <div class="flex space-x-4 text-2xl mb-8">
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fas fa-globe"></i></a> <!-- Assuming globe for general website/linkedin -->
+            </div>
+            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const menuButton = document.getElementById('menu-button');
+            const navbarMenu = document.getElementById('navbar-menu');
+
+            if (menuButton && navbarMenu) {
+                menuButton.addEventListener('click', () => {
+                    navbarMenu.classList.toggle('hidden');
+                    navbarMenu.classList.toggle('flex-col');
+                    navbarMenu.classList.toggle('space-y-4');
+                    navbarMenu.classList.toggle('p-4');
+                    navbarMenu.classList.toggle('bg-white');
+                    navbarMenu.classList.toggle('w-full');
+                    navbarMenu.classList.toggle('items-center');
+                    navbarMenu.classList.toggle('md:flex-row'); /* Ensure it reverts to row on desktop */
+                });
+            }
+
+            // Inquiry Form (Floating Button and Modal) Logic
+            const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
+            const openInquiryModalButton = document.getElementById('open-inquiry-modal');
+            const closeInquiryModalButton = document.getElementById('close-inquiry-modal');
+            const submitInquiryButton = document.getElementById('submit-inquiry-button');
+            const messageBoxOverlay = document.getElementById('message-box-overlay');
+            const messageBoxText = document.getElementById('message-box-text');
+            const messageBoxCloseButton = document.getElementById('message-box-close');
+
+            if (openInquiryModalButton) {
+                openInquiryModalButton.addEventListener('click', () => {
+                    inquiryModalOverlay.style.display = 'flex'; // Use flex to center content
+                });
+            }
+
+            if (closeInquiryModalButton) {
+                closeInquiryModalButton.addEventListener('click', () => {
+                    inquiryModalOverlay.style.display = 'none';
+                });
+            }
+
+            if (submitInquiryButton) {
+                submitInquiryButton.addEventListener('click', () => {
+                    const name = document.getElementById('inquiry-name').value;
+                    const mobile = document.getElementById('inquiry-mobile').value;
+                    const pincode = document.getElementById('inquiry-pincode').value;
+                    const inquiryType = document.getElementById('inquiry-type').value;
+                    const robotCheck = document.getElementById('robot-check').checked;
+
+                    if (!name || !mobile || !pincode || !inquiryType) {
+                        showMessageBox('Please fill in all required fields.');
+                        return;
+                    }
+                    if (!robotCheck) {
+                        showMessageBox('Please confirm you are not a robot.');
+                        return;
+                    }
+
+                    const message = `Hello GreenInfinity, I would like to inquire about your products.
+Name: ${name}
+Contact No.: ${mobile}
+Pincode: ${pincode}
+Inquiry Type: ${inquiryType}`;
+
+                    // Replace '91XXXXXXXXXX' with the actual WhatsApp number for inquiries
+                    const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+
+                    window.open(whatsappUrl, '_blank');
+                    inquiryModalOverlay.style.display = 'none'; // Close modal after submission
+                    showMessageBox('Your inquiry has been sent!');
+                });
+            }
+
+            function showMessageBox(message) {
+                messageBoxText.textContent = message;
+                messageBoxOverlay.style.display = 'flex';
+            }
+
+            if (messageBoxCloseButton) {
+                messageBoxCloseButton.addEventListener('click', () => {
+                    messageBoxOverlay.style.display = 'none';
+                });
+            }
+
+            // Close inquiry modal if user clicks outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target == inquiryModalOverlay) {
+                    inquiryModalOverlay.style.display = 'none';
+                }
+                if (event.target == messageBoxOverlay) {
+                    messageBoxOverlay.style.display = 'none';
+                }
+            });
+
+            // Furniture Carousel Logic
+            const furnitureCarousel = document.getElementById('furniture-carousel');
+            const furniturePrevButton = document.getElementById('furniture-carousel-prev');
+            const furnitureNextButton = document.getElementById('furniture-carousel-next');
+
+            let furnitureCurrentIndex = 0;
+            const furnitureItems = furnitureCarousel.querySelectorAll('.furniture-carousel-item');
+            const furnitureTotalItems = furnitureItems.length;
+
+            function updateFurnitureCarousel() {
+                if (furnitureItems.length === 0) return;
+                const itemWidth = furnitureItems[0].offsetWidth + 24; // Item width + gap (1.5rem = 24px)
+                furnitureCarousel.style.transform = `translateX(-${furnitureCurrentIndex * itemWidth}px)`;
+            }
+
+            if (furniturePrevButton) {
+                furniturePrevButton.addEventListener('click', () => {
+                    furnitureCurrentIndex = (furnitureCurrentIndex > 0) ? furnitureCurrentIndex - 1 : furnitureTotalItems - 1;
+                    updateFurnitureCarousel();
+                });
+            }
+
+            if (furnitureNextButton) {
+                furnitureNextButton.addEventListener('click', () => { // Corrected from furnitureNextIndex to furnitureNextButton
+                    furnitureCurrentIndex = (furnitureCurrentIndex < furnitureTotalItems - 1) ? furnitureCurrentIndex + 1 : 0;
+                    updateFurnitureCarousel();
+                });
+            }
+
+            // Initial update for furniture carousel
+            updateFurnitureCarousel();
+            window.addEventListener('resize', updateFurnitureCarousel); // Recalculate on resize
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenInfinity - Office Themes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Import Google Fonts - Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+        }
+
+        /* Custom color variables for consistency */
+        :root {
+            --green-theme: #38A169; /* Tailwind's green-600 for this page */
+            --green-theme-hover: #2F855A; /* Darker green for hover */
+            --red-theme: #e53e3e; /* Keeping red for inquiry button */
+            --red-theme-hover: #c53030;
+            --dark-green: #10B981; /* A darker green for specific elements */
+        }
+
+        /* Tailwind-like utility classes for custom colors */
+        .bg-green-theme { background-color: var(--green-theme); }
+        .text-green-theme { color: var(--green-theme); }
+        .border-green-theme { border-color: var(--green-theme); }
+        .hover-green-theme:hover { background-color: var(--green-theme-hover); }
+
+        .bg-red-theme { background-color: var(--red-theme); } /* Added for consistency */
+        .text-red-theme { color: var(--red-theme); } /* Added for consistency */
+        .border-red-theme { border-color: var(--red-theme); } /* Added for consistency */
+        .hover-red-theme:hover { background-color: var(--red-theme-hover); } /* Added for consistency */
+
+        .bg-dark-green { background-color: var(--dark-green); }
+        .text-dark-green { color: var(--dark-green); }
+
+        /* Footer link hover effect */
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Accordion styles */
+        .accordion-button {
+            cursor: pointer;
+            padding: 1rem;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: background-color 0.3s ease; /* Smooth transition for background */
+        }
+        .accordion-button.active {
+            background-color: #f0fdf4; /* Light green background when active */
+            border-bottom: 1px solid var(--green-theme); /* Green border when active */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out, border 0.3s ease-out; /* Added padding to transition */
+            padding-top: 0; /* No top padding when closed */
+            padding-bottom: 0; /* No bottom padding when closed */
+            padding-left: 1rem;
+            padding-right: 1rem;
+            background-color: #f9f9f9;
+            border-left: 5px solid transparent; /* Default transparent border */
+            border-radius: 0 0 8px 8px; /* Rounded corners only at bottom */
+        }
+        .accordion-content.active {
+            padding-top: 2rem; /* Increased top padding when active */
+            padding-bottom: 2rem; /* Increased bottom padding when active */
+            min-height: 150px; /* Minimum height for active content */
+            border-left-color: var(--green-theme); /* Green border when active */
+        }
+        .rotate-icon {
+            transform: rotate(45deg); /* Rotates plus to an 'x' or minus-like symbol */
+            transition: transform 0.3s ease;
+        }
+
+        /* Custom styles for footer social icons */
+        .social-icon-circle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for circles */
+            transition: background-color 0.3s ease;
+        }
+        .social-icon-circle:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Fixed navigation bar */
+        .fixed-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .fixed-navbar .nav-link {
+            color: #333;
+        }
+        .fixed-navbar .nav-link:hover {
+            color: var(--green-theme);
+        }
+
+        /* Inquiry Modal styles */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .inquiry-form-modal {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .modal-close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Custom Message Box Styles */
+        .message-box-overlay {
+            display: none;
+            position: fixed;
+            z-index: 101; /* Higher than inquiry modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .message-box-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Hero Section Specific Styles for Office Themes Page */
+        .office-hero {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            background-image: url('image_6828dd.jpg'); /* Background image from uploaded files */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        .office-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4); /* Dark overlay */
+            z-index: 0;
+        }
+        .office-hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 0 2rem;
+        }
+        .office-hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .office-hero-content p {
+            font-size: 1.5rem;
+        }
+        .breadcrumb {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+        .breadcrumb a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Office Themes Grid */
+        .theme-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .theme-card:hover {
+            transform: translateY(-5px);
+        }
+        .theme-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .theme-card-content {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        /* Furniture Type Section */
+        .furniture-type-section {
+            background-color: var(--dark-green); /* Dark green background */
+            color: white;
+        }
+        .furniture-card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255,255,255,0.1); /* Slightly transparent white for cards */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .furniture-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .furniture-carousel-container {
+            display: flex;
+            overflow-x: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            gap: 1.5rem;
+            padding-bottom: 1rem;
+        }
+        .furniture-carousel-item {
+            flex: 0 0 auto;
+            width: 300px; /* Fixed width for each card */
+            scroll-snap-align: start;
+        }
+        .furniture-carousel-nav-arrow {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            padding: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            z-index: 5;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .furniture-carousel-nav-arrow:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+        .furniture-carousel-nav-arrow.left {
+            left: 1rem;
+        }
+        .furniture-carousel-nav-arrow.right {
+            right: 1rem;
+        }
+
+        /* GreenSpaces Section */
+        .greenspaces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .greenspaces-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Floating Inquiry Button */
+        #open-inquiry-modal {
+            position: fixed;
+            right: 1.5rem; /* Equivalent to Tailwind's right-6 (24px) */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 99999 !important; /* Extremely high z-index to ensure it's always on top */
+            background-color: var(--red-theme); /* Tailwind's red-600 */
+            color: white;
+            padding: 1rem; /* Equivalent to p-4 */
+            border-radius: 9999px; /* Full rounded */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #open-inquiry-modal:hover {
+            background-color: var(--red-theme-hover); /* Darker red for hover */
+            transform: translateY(-2px) translateY(-50%); /* Apply hover transform while maintaining vertical center */
+        }
+        #open-inquiry-modal:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.5); /* Focus ring */
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
+        <div class="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0">
+            <img src="https://placehold.co/100x40/EF4444/FFFFFF?text=GreenInfinity" alt="GreenInfinity Logo" class="h-10 rounded">
+            <button id="menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
+            </button>
+        </div>
+        <!-- Updated Navigation Structure: Single row -->
+        <nav id="navbar-menu" class="hidden md:flex flex-row md:items-center md:space-x-4 w-full md:w-auto">
+            <a href="./index.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
+            <a href="./investers.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            <a href="./about.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
+            <a href="#" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Visualizer</a>
+        </nav>
+    </header>
+
+    <!-- Floating Inquiry Button (Right-middle) -->
+    <button id="open-inquiry-modal">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+        <span class="sr-only">Open Inquiry Form</span>
+    </button>
+
+    <!-- Inquiry Form Modal -->
+    <div id="inquiry-modal-overlay" class="modal-overlay">
+        <div class="inquiry-form-modal">
+            <button class="modal-close-button" id="close-inquiry-modal">&times;</button>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Inquire Now</h3>
+            <form class="flex flex-wrap gap-4">
+                <input type="text" id="inquiry-name" placeholder="Enter Your Name" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="text" id="inquiry-mobile" placeholder="Enter Your Mobile Number" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <!-- Added Pincode input field -->
+                <input type="text" id="inquiry-pincode" placeholder="Enter Pincode" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <select id="inquiry-type" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                    <option value="">Select Inquiry Type</option>
+                    <option value="product">Product Inquiry</option>
+                    <option value="support">Support</option>
+                    <option value="other">Other</option>
+                </select>
+                <!-- Added "I'm not a robot" checkbox and Privacy Policy link -->
+                <div class="w-full flex items-center gap-2 mt-2">
+                    <input type="checkbox" id="robot-check" class="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                    <label for="robot-check" class="text-sm text-gray-700">I'm not a robot</label>
+                    <a href="#" class="text-sm text-green-600 hover:underline ml-4">Privacy Policy</a>
+                </div>
+                <button type="button" id="submit-inquiry-button" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Inquire Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="message-box-overlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <p id="message-box-text" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="message-box-close" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out">OK</button>
+        </div>
+    </div>
+
+    <!-- Hero Section for Office Themes -->
+    <section class="office-hero">
+        <div class="breadcrumb">
+            <a href="./index.html">Home</a> > <a href="#">Office</a>
+        </div>
+        <div class="office-hero-content">
+            <h1>Office Themes</h1>
+            <p>Envision the perfect workspace</p>
+        </div>
+    </section>
+
+    <!-- Introduction to Office Themes -->
+    <section class="py-16 px-6 md:px-12 bg-white text-center">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-lg text-gray-600 leading-relaxed">
+                The office is the heart of productivity and collaboration in your workspace. It's where ideas are born, projects come to life, and connections are made. With its vibrant energy and dynamic atmosphere, the office is the hub of innovation and growth.
+            </p>
+            <p class="text-lg text-gray-600 leading-relaxed mt-4">
+                Transform your office space with inspiring themes that fuel creativity and drive success.
+            </p>
+        </div>
+    </section>
+
+    <!-- Office Themes Grid -->
+    <section class="py-16 px-6 md:px-12 bg-gray-100">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="theme-card bg-white">
+                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Opulent+Office" alt="Opulent Office Theme">
+                <div class="theme-card-content">
+                    <h3 class="text-xl font-semibold text-gray-900">Opulent</h3>
+                </div>
+            </div>
+            <div class="theme-card bg-white">
+                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Artistic+Den+Office" alt="Artistic Den Office Theme">
+                <div class="theme-card-content">
+                    <h3 class="text-xl font-semibold text-gray-900">Artistic Den</h3>
+                </div>
+            </div>
+            <div class="theme-card bg-white">
+                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Modern+Minimalism+Office" alt="Modern Minimalism Office Theme">
+                <div class="theme-card-content">
+                    <h3 class="text-xl font-semibold text-gray-900">Modern Minimalism</h3>
+                </div>
+            </div>
+            <div class="theme-card bg-white">
+                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Indian+Ethos+Office" alt="Indian Ethos Office Theme">
+                <div class="theme-card-content">
+                    <h3 class="text-xl font-semibold text-gray-900">Indian Ethos</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Furniture Type Section with Carousel -->
+    <section class="py-16 px-6 md:px-12 furniture-type-section">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-white text-center">Furniture Type</h2>
+            <div class="relative">
+                <div id="furniture-carousel" class="furniture-carousel-container">
+                    <!-- Furniture Card 1 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Podium" alt="Podium">
+                        <h3 class="text-xl font-semibold text-white">Podium</h3>
+                    </div>
+                    <!-- Furniture Card 2 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Shelves" alt="Shelves">
+                        <h3 class="text-xl font-semibold text-white">Shelves</h3>
+                    </div>
+                    <!-- Furniture Card 3 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Table" alt="Table">
+                        <h3 class="text-xl font-semibold text-white">Table</h3>
+                    </div>
+                    <!-- Furniture Card 4 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Desk" alt="Desk">
+                        <h3 class="text-xl font-semibold text-white">Desk</h3>
+                    </div>
+                     <!-- Furniture Card 5 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Chair" alt="Chair">
+                        <h3 class="text-xl font-semibold text-white">Chair</h3>
+                    </div>
+                    <!-- Furniture Card 6 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Filing+Cabinet" alt="Filing Cabinet">
+                        <h3 class="text-xl font-semibold text-white">Filing Cabinet</h3>
+                    </div>
+                    <!-- Furniture Card 7 -->
+                    <div class="furniture-carousel-item furniture-card">
+                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Conference+Table" alt="Conference Table">
+                        <h3 class="text-xl font-semibold text-white">Conference Table</h3>
+                    </div>
+                </div>
+                <!-- Navigation Arrows -->
+                <button id="furniture-carousel-prev" class="furniture-carousel-nav-arrow left">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="furniture-carousel-next" class="furniture-carousel-nav-arrow right">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Greenply Products Section -->
+    <section class="py-16 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Explore Greenply Products</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <img src="data:image/jpeg;base64,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" alt="Plywood & Blockboard" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <h3 class="text-xl font-semibold text-gray-900">Plywood & Blockboard</h3>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Doors" alt="Doors" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <h3 class="text-xl font-semibold text-gray-900">Doors</h3>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Veneers" alt="Veneers" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <h3 class="text-xl font-semibold text-gray-900">Veneers</h3>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=MDF+and+Board" alt="MDF and Board" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <h3 class="text-xl font-semibold text-gray-900">MDF and Board</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- #GreenSpaces Section -->
+    <section class="py-16 px-6 md:px-12 bg-gray-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">#GreenSpaces</h2>
+                <a href="#" class="text-green-600 hover:underline flex items-center font-semibold">
+                    Discover
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path></svg>
+                </a>
+            </div>
+            <div class="greenspaces-grid">
+                <div class="greenspaces-item">
+                    <img src="data:image/jpeg;base64,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" alt="Office GreenSpace 1">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Office+2" alt="Office GreenSpace 2">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Office+3" alt="Office GreenSpace 3">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Office+4" alt="Office GreenSpace 4">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Office+5" alt="Office GreenSpace 5">
+                </div>
+                <div class="greenspaces-item">
+                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Office+6" alt="Office GreenSpace 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Products</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Categories</a></li>
+                    <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                    <li><a href="#" class="footer-link">Doors</a></li>
+                    <li><a href="#" class="footer-link">Veneers</a></li>
+                    <li><a href="#" class="footer-link">MDF</a></li>
+                    <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                    <li><a href="#" class="footer-link">PVC</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Speciality Feature</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Brands</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">GreenInfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crrest</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity MDF</a></li>
+                    <li><a href="#" class="footer-link">OPTIMAG</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Furniture Type</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Quick Links & More</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 mt-12 border-t border-gray-700 pt-8 flex flex-col items-center">
+            <p class="text-lg font-semibold mb-4">Follow us on</p>
+            <div class="flex space-x-4 text-2xl mb-8">
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fas fa-globe"></i></a> <!-- Assuming globe for general website/linkedin -->
+            </div>
+            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const menuButton = document.getElementById('menu-button');
+            const navbarMenu = document.getElementById('navbar-menu');
+
+            if (menuButton && navbarMenu) {
+                menuButton.addEventListener('click', () => {
+                    navbarMenu.classList.toggle('hidden');
+                    navbarMenu.classList.toggle('flex-col');
+                    navbarMenu.classList.toggle('space-y-4');
+                    navbarMenu.classList.toggle('p-4');
+                    navbarMenu.classList.toggle('bg-white');
+                    navbarMenu.classList.toggle('w-full');
+                    navbarMenu.classList.toggle('items-center');
+                    navbarMenu.classList.toggle('md:flex-row'); /* Ensure it reverts to row on desktop */
+                });
+            }
+
+            // Inquiry Form (Floating Button and Modal) Logic
+            const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
+            const openInquiryModalButton = document.getElementById('open-inquiry-modal');
+            const closeInquiryModalButton = document.getElementById('close-inquiry-modal');
+            const submitInquiryButton = document.getElementById('submit-inquiry-button');
+            const messageBoxOverlay = document.getElementById('message-box-overlay');
+            const messageBoxText = document.getElementById('message-box-text');
+            const messageBoxCloseButton = document.getElementById('message-box-close');
+
+            if (openInquiryModalButton) {
+                openInquiryModalButton.addEventListener('click', () => {
+                    inquiryModalOverlay.style.display = 'flex'; // Use flex to center content
+                });
+            }
+
+            if (closeInquiryModalButton) {
+                closeInquiryModalButton.addEventListener('click', () => {
+                    inquiryModalOverlay.style.display = 'none';
+                });
+            }
+
+            if (submitInquiryButton) {
+                submitInquiryButton.addEventListener('click', () => {
+                    const name = document.getElementById('inquiry-name').value;
+                    const mobile = document.getElementById('inquiry-mobile').value;
+                    const pincode = document.getElementById('inquiry-pincode').value;
+                    const inquiryType = document.getElementById('inquiry-type').value;
+                    const robotCheck = document.getElementById('robot-check').checked;
+
+                    if (!name || !mobile || !pincode || !inquiryType) {
+                        showMessageBox('Please fill in all required fields.');
+                        return;
+                    }
+                    if (!robotCheck) {
+                        showMessageBox('Please confirm you are not a robot.');
+                        return;
+                    }
+
+                    const message = `Hello GreenInfinity, I would like to inquire about your products.
+Name: ${name}
+Contact No.: ${mobile}
+Pincode: ${pincode}
+Inquiry Type: ${inquiryType}`;
+
+                    // Replace '91XXXXXXXXXX' with the actual WhatsApp number for inquiries
+                    const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+
+                    window.open(whatsappUrl, '_blank');
+                    inquiryModalOverlay.style.display = 'none'; // Close modal after submission
+                    showMessageBox('Your inquiry has been sent!');
+                });
+            }
+
+            function showMessageBox(message) {
+                messageBoxText.textContent = message;
+                messageBoxOverlay.style.display = 'flex';
+            }
+
+            if (messageBoxCloseButton) {
+                messageBoxCloseButton.addEventListener('click', () => {
+                    messageBoxOverlay.style.display = 'none';
+                });
+            }
+
+            // Close inquiry modal if user clicks outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target == inquiryModalOverlay) {
+                    inquiryModalOverlay.style.display = 'none';
+                }
+                if (event.target == messageBoxOverlay) {
+                    messageBoxOverlay.style.display = 'none';
+                }
+            });
+
+            // Furniture Carousel Logic
+            const furnitureCarousel = document.getElementById('furniture-carousel');
+            const furniturePrevButton = document.getElementById('furniture-carousel-prev');
+            const furnitureNextButton = document.getElementById('furniture-carousel-next');
+
+            let furnitureCurrentIndex = 0;
+            const furnitureItems = furnitureCarousel.querySelectorAll('.furniture-carousel-item');
+            const furnitureTotalItems = furnitureItems.length;
+
+            function updateFurnitureCarousel() {
+                if (furnitureItems.length === 0) return;
+                const itemWidth = furnitureItems[0].offsetWidth + 24; // Item width + gap (1.5rem = 24px)
+                furnitureCarousel.style.transform = `translateX(-${furnitureCurrentIndex * itemWidth}px)`;
+            }
+
+            if (furniturePrevButton) {
+                furniturePrevButton.addEventListener('click', () => {
+                    furnitureCurrentIndex = (furnitureCurrentIndex > 0) ? furnitureCurrentIndex - 1 : furnitureTotalItems - 1;
+                    updateFurnitureCarousel();
+                });
+            }
+
+            if (furnitureNextButton) {
+                furnitureNextButton.addEventListener('click', () => {
+                    furnitureCurrentIndex = (furnitureCurrentIndex < furnitureTotalItems - 1) ? furnitureCurrentIndex + 1 : 0;
+                    updateFurnitureCarousel();
+                });
+            }
+
+            // Initial update for furniture carousel
+            updateFurnitureCarousel();
+            window.addEventListener('resize', updateFurnitureCarousel); // Recalculate on resize
+        });
+    </script>
+</body>
+</html>

@@ -102,7 +102,7 @@
         }
 
         /* Inquiry Modal styles */
-        .modal-overlay {
+        .inquiry-modal {
             display: none; /* Hidden by default */
             position: fixed;
             z-index: 100;
@@ -115,7 +115,7 @@
             justify-content: center;
             align-items: center;
         }
-        .inquiry-form-modal {
+        .inquiry-modal-content {
             background-color: #fefefe;
             margin: auto;
             padding: 20px;
@@ -124,45 +124,18 @@
             max-width: 600px;
             border-radius: 8px;
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        .modal-close-button {
+        .close-button {
             color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 15px;
+            float: right;
             font-size: 28px;
             font-weight: bold;
-            cursor: pointer;
         }
-        .modal-close-button:hover,
-        .modal-close-button:focus {
+        .close-button:hover,
+        .close-button:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
-        }
-
-        /* Custom Message Box Styles */
-        .message-box-overlay {
-            display: none;
-            position: fixed;
-            z-index: 101; /* Higher than inquiry modal */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            justify-content: center;
-            align-items: center;
-        }
-        .message-box-content {
-            background-color: #fefefe;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            max-width: 400px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         /* Hero Section Carousel Styles */
@@ -259,8 +232,8 @@
         }
         .product-panel {
             position: absolute;
-            width: 465px; /* Example size for the movable panel */
-            height: 500px;
+            width: 200px; /* Example size for the movable panel */
+            height: 300px;
             background-color: #ccc; /* Default panel color */
             border: 2px solid #fff;
             cursor: grab;
@@ -427,8 +400,7 @@
         /* Blog Carousel */
         .blog-carousel-container {
             display: flex;
-            overflow-x: hidden; /* Hide scrollbar for smooth auto-scroll */
-            scroll-behavior: smooth; /* Smooth scrolling for manual and auto */
+            overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
             gap: 1.5rem; /* Space between cards */
@@ -452,29 +424,6 @@
             .key-features-nav-arrow {
                 display: none; /* Hide arrows on desktop if using list clicks */
             }
-        }
-
-        /* Explicit styles for the inquiry button to ensure it's always on top */
-        #open-inquiry-modal {
-            position: fixed;
-            right: 1.5rem; /* Equivalent to Tailwind's right-6 (24px) */
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 99999 !important; /* Extremely high z-index to ensure it's always on top */
-            background-color: #e53e3e; /* Tailwind's red-600 */
-            color: white;
-            padding: 1rem; /* Equivalent to p-4 */
-            border-radius: 9999px; /* Full rounded */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        #open-inquiry-modal:hover {
-            background-color: #c53030; /* Darker red for hover */
-            transform: translateY(-2px) translateY(-50%); /* Apply hover transform while maintaining vertical center */
-        }
-        #open-inquiry-modal:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.5); /* Focus ring */
         }
     </style>
 </head>
@@ -511,8 +460,8 @@
         <div class="carousel-dots"></div> <!-- Dots will be dynamically added by JS -->
     </section>
 
-    <!-- Floating Inquiry Button (Right-middle) -->
-    <button id="open-inquiry-modal">
+    <!-- Floating Inquiry Button -->
+    <button id="open-inquiry-modal" class="fixed top-1/2 right-6 -translate-y-1/2 bg-red-600 text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 z-[990]">
         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
         <span class="sr-only">Open Inquiry Form</span>
     </button>
@@ -525,21 +474,14 @@
             <form class="flex flex-wrap gap-4">
                 <input type="text" id="inquiry-name" placeholder="Enter Your Name" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
                 <input type="text" id="inquiry-mobile" placeholder="Enter Your Mobile Number" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
-                <!-- Added Pincode input field -->
-                <input type="text" id="inquiry-pincode" placeholder="Enter Pincode" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="email" id="inquiry-email" placeholder="Enter Your Email Id" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
                 <select id="inquiry-type" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
                     <option value="">Select Inquiry Type</option>
                     <option value="product">Product Inquiry</option>
                     <option value="support">Support</option>
                     <option value="other">Other</option>
                 </select>
-                <!-- Added "I'm not a robot" checkbox and Privacy Policy link -->
-                <div class="w-full flex items-center gap-2 mt-2">
-                    <input type="checkbox" id="robot-check" class="rounded border-gray-300 text-red-600 shadow-sm focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50">
-                    <label for="robot-check" class="text-sm text-gray-700">I'm not a robot</label>
-                    <a href="#" class="text-sm text-red-600 hover:underline ml-4">Privacy Policy</a>
-                </div>
-                <button type="button" id="submit-inquiry-button" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Inquire Now</button>
+                <button type="button" id="submit-inquiry-button" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Submit Inquiry</button>
             </form>
         </div>
     </div>
@@ -610,6 +552,8 @@
                             <div class="bg-white p-4 rounded-lg shadow-sm">
                                 <div class="mini-carousel-container" id="opulent-p1-carousel">
                                     <img src="https://clubcrests.greenply.com/wp-content/uploads/4.png" class="mini-carousel-slide active" alt="Opulent Polymer 1 Image 1">
+                                    <img src="https://clubcrests.greenply.com/wp-content/uploads/4.png" class="mini-carousel-slide" alt="Opulent Polymer 1 Image 2">
+                                    <img src="https://clubcrests.greenply.com/wp-content/uploads/4.png" class="mini-carousel-slide" alt="Opulent Polymer 1 Image 3">
                                 </div>
                                 <h4 class="text-lg font-semibold text-gray-800 mb-2">Opulent Polymer 1 (10)</h4>
                                 <p class="text-gray-600 text-sm mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -655,6 +599,8 @@
                             <div class="bg-white p-4 rounded-lg shadow-sm">
                                 <div class="mini-carousel-container" id="aspire-p1-carousel">
                                     <img src="https://clubcrests.greenply.com/wp-content/uploads/CANE-STITCH-Polymer-1.jpg" class="mini-carousel-slide active" alt="Aspire Polymer 1 Image 1">
+                                    <img src="https://clubcrests.greenply.com/wp-content/uploads/CANE-STITCH-Polymer-1.jpg" class="mini-carousel-slide" alt="Aspire Polymer 1 Image 2">
+                                    <img src="https://clubcrests.greenply.com/wp-content/uploads/CANE-STITCH-Polymer-1.jpg" class="mini-carousel-slide" alt="Aspire Polymer 1 Image 3">
                                 </div>
                                 <h4 class="text-lg font-semibold text-gray-800 mb-2">Polymer 1 (23)</h4>
                                 <p class="text-gray-600 text-sm mb-3">We are interior designers with a strong architectural sensibility, dedicated to enhancing everyday environments and contributing to better quality of life. Since our launch in 2009, Material Creative has focused on creating unexpected design to bring people together and command attention, which has earned us an award winning reputation both nationally and internationally.</p>
@@ -835,13 +781,6 @@
                         <a href="#" class="mt-4 inline-block text-red-600 hover:underline">Read More &rarr;</a>
                     </div>
                 </div>
-                <!-- Blog Carousel Navigation Buttons -->
-                <button id="blog-carousel-prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-200 focus:outline-none">
-                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                </button>
-                <button id="blog-carousel-next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-200 focus:outline-none">
-                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                </button>
             </div>
         </div>
     </section>
@@ -917,6 +856,49 @@
                 <a href="#" class="social-icon-circle text-white"><i class="fas fa-globe"></i></a> <!-- Assuming globe for general website/linkedin -->
             </div>
             <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+
+        <!-- Floating Info Icon -->
+        <div class="fixed bottom-8 right-8 bg-red-theme text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-red-700 transition duration-300" id="inquiryButton">
+            <i class="fas fa-info text-2xl"></i>
+        </div>
+
+        <!-- Inquiry Modal -->
+        <div id="inquiryModal" class="inquiry-modal">
+            <div class="inquiry-modal-content">
+                <span class="close-button" onclick="closeInquiryModal()">&times;</span>
+                <h2 class="text-2xl font-semibold mb-6">Inquire Now</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="modalName" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="modalName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Name">
+                    </div>
+                    <div>
+                        <label for="modalContact" class="block text-sm font-medium text-gray-700">Contact No.</label>
+                        <input type="text" id="modalContact" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Phone">
+                    </div>
+                    <div>
+                        <label for="modalPincode" class="block text-sm font-medium text-gray-700">Pincode</label>
+                        <input type="text" id="modalPincode" class="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Pincode">
+                    </div>
+                    <div>
+                        <label for="modalInquiryType" class="block text-sm font-medium text-gray-700">Inquiry Type</label>
+                        <select id="modalInquiryType" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme">
+                            <option>Select Type</option>
+                            <option>General Inquiry</option>
+                            <option>Product Inquiry</option>
+                            <option>Dealer Inquiry</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center mt-6">
+                    <input type="checkbox" id="modalRobotCheck" class="rounded border-gray-300 text-red-theme shadow-sm focus:border-red-theme focus:ring focus:ring-red-theme focus:ring-opacity-50">
+                    <label for="modalRobotCheck" class="ml-2 block text-sm text-gray-900">I'm not a robot</label>
+                    <a href="#" class="ml-4 text-sm text-red-theme hover:underline">Privacy Policy</a>
+                </div>
+                <button class="mt-6 bg-green-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-green-600 transition duration-300" onclick="handleModalInquirySubmit()">Inquire Now</button>
+            </div>
         </div>
     </footer>
 
@@ -1049,7 +1031,6 @@
             const featureUpArrow = document.getElementById('key-features-up');
             const featureDownArrow = document.getElementById('key-features-down');
             let currentFeatureIndex = 0;
-            let featureInterval;
 
             function showFeature(index) {
                 featureListItems.forEach((item, i) => {
@@ -1064,128 +1045,111 @@
                 currentFeatureIndex = index;
             }
 
-            function nextFeature() {
-                currentFeatureIndex = (currentFeatureIndex + 1) % featureListItems.length;
-                showFeature(currentFeatureIndex);
-            }
-
-            function startFeatureShow() {
-                featureInterval = setInterval(nextFeature, 4000); // Change feature every 4 seconds
-            }
-
             featureListItems.forEach((item, index) => {
                 item.addEventListener('click', () => {
-                    clearInterval(featureInterval); // Stop auto-slide on manual click
                     showFeature(index);
-                    startFeatureShow(); // Restart auto-slide after manual click
                 });
             });
 
             if (featureUpArrow) {
                 featureUpArrow.addEventListener('click', () => {
-                    clearInterval(featureInterval); // Stop auto-slide on manual click
                     currentFeatureIndex = (currentFeatureIndex - 1 + featureListItems.length) % featureListItems.length;
                     showFeature(currentFeatureIndex);
-                    startFeatureShow(); // Restart auto-slide after manual click
                 });
             }
 
             if (featureDownArrow) {
                 featureDownArrow.addEventListener('click', () => {
-                    clearInterval(featureInterval); // Stop auto-slide on manual click
                     currentFeatureIndex = (currentFeatureIndex + 1) % featureListItems.length;
                     showFeature(currentFeatureIndex);
-                    startFeatureShow(); // Restart auto-slide after manual click
                 });
             }
 
-            startFeatureShow(); // Initialize auto-slide for features
             showFeature(0); // Initialize first feature as active
 
             // Product Visualizer Logic
+            const productPanel = document.getElementById('productPanel');
             const scene = document.getElementById('scene');
-            const productPanel = document.getElementById('productPanel'); // Reference to the single product panel
-
-            const sceneConfiguration = {
-                backgroundImage: 'https://clubcrests.greenply.com/wp-content/uploads/office-image-left.png', // Fixed background image
-                productPanelPosition: { left: '47%', top: '0%' } // Fixed panel position
-            };
-
-            function updateVisualizerScene() {
-                scene.style.backgroundImage = `url('${sceneConfiguration.backgroundImage}')`;
-                productPanel.style.left = sceneConfiguration.productPanelPosition.left;
-                productPanel.style.top = sceneConfiguration.productPanelPosition.top;
-                productPanel.style.display = 'block'; // Ensure the panel is visible
-            }
-
-            const colorData = {
-                opulent: {
-                    pastels: [
-                        { name: "Moonstone 166", hex: "#A0AEC0" },
-                        { name: "Gothic Grey 118", hex: "#718096" },
-                        { name: "Pluto 119", hex: "#4A5568" },
-                        { name: "Leaf Green 174", hex: "#2F855A" },
-                        { name: "Summer Song 170", hex: "#38A169" },
-                        { name: "Prairie Blue 164", hex: "#3182CE" }
-                    ],
-                    neutrals: [
-                        { name: "Creamy White", hex: "#F7FAFC" },
-                        { name: "Light Beige", hex: "#EDF2F7" },
-                        { name: "Stone Grey", hex: "#CBD5E0" },
-                        { name: "Dark Taupe", hex: "#A0AEC0" },
-                        { name: "Charcoal", hex: "#4A5568" },
-                        { name: "Black", hex: "#1A202C" }
-                    ]
-                },
-                modern: {
-                    pastels: [
-                        { name: "Sky Blue", hex: "#90CDF4" },
-                        { name: "Mint Green", hex: "#68D391" },
-                        { name: "Lavender", hex: "#B794F4" },
-                        { name: "Coral Pink", hex: "#FBB6CE" },
-                        { name: "Soft Yellow", hex: "#F6E05E" },
-                        { name: "Peach", hex: "#FBD38D" }
-                    ],
-                    vibrant: [
-                        { name: "Electric Blue", hex: "#00BFFF" },
-                        { name: "Lime Green", hex: "#32CD32" },
-                        { name: "Deep Purple", hex: "#8A2BE2" },
-                        { name: "Hot Pink", hex: "#FF69B4" },
-                        { name: "Sunny Orange", hex: "#FFA500" },
-                        { name: "Crimson Red", hex: "#DC143C" }
-                    ]
-                }
-            };
-
-            const colorPickerModal = document.getElementById('colorPickerModal');
             const togglePickerButton = document.getElementById('togglePickerButton');
+            const colorPickerModal = document.getElementById('colorPickerModal');
             const closeModalButton = document.getElementById('closeModalButton');
             const panelTypeSelect = document.getElementById('panelTypeSelect');
             const panelStyleSelect = document.getElementById('panelStyleSelect');
             const colorGrid = document.getElementById('colorGrid');
 
-            let currentPanelType = panelTypeSelect.value;
-            let currentPanelStyle = panelStyleSelect.value;
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            // Sample colors and images (you would replace these with actual product data)
+            const productData = {
+                opulent: {
+                    pastels: [
+                        { name: 'Opulent Pastel 1', color: '#F3E5F5', image: 'https://placehold.co/60x60/F3E5F5/000000?text=' },
+                        { name: 'Opulent Pastel 2', color: '#E0F2F7', image: 'https://placehold.co/60x60/E0F2F7/000000?text=' },
+                        { name: 'Opulent Pastel 3', color: '#E8F5E9', image: 'https://placehold.co/60x60/E8F5E9/000000?text=' },
+                    ],
+                    neutrals: [
+                        { name: 'Opulent Neutral 1', color: '#F5F5DC', image: 'https://placehold.co/60x60/F5F5DC/000000?text=' },
+                        { name: 'Opulent Neutral 2', color: '#F0F0F0', image: 'https://placehold.co/60x60/F0F0F0/000000?text=' },
+                        { name: 'Opulent Neutral 3', color: '#D3D3D3', image: 'https://placehold.co/60x60/D3D3D3/000000?text=' },
+                    ],
+                    vibrant: [
+                        { name: 'Opulent Vibrant 1', color: '#FFD700', image: 'https://placehold.co/60x60/FFD700/000000?text=' },
+                        { name: 'Opulent Vibrant 2', color: '#FF4500', image: 'https://placehold.co/60x60/FF4500/FFFFFF?text=' },
+                        { name: 'Opulent Vibrant 3', color: '#8A2BE2', image: 'https://placehold.co/60x60/8A2BE2/FFFFFF?text=' },
+                    ]
+                },
+                modern: {
+                    pastels: [
+                        { name: 'Modern Pastel 1', color: '#B2EBF2', image: 'https://placehold.co/60x60/B2EBF2/000000?text=' },
+                        { name: 'Modern Pastel 2', color: '#C8E6C9', image: 'https://placehold.co/60x60/C8E6C9/000000?text=' },
+                    ],
+                    neutrals: [
+                        { name: 'Modern Neutral 1', color: '#A9A9A9', image: 'https://placehold.co/60x60/A9A9A9/FFFFFF?text=' },
+                        { name: 'Modern Neutral 2', color: '#778899', image: 'https://placehold.co/60x60/778899/FFFFFF?text=' },
+                    ],
+                    vibrant: [
+                        { name: 'Modern Vibrant 1', color: '#FF6347', image: 'https://placehold.co/60x60/FF6347/FFFFFF?text=' },
+                        { name: 'Modern Vibrant 2', color: '#4682B4', image: 'https://placehold.co/60x60/4682B4/FFFFFF?text=' },
+                    ]
+                },
+                classic: {
+                    pastels: [
+                        { name: 'Classic Pastel 1', color: '#F5DEB3', image: 'https://placehold.co/60x60/F5DEB3/000000?text=' },
+                    ],
+                    neutrals: [
+                        { name: 'Classic Neutral 1', color: '#D2B48C', image: 'https://placehold.co/60x60/D2B48C/000000?text=' },
+                        { name: 'Classic Neutral 2', color: '#8B4513', image: 'https://placehold.co/60x60/8B4513/FFFFFF?text=' },
+                    ],
+                    vibrant: [
+                        { name: 'Classic Vibrant 1', color: '#800000', image: 'https://placehold.co/60x60/800000/FFFFFF?text=' },
+                    ]
+                }
+            };
 
             function loadColors() {
                 const selectedType = panelTypeSelect.value;
                 const selectedStyle = panelStyleSelect.value;
-                const colors = colorData[selectedType]?.[selectedStyle] || []; // Use optional chaining for safety
+                const colors = productData[selectedType][selectedStyle];
 
                 colorGrid.innerHTML = ''; // Clear previous colors
                 colors.forEach(product => {
                     const colorOption = document.createElement('div');
                     colorOption.classList.add('color-option');
-                    colorOption.style.backgroundColor = product.hex; // Use hex from new data
+                    colorOption.style.backgroundColor = product.color;
                     colorOption.title = product.name;
-                    colorOption.dataset.color = product.hex; // Store color for applying
+                    colorOption.dataset.color = product.color; // Store color for applying
+                    colorOption.dataset.image = product.image; // Store image for applying
 
                     colorOption.addEventListener('click', () => {
                         // Remove 'selected' class from all other options
                         document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
                         // Add 'selected' class to the clicked option
                         colorOption.classList.add('selected');
-                        productPanel.style.backgroundColor = product.hex;
+                        productPanel.style.backgroundColor = product.color;
+                        // You can also change the background image of the panel if product.image is a texture
+                        // productPanel.style.backgroundImage = `url('${product.image}')`;
+                        // productPanel.style.backgroundSize = 'cover';
                     });
                     colorGrid.appendChild(colorOption);
                 });
@@ -1197,41 +1161,13 @@
             }
 
             // Event listeners for dropdowns
-            panelTypeSelect.addEventListener('change', () => {
-                currentPanelType = panelTypeSelect.value;
-                // Update panelStyleSelect options based on selected panelType
-                updatePanelStyleOptions();
-                loadColors();
-            });
+            panelTypeSelect.addEventListener('change', loadColors);
+            panelStyleSelect.addEventListener('change', loadColors);
 
-            panelStyleSelect.addEventListener('change', () => {
-                currentPanelStyle = panelStyleSelect.value;
-                loadColors();
-            });
-
-            function updatePanelStyleOptions() {
-                panelStyleSelect.innerHTML = ''; // Clear existing options
-                const styles = Object.keys(colorData[currentPanelType]);
-                styles.forEach(style => {
-                    const option = document.createElement('option');
-                    option.value = style;
-                    option.textContent = style.charAt(0).toUpperCase() + style.slice(1); // Capitalize first letter
-                    panelStyleSelect.appendChild(option);
-                });
-                // Set the default selected style to the first available or 'pastels' if exists
-                panelStyleSelect.value = styles.includes('pastels') ? 'pastels' : styles[0];
-                currentPanelStyle = panelStyleSelect.value; // Update current style after setting
-            }
-
-            // Initial setup for visualizer
-            updateVisualizerScene();
-            updatePanelStyleOptions(); // Populate style options initially
-            loadColors(); // Load colors based on initial selections
+            // Initial load of colors
+            loadColors();
 
             // Make the product panel draggable
-            let isDragging = false;
-            let offsetX, offsetY;
-
             productPanel.addEventListener('mousedown', (e) => {
                 isDragging = true;
                 offsetX = e.clientX - productPanel.getBoundingClientRect().left;
@@ -1279,24 +1215,24 @@
                 }
             });
 
-            // Inquiry Form (Modal) Logic
-            const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
-            const openInquiryModalButton = document.getElementById('open-inquiry-modal'); // The button to keep
+            // Inquiry Form (Floating Button and Modal) Logic
+            const inquiryModal = document.getElementById('inquiryModal');
+            const inquiryButton = document.getElementById('inquiryButton');
             const closeInquiryModalButton = document.getElementById('close-inquiry-modal');
             const submitInquiryButton = document.getElementById('submit-inquiry-button');
             const messageBoxOverlay = document.getElementById('message-box-overlay');
             const messageBoxText = document.getElementById('message-box-text');
             const messageBoxCloseButton = document.getElementById('message-box-close');
 
-            if (openInquiryModalButton) {
-                openInquiryModalButton.addEventListener('click', () => {
-                    inquiryModalOverlay.style.display = 'flex'; // Use flex to center content
+            if (inquiryButton) {
+                inquiryButton.addEventListener('click', () => {
+                    inquiryModal.style.display = 'flex'; // Use flex to center content
                 });
             }
 
             if (closeInquiryModalButton) {
                 closeInquiryModalButton.addEventListener('click', () => {
-                    inquiryModalOverlay.style.display = 'none';
+                    inquiryModal.style.display = 'none';
                 });
             }
 
@@ -1304,30 +1240,25 @@
                 submitInquiryButton.addEventListener('click', () => {
                     const name = document.getElementById('inquiry-name').value;
                     const mobile = document.getElementById('inquiry-mobile').value;
-                    const pincode = document.getElementById('inquiry-pincode').value; // Get pincode
+                    const email = document.getElementById('inquiry-email').value;
                     const inquiryType = document.getElementById('inquiry-type').value;
-                    const robotCheck = document.getElementById('robot-check').checked; // Get checkbox state
 
-                    if (!name || !mobile || !pincode || !inquiryType) { // Added pincode to validation
-                        showMessageBox('Please fill in all required fields.');
-                        return;
-                    }
-                    if (!robotCheck) { // Check if "I'm not a robot" is checked
-                        showMessageBox('Please confirm you are not a robot.');
+                    if (!name || !mobile || !email || !inquiryType) {
+                        showMessageBox('Please fill in all fields.');
                         return;
                     }
 
                     const message = `Hello GreenInfinity, I would like to inquire about your products.
 Name: ${name}
 Contact No.: ${mobile}
-Pincode: ${pincode}
+Email: ${email}
 Inquiry Type: ${inquiryType}`;
 
                     // Replace '91XXXXXXXXXX' with the actual WhatsApp number for inquiries
                     const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
 
                     window.open(whatsappUrl, '_blank');
-                    inquiryModalOverlay.style.display = 'none'; // Close modal after submission
+                    inquiryModal.style.display = 'none'; // Close modal after submission
                     showMessageBox('Your inquiry has been sent!');
                 });
             }
@@ -1345,8 +1276,8 @@ Inquiry Type: ${inquiryType}`;
 
             // Close inquiry modal if user clicks outside of it
             window.addEventListener('click', (event) => {
-                if (event.target == inquiryModalOverlay) {
-                    inquiryModalOverlay.style.display = 'none';
+                if (event.target == inquiryModal) {
+                    inquiryModal.style.display = 'none';
                 }
                 if (event.target == messageBoxOverlay) {
                     messageBoxOverlay.style.display = 'none';
@@ -1393,77 +1324,43 @@ Inquiry Type: ${inquiryType}`;
                 });
             });
 
-            // Our Blogs Carousel Logic
-            const blogCarouselContainer = document.getElementById('blog-carousel');
-            const blogCarouselItems = document.querySelectorAll('#blog-carousel .blog-card');
-            const blogCarouselPrevButton = document.getElementById('blog-carousel-prev');
-            const blogCarouselNextButton = document.getElementById('blog-carousel-next');
-            let blogAutoScrollInterval;
+            // Interior Guide Carousel Logic
+            const interiorGuideContainer = document.querySelector('#interior-guide-carousel .blog-carousel-container');
+            const interiorGuideItems = document.querySelectorAll('#interior-guide-carousel .blog-card');
+            const interiorGuidePrevButton = document.querySelector('#interior-guide-carousel .carousel-prev');
+            const interiorGuideNextButton = document.querySelector('#interior-guide-carousel .carousel-next');
 
-            function scrollBlogCarousel(direction) {
-                if (blogCarouselItems.length === 0 || !blogCarouselContainer) return;
+            function scrollCarousel(container, items, direction) {
+                if (items.length === 0 || !container) return;
 
-                const itemWidth = blogCarouselItems[0].offsetWidth;
-                const itemStyle = getComputedStyle(blogCarouselItems[0]);
-                const gap = parseFloat(itemStyle.marginRight) || parseFloat(getComputedStyle(blogCarouselItems[1] || blogCarouselItems[0]).marginLeft) || 0;
+                const itemWidth = items[0].offsetWidth;
+                const itemStyle = getComputedStyle(items[0]);
+                const gap = parseFloat(itemStyle.marginRight) || parseFloat(getComputedStyle(items[1] || items[0]).marginLeft) || 0;
                 const scrollAmount = itemWidth + gap;
 
-                let currentScrollLeft = blogCarouselContainer.scrollLeft;
-                let maxScrollLeft = blogCarouselContainer.scrollWidth - blogCarouselContainer.clientWidth;
-
                 if (direction === 'next') {
-                    let targetScrollLeft = currentScrollLeft + scrollAmount;
-                    if (targetScrollLeft >= maxScrollLeft) {
-                        // If the next scroll would go past the end, jump to the beginning instantly
-                        blogCarouselContainer.scrollTo({
-                            left: 0,
-                            behavior: 'auto'
-                        });
-                    } else {
-                        // Otherwise, scroll smoothly to the next position
-                        blogCarouselContainer.scrollBy({
-                            left: scrollAmount,
-                            behavior: 'smooth'
-                        });
-                    }
+                    container.scrollBy({
+                        left: scrollAmount,
+                        behavior: 'smooth'
+                    });
                 } else if (direction === 'prev') {
-                    let targetScrollLeft = currentScrollLeft - scrollAmount;
-                    if (targetScrollLeft <= 0) {
-                        // If the next scroll would go past the beginning, jump to the end instantly
-                        blogCarouselContainer.scrollTo({
-                            left: maxScrollLeft,
-                            behavior: 'auto'
-                        });
-                    } else {
-                        // Otherwise, scroll smoothly to the previous position
-                        blogCarouselContainer.scrollBy({
-                            left: -scrollAmount,
-                            behavior: 'smooth'
-                        });
-                    }
+                    container.scrollBy({
+                        left: -scrollAmount,
+                        behavior: 'smooth'
+                    });
                 }
             }
 
-            function startBlogAutoScroll() {
-                blogAutoScrollInterval = setInterval(() => {
-                    scrollBlogCarousel('next');
-                }, 5000); // Auto-scroll every 5 seconds
+            if (interiorGuidePrevButton) {
+                interiorGuidePrevButton.addEventListener('click', () => {
+                    scrollCarousel(interiorGuideContainer, interiorGuideItems, 'prev');
+                });
             }
-
-            // Stop auto-scroll on manual interaction and restart after a delay
-            blogCarouselPrevButton.addEventListener('click', () => {
-                clearInterval(blogAutoScrollInterval);
-                scrollBlogCarousel('prev');
-                startBlogAutoScroll();
-            });
-
-            blogCarouselNextButton.addEventListener('click', () => {
-                clearInterval(blogAutoScrollInterval);
-                scrollBlogCarousel('next');
-                startBlogAutoScroll();
-            });
-
-            startBlogAutoScroll(); // Start auto-scrolling blogs on load
+            if (interiorGuideNextButton) {
+                interiorGuideNextButton.addEventListener('click', () => {
+                    scrollCarousel(interiorGuideContainer, interiorGuideItems, 'next');
+                });
+            }
         });
     </script>
 </body>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenInfinity - Waterproof Plywood & Solutions</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Import Google Fonts - Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+        }
+
+        /* Custom color variables for consistency */
+        :root {
+            --red-theme: #e53e3e; /* Tailwind's red-600 */
+            --red-theme-hover: #c53030; /* Darker red for hover */
+        }
+
+        /* Tailwind-like utility classes for custom colors */
+        .bg-red-theme { background-color: var(--red-theme); }
+        .text-red-theme { color: var(--red-theme); }
+        .border-red-theme { border-color: var(--red-theme); }
+        .hover-red-theme:hover { background-color: var(--red-theme-hover); }
+
+        /* Footer link hover effect */
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Fixed navigation bar */
+        .fixed-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .fixed-navbar .nav-link {
+            color: #333;
+        }
+        .fixed-navbar .nav-link:hover {
+            color: var(--red-theme);
+        }
+
+        /* Dropdown for Products in Navbar */
+        .dropdown-navbar {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content-navbar {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            top: calc(100% + 5px); /* Position below the main nav item */
+            left: 0;
+        }
+
+        .dropdown-content-navbar a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            transition: background-color 0.2s ease;
+        }
+
+        .dropdown-content-navbar a:hover {
+            background-color: #f1f1f1;
+            color: var(--red-theme);
+        }
+
+        .dropdown-navbar:hover .dropdown-content-navbar {
+            display: block;
+        }
+
+        /* Inquiry Modal styles (copied from main page) */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .inquiry-form-modal {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .modal-close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+         /* Custom styles for footer social icons */
+        .social-icon-circle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for circles */
+            transition: background-color 0.3s ease;
+        }
+        .social-icon-circle:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section for Waterproof Page */
+        .waterproof-hero {
+            background-image: url('image_76ae18.jpg'); /* Your waterproof hero image */
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .waterproof-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+        }
+        .waterproof-hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 0 1.5rem;
+        }
+        
+        /* Product Card specific styling for this page */
+        .waterproof-product-card {
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            height: 100%; /* Ensure cards fill height in grid */
+        }
+        .waterproof-product-card:hover {
+            transform: translateY(-5px);
+        }
+        .waterproof-product-card img {
+            width: 100%;
+            height: 200px; /* Fixed height for product images */
+            object-fit: cover;
+        }
+        .waterproof-product-card .content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allow content to grow */
+        }
+        .waterproof-product-card .badge {
+            background-color: #34D399; /* Green for waterproof badge */
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        .waterproof-product-card .badge-image {
+            max-width: 120px; /* Adjust size as needed */
+            height: auto;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header Section (Copied from index.html) -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
+        <div class="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0">
+            <img src="https://placehold.co/100x40/EF4444/FFFFFF?text=GreenInfinity" alt="GreenInfinity Logo" class="h-10 rounded">
+            <button id="menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
+            </button>
+        </div>
+        <nav id="navbar-menu" class="hidden md:flex flex-col md:flex-row md:items-center md:space-x-4 w-full md:w-auto">
+            <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
+            <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            
+            <!-- Products Dropdown -->
+            <div class="dropdown-navbar">
+                <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item flex items-center text-red-600">
+                    Products
+                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </a>
+                <div class="dropdown-content-navbar">
+                    <a href="./about.html">All Products</a>
+                    <a href="./waterproof.html" class="bg-gray-100 font-semibold">Waterproof</a>
+                    <!-- Add more product categories here if needed -->
+                </div>
+            </div>
+
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Visualizer</a>
+        </nav>
+    </header>
+
+    <!-- Floating Inquiry Button (Copied from index.html) -->
+    <button id="open-inquiry-modal" class="fixed top-1/2 right-6 -translate-y-1/2 bg-red-600 text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 z-[990]">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+        <span class="sr-only">Open Inquiry Form</span>
+    </button>
+
+    <!-- Inquiry Form Modal (Copied from index.html) -->
+    <div id="inquiry-modal-overlay" class="modal-overlay">
+        <div class="inquiry-form-modal">
+            <button class="modal-close-button" id="close-inquiry-modal">&times;</button>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Inquire Now</h3>
+            <form class="flex flex-wrap gap-4">
+                <input type="text" id="inquiry-name" placeholder="Enter Your Name" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="text" id="inquiry-mobile" placeholder="Enter Your Mobile Number" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="email" id="inquiry-email" placeholder="Enter Your Email Id" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <select type="email" id="inquiry-type" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                    <option value="">Select Inquiry Type</option>
+                    <option value="product">Product Inquiry</option>
+                    <option value="support">Support</option>
+                    <option value="other">Other</option>
+                </select>
+                <button type="button" id="submit-inquiry-button" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Submit Inquiry</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Message Box (Copied from index.html) -->
+    <div id="message-box-overlay" class="modal-overlay">
+        <div class="message-box-content">
+            <p id="message-box-text" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="message-box-close" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out">OK</button>
+        </div>
+    </div>
+
+    <!-- Hero Section for Waterproof Page -->
+    <section class="waterproof-hero">
+        <div class="waterproof-hero-content">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4">GREENINFINITY</h1>
+            <p class="text-3xl md:text-4xl font-semibold">WATERPROOF SOLUTIONS</p>
+            <p class="text-lg mt-4 max-w-2xl mx-auto">Unmatched protection and durability for every space, resisting moisture and enhancing longevity.</p>
+        </div>
+    </section>
+
+    <!-- Introduction to Waterproof Section -->
+    <section class="py-16 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Unmatched Protection with GreenInfinity Waterproof</h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    In environments prone to moisture, ordinary plywood simply won't do. GreenInfinity's Waterproof Plywood is engineered to provide superior resistance against water, humidity, and dampness, ensuring your interiors and exteriors remain pristine and structurally sound for years to come.
+                </p>
+                <p class="text-gray-600 leading-relaxed">
+                    Ideal for kitchens, bathrooms, laundry rooms, and outdoor furniture, our waterproof solutions prevent swelling, warping, and delamination, offering peace of mind and enduring beauty. Invest in GreenInfinity Waterproof for reliability that stands the test of time and water.
+                </p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="image_76ad55.jpg" alt="Waterproof surface with water droplets" class="rounded-xl shadow-lg max-w-full h-auto object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Waterproof Products Section -->
+    <section class="py-16 px-6 md:px-12 bg-gray-100">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Flagship Waterproof Products</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1: GreenInfinity Optima G 710 BWR -->
+                <div class="waterproof-product-card">
+                    <img src="image_76ad79.png" alt="GreenInfinity Optima G 710 BWR">
+                    <div class="content">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">GreenInfinity Optima G 710 BWR</h3>
+                        <p class="text-gray-700 mb-3">
+                            The ultimate choice for marine and high-moisture applications. Our Optima G 710 BWR plywood is built with advanced technology to resist boiling water, ensuring uncompromised performance even in the most challenging conditions. Perfect for kitchens, bathrooms, and marine furniture.
+                        </p>
+                        <div class="mt-auto flex items-center flex-wrap gap-2">
+                             <span class="badge">BWR Grade</span>
+                             <span class="badge">Marine Grade</span>
+                             <img src="image_76aa10.png" alt="Boiling Water Proof Badge" class="badge-image">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2: GreenInfinity 710 BWP Plywood -->
+                <div class="waterproof-product-card">
+                    <img src="image_76ad1c.png" alt="GreenInfinity 710 BWP Plywood">
+                    <div class="content">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">GreenInfinity 710 BWP Plywood</h3>
+                        <p class="text-gray-700 mb-3">
+                            Designed to offer exceptional protection against water and humidity, our 710 BWP (Boiling Waterproof) plywood is a robust solution for all your interior and exterior needs. Its superior adhesive bond prevents delamination, making it an ideal choice for durable furniture and fixtures.
+                        </p>
+                        <div class="mt-auto flex items-center flex-wrap gap-2">
+                            <span class="badge">BWP Grade</span>
+                            <span class="badge">Termite Resistant</span>
+                            <img src="image_76a994.png" alt="Water Proof Plywood Badge" class="badge-image">
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Product Card 3: General Waterproof Plywood Features -->
+                <div class="waterproof-product-card">
+                    <img src="https://placehold.co/400x200/CBD5E0/4A5568?text=Advanced+Waterproof+Technology" alt="Advanced Waterproof Technology">
+                    <div class="content">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Advanced Waterproof Technology</h3>
+                        <p class="text-gray-700 mb-3">
+                            All GreenInfinity waterproof plywood is manufactured using a unique process that ensures maximum resistance to moisture penetration. From high-quality resins to precision bonding, every step is designed to create a product that stands strong against water, humidity, and atmospheric changes.
+                        </p>
+                        <div class="mt-auto flex items-center flex-wrap gap-2">
+                            <span class="badge">High Density</span>
+                            <span class="badge">Superior Bonding</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Advantages Section -->
+    <section class="py-16 px-6 md:px-12 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Key Advantages of GreenInfinity Waterproof</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="flex items-start bg-gray-50 p-6 rounded-lg shadow-md">
+                    <i class="fas fa-water text-3xl text-red-theme mr-4"></i>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Boiling Water Proof (BWP/BWR Grade)</h3>
+                        <p class="text-gray-700">Resists prolonged exposure to boiling water without delamination, making it ideal for wet areas.</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-gray-50 p-6 rounded-lg shadow-md">
+                    <i class="fas fa-ruler-combined text-3xl text-red-theme mr-4"></i>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">High Density & Strength</h3>
+                        <p class="text-gray-700">Exceptional structural integrity and durability for long-lasting performance.</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-gray-50 p-6 rounded-lg shadow-md">
+                    <i class="fas fa-bug text-3xl text-red-theme mr-4"></i>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Termite and Borer Proof</h3>
+                        <p class="text-gray-700">Treated to resist termites and borers, protecting your investments from destructive pests.</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-gray-50 p-6 rounded-lg shadow-md">
+                    <i class="fas fa-expand-alt text-3xl text-red-theme mr-4"></i>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Resistant to Warping & Delamination</h3>
+                        <p class="text-gray-700">Maintains its shape and structural integrity, even in humid conditions.</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-gray-50 p-6 rounded-lg shadow-md">
+                    <i class="fas fa-shower text-3xl text-red-theme mr-4"></i>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Ideal for Wet Areas</h3>
+                        <p class="text-gray-700">Perfect for kitchens, bathrooms, laundry rooms, and any area exposed to moisture.</p>
+                    </div>
+                </div>
+                <div class="flex items-start bg-gray-50 p-6 rounded-lg shadow-md">
+                    <i class="fas fa-infinity text-3xl text-red-theme mr-4"></i>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Long-lasting Durability</h3>
+                        <p class="text-gray-700">Engineered for extended lifespan, reducing the need for frequent replacements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Visuals Section -->
+    <section class="py-16 px-6 md:px-12 bg-gray-200">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Transform Your Wet Areas with Confidence</h2>
+            <img src="image_76aa50.jpg" alt="Kitchen and Bathroom applications of waterproof plywood" class="rounded-xl shadow-lg w-full max-w-5xl mx-auto h-auto object-cover mb-8">
+            <p class="text-gray-700 text-lg leading-relaxed max-w-3xl mx-auto">
+                From sleek kitchen cabinets to durable bathroom vanities, GreenInfinity Waterproof products offer the perfect blend of aesthetic appeal and unparalleled performance, ensuring your designs last.
+            </p>
+            <a href="#" id="inquireNowButton" class="mt-8 inline-block bg-red-600 text-white px-8 py-4 rounded-lg hover:bg-red-700 transition duration-300 ease-in-out shadow-lg text-lg font-semibold">Inquire Now &rarr;</a>
+        </div>
+    </section>
+
+    <!-- Footer Section (Copied from index.html) -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Products</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Categories</a></li>
+                    <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                    <li><a href="#" class="footer-link">Doors</a></li>
+                    <li><a href="#" class="footer-link">Veneers</a></li>
+                    <li><a href="#" class="footer-link">MDF</a></li>
+                    <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                    <li><a href="#" class="footer-link">PVC</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Speciality Feature</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Brands</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">GreenInfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crrest</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity MDF</a></li>
+                    <li><a href="#" class="footer-link">OPTIMAG</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Furniture Type</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Quick Links & More</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">About Us</a></li>
+                    <li><a href="#" class="footer-link">Contact Us</a></li>
+                    <li><a href="#" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 mt-12 border-t border-gray-700 pt-8 flex flex-col items-center">
+            <p class="text-lg font-semibold mb-4">Follow us on</p>
+            <div class="flex space-x-4 text-2xl mb-8">
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fas fa-globe"></i></a> <!-- Assuming globe for general website/linkedin -->
+            </div>
+            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const menuButton = document.getElementById('menu-button');
+            const navbarMenu = document.getElementById('navbar-menu');
+
+            if (menuButton && navbarMenu) {
+                menuButton.addEventListener('click', () => {
+                    navbarMenu.classList.toggle('hidden');
+                    navbarMenu.classList.toggle('flex-col');
+                    navbarMenu.classList.toggle('space-y-4');
+                    navbarMenu.classList.toggle('p-4');
+                    navbarMenu.classList.toggle('bg-white');
+                    navbarMenu.classList.toggle('w-full');
+                    navbarMenu.classList.toggle('items-center');
+                });
+            }
+
+            // Inquiry Form (Floating Button and Modal) Logic
+            const inquiryModal = document.getElementById('inquiry-modal-overlay');
+            const openInquiryModalButton = document.getElementById('open-inquiry-modal');
+            const closeInquiryModalButton = document.getElementById('close-inquiry-modal');
+            const submitInquiryButton = document.getElementById('submit-inquiry-button');
+            const messageBoxOverlay = document.getElementById('message-box-overlay');
+            const messageBoxText = document.getElementById('message-box-text');
+            const messageBoxCloseButton = document.getElementById('message-box-close');
+            const inquireNowButton = document.getElementById('inquireNowButton'); // For the button in Application Visuals section
+
+            if (openInquiryModalButton) {
+                openInquiryModalButton.addEventListener('click', () => {
+                    inquiryModal.style.display = 'flex';
+                });
+            }
+
+            if (inquireNowButton) { // Listener for the "Inquire Now" button in the Application Visuals section
+                inquireNowButton.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default anchor behavior
+                    inquiryModal.style.display = 'flex';
+                });
+            }
+
+            if (closeInquiryModalButton) {
+                closeInquiryModalButton.addEventListener('click', () => {
+                    inquiryModal.style.display = 'none';
+                });
+            }
+
+            if (submitInquiryButton) {
+                submitInquiryButton.addEventListener('click', () => {
+                    const name = document.getElementById('inquiry-name').value;
+                    const mobile = document.getElementById('inquiry-mobile').value;
+                    const email = document.getElementById('inquiry-email').value;
+                    const inquiryType = document.getElementById('inquiry-type').value;
+
+                    if (!name || !mobile || !email || !inquiryType) {
+                        showMessageBox('Please fill in all fields.');
+                        return;
+                    }
+
+                    const message = `Hello GreenInfinity, I would like to inquire about your products.
+Name: ${name}
+Contact No.: ${mobile}
+Email: ${email}
+Inquiry Type: ${inquiryType}`;
+
+                    // Replace '91XXXXXXXXXX' with the actual WhatsApp number for inquiries
+                    const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+
+                    window.open(whatsappUrl, '_blank');
+                    inquiryModal.style.display = 'none'; // Close modal after submission
+                    showMessageBox('Your inquiry has been sent!');
+                });
+            }
+
+            function showMessageBox(message) {
+                messageBoxText.textContent = message;
+                messageBoxOverlay.style.display = 'flex';
+            }
+
+            if (messageBoxCloseButton) {
+                messageBoxCloseButton.addEventListener('click', () => {
+                    messageBoxOverlay.style.display = 'none';
+                });
+            }
+
+            // Close inquiry modal if user clicks outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target == inquiryModal) {
+                    inquiryModal.style.display = 'none';
+                }
+                if (event.target == messageBoxOverlay) {
+                    messageBoxOverlay.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
