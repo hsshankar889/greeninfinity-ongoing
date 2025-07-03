@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenInfinity - Contact Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Import Google Fonts - Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+        }
+
+        /* Custom color variables for consistency */
+        :root {
+            --green-theme: #38A169; /* Tailwind's green-600 for this page */
+            --green-theme-hover: #2F855A; /* Darker green for hover */
+            --red-theme: #e53e3e; /* Keeping red for inquiry button */
+            --red-theme-hover: #c53030;
+            --dark-green: #10B981; /* A darker green for specific elements */
+        }
+
+        /* Tailwind-like utility classes for custom colors */
+        .bg-green-theme { background-color: var(--green-theme); }
+        .text-green-theme { color: var(--green-theme); }
+        .border-green-theme { border-color: var(--green-theme); }
+        .hover-green-theme:hover { background-color: var(--green-theme-hover); }
+
+        .bg-red-theme { background-color: var(--red-theme); } /* Added for consistency */
+        .text-red-theme { color: var(--red-theme); } /* Added for consistency */
+        .border-red-theme { border-color: var(--red-theme); } /* Added for consistency */
+        .hover-red-theme:hover { background-color: var(--red-theme-hover); } /* Added for consistency */
+
+        .bg-dark-green { background-color: var(--dark-green); }
+        .text-dark-green { color: var(--dark-green); }
+
+        /* Footer link hover effect */
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Accordion styles (if any are used, though not directly on contact page) */
+        .accordion-button {
+            cursor: pointer;
+            padding: 1rem;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-button.active {
+            background-color: #f0fdf4;
+            border-bottom: 1px solid var(--green-theme);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out, border 0.3s ease-out;
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            background-color: #f9f9f9;
+            border-left: 5px solid transparent;
+            border-radius: 0 0 8px 8px;
+        }
+        .accordion-content.active {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            min-height: 150px;
+            border-left-color: var(--green-theme);
+        }
+        .rotate-icon {
+            transform: rotate(45deg);
+            transition: transform 0.3s ease;
+        }
+
+        /* Custom styles for footer social icons */
+        .social-icon-circle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        .social-icon-circle:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Fixed navigation bar */
+        .fixed-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .fixed-navbar .nav-link {
+            color: #333;
+        }
+        .fixed-navbar .nav-link:hover {
+            color: var(--green-theme);
+        }
+
+        /* Inquiry Modal styles */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .inquiry-form-modal {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .modal-close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Custom Message Box Styles */
+        .message-box-overlay {
+            display: none;
+            position: fixed;
+            z-index: 101;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .message-box-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Hero Section Specific Styles for Contact Us Page */
+        .contact-hero {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            background-image: url('https://placehold.co/1920x450/38A169/FFFFFF?text=Contact+Us+Background'); /* Placeholder image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4); /* Dark overlay */
+            z-index: 0;
+        }
+        .contact-hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 0 2rem;
+        }
+        .contact-hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .contact-hero-content p {
+            font-size: 1.5rem;
+        }
+        .breadcrumb {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+        .breadcrumb a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Floating Inquiry Button */
+        #open-inquiry-modal {
+            position: fixed;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 99999 !important;
+            background-color: var(--red-theme);
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #open-inquiry-modal:hover {
+            background-color: var(--red-theme-hover);
+            transform: translateY(-2px) translateY(-50%);
+        }
+        #open-inquiry-modal:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
+        <div class="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0">
+            <img src="https://placehold.co/100x40/EF4444/FFFFFF?text=GreenInfinity" alt="GreenInfinity Logo" class="h-10 rounded">
+            <button id="menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
+            </button>
+        </div>
+        <!-- Updated Navigation Structure: Single row -->
+        <nav id="navbar-menu" class="hidden md:flex flex-row md:items-center md:space-x-4 w-full md:w-auto">
+            <a href="./index.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
+            <a href="./investers.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            <a href="./about.html" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
+            <a href="#" class="text-gray-700 hover:text-green-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Visualizer</a>
+        </nav>
+    </header>
+
+    <!-- Floating Inquiry Button (Right-middle) -->
+    <button id="open-inquiry-modal">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+        <span class="sr-only">Open Inquiry Form</span>
+    </button>
+
+    <!-- Inquiry Form Modal -->
+    <div id="inquiry-modal-overlay" class="modal-overlay">
+        <div class="inquiry-form-modal">
+            <button class="modal-close-button" id="close-inquiry-modal">&times;</button>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Inquire Now</h3>
+            <form class="flex flex-wrap gap-4">
+                <input type="text" id="inquiry-name" placeholder="Enter Your Name" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="text" id="inquiry-mobile" placeholder="Enter Your Mobile Number" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="text" id="inquiry-pincode" placeholder="Enter Pincode" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <select id="inquiry-type" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                    <option value="">Select Inquiry Type</option>
+                    <option value="product">Product Inquiry</option>
+                    <option value="support">Support</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="w-full flex items-center gap-2 mt-2">
+                    <input type="checkbox" id="robot-check" class="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                    <label for="robot-check" class="text-sm text-gray-700">I'm not a robot</label>
+                    <a href="#" class="text-sm text-green-600 hover:underline ml-4">Privacy Policy</a>
+                </div>
+                <button type="button" id="submit-inquiry-button" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Inquire Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="message-box-overlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <p id="message-box-text" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="message-box-close" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out">OK</button>
+        </div>
+    </div>
+
+    <!-- Hero Section for Contact Us -->
+    <section class="contact-hero">
+        <div class="breadcrumb">
+            <a href="./index.html">Home</a> > <a href="#">Contact Us</a>
+        </div>
+        <div class="contact-hero-content">
+            <h1>Contact Us</h1>
+            <p>We're here to help you</p>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="py-16 px-6 md:px-12 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Get in Touch</h2>
+            <p class="text-lg text-gray-600 leading-relaxed mb-10 text-center">
+                Have a question, feedback, or need assistance? Fill out the form below, and we'll get back to you as soon as possible. You can also reach us directly via the contact details provided.
+            </p>
+
+            <form id="contact-form" class="space-y-6">
+                <div>
+                    <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                    <input type="text" id="contact-name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm" placeholder="John Doe" required>
+                </div>
+                <div>
+                    <label for="contact-email" class="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+                    <input type="email" id="contact-email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm" placeholder="john.doe@example.com" required>
+                </div>
+                <div>
+                    <label for="contact-mobile" class="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
+                    <input type="tel" id="contact-mobile" name="mobile" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm" placeholder="+91 XXXXXXXXXX" required>
+                </div>
+                <div>
+                    <label for="contact-subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                    <input type="text" id="contact-subject" name="subject" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm" placeholder="Inquiry about products/services">
+                </div>
+                <div>
+                    <label for="contact-message" class="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
+                    <textarea id="contact-message" name="message" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm" placeholder="Type your message here..." required></textarea>
+                </div>
+                <div class="flex items-center gap-2 mt-2">
+                    <input type="checkbox" id="contact-robot-check" class="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50" required>
+                    <label for="contact-robot-check" class="text-sm text-gray-700">I'm not a robot</label>
+                    <a href="#" class="text-sm text-green-600 hover:underline ml-4">Privacy Policy</a>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Send Message via WhatsApp</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Information and Map Section -->
+    <section class="py-16 px-6 md:px-12 bg-gray-100">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Our Location</h2>
+                <p class="text-gray-600 mb-4">
+                    <strong>GreenInfinity Headquarters</strong><br>
+                    123 Green Boulevard,<br>
+                    Eco City, Green State, 12345<br>
+                    Country
+                </p>
+                <p class="text-gray-600 mb-4">
+                    <strong>Phone:</strong> +91 12345 67890<br>
+                    <strong>Email:</strong> info@greeninfinity.com
+                </p>
+                <div class="flex space-x-4 text-2xl mt-6">
+                    <a href="#" class="text-gray-600 hover:text-green-600 transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-green-600 transition duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-green-600 transition duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-green-600 transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Find Us on Map</h2>
+                <div class="bg-gray-200 h-80 rounded-lg overflow-hidden shadow-md">
+                    <!-- Placeholder for Google Map or any other map embed -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31104.28014595874!2d77.5871271775171!3d12.97159877202302!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44781%3A0x81855a8289450a3!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1678901234567!5m2!1sen!2sin"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Products</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Categories</a></li>
+                    <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
+                    <li><a href="#" class="footer-link">Doors</a></li>
+                    <li><a href="#" class="footer-link">Veneers</a></li>
+                    <li><a href="#" class="footer-link">MDF</a></li>
+                    <li><a href="#" class="footer-link">Speciality Plywood</a></li>
+                    <li><a href="#" class="footer-link">PVC</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Speciality Feature</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Water Proof</a></li>
+                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Brands</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">GreenInfinity</a></li>
+                    <li><a href="#" class="footer-link">Ecotec</a></li>
+                    <li><a href="#" class="footer-link">Optima G</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity Ndure</a></li>
+                    <li><a href="#" class="footer-link">Wood Crrest</a></li>
+                    <li><a href="#" class="footer-link">GreenInfinity MDF</a></li>
+                    <li><a href="#" class="footer-link">OPTIMAG</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Furniture Type</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="footer-link">Chair</a></li>
+                    <li><a href="#" class="footer-link">Study Table</a></li>
+                    <li><a href="#" class="footer-link">Sofa</a></li>
+                    <li><a href="#" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Quick Links & More</h3>
+                <ul class="space-y-2">
+                    <li><a href="./about.html" class="footer-link">About Us</a></li>
+                    <li><a href="./contact.html" class="footer-link">Contact Us</a></li>
+                    <li><a href="./investers.html" class="footer-link">Investors</a></li>
+                    <li><a href="#" class="footer-link">Sustainability</a></li>
+                    <li><a href="#" class="footer-link">Blogs</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 mt-12 border-t border-gray-700 pt-8 flex flex-col items-center">
+            <p class="text-lg font-semibold mb-4">Follow us on</p>
+            <div class="flex space-x-4 text-2xl mb-8">
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon-circle text-white"><i class="fas fa-globe"></i></a> <!-- Assuming globe for general website/linkedin -->
+            </div>
+            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const menuButton = document.getElementById('menu-button');
+            const navbarMenu = document.getElementById('navbar-menu');
+
+            if (menuButton && navbarMenu) {
+                menuButton.addEventListener('click', () => {
+                    navbarMenu.classList.toggle('hidden');
+                    navbarMenu.classList.toggle('flex-col');
+                    navbarMenu.classList.toggle('space-y-4');
+                    navbarMenu.classList.toggle('p-4');
+                    navbarMenu.classList.toggle('bg-white');
+                    navbarMenu.classList.toggle('w-full');
+                    navbarMenu.classList.toggle('items-center');
+                    navbarMenu.classList.toggle('md:flex-row'); /* Ensure it reverts to row on desktop */
+                });
+            }
+
+            // Inquiry Form (Floating Button and Modal) Logic
+            const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
+            const openInquiryModalButton = document.getElementById('open-inquiry-modal');
+            const closeInquiryModalButton = document.getElementById('close-inquiry-modal');
+            const submitInquiryButton = document.getElementById('submit-inquiry-button');
+            const messageBoxOverlay = document.getElementById('message-box-overlay');
+            const messageBoxText = document.getElementById('message-box-text');
+            const messageBoxCloseButton = document.getElementById('message-box-close');
+
+            if (openInquiryModalButton) {
+                openInquiryModalButton.addEventListener('click', () => {
+                    inquiryModalOverlay.style.display = 'flex'; // Use flex to center content
+                });
+            }
+
+            if (closeInquiryModalButton) {
+                closeInquiryModalButton.addEventListener('click', () => {
+                    inquiryModalOverlay.style.display = 'none';
+                });
+            }
+
+            if (submitInquiryButton) {
+                submitInquiryButton.addEventListener('click', () => {
+                    const name = document.getElementById('inquiry-name').value;
+                    const mobile = document.getElementById('inquiry-mobile').value;
+                    const pincode = document.getElementById('inquiry-pincode').value;
+                    const inquiryType = document.getElementById('inquiry-type').value;
+                    const robotCheck = document.getElementById('robot-check').checked;
+
+                    if (!name || !mobile || !pincode || !inquiryType) {
+                        showMessageBox('Please fill in all required fields.');
+                        return;
+                    }
+                    if (!robotCheck) {
+                        showMessageBox('Please confirm you are not a robot.');
+                        return;
+                    }
+
+                    const message = `Hello GreenInfinity, I would like to inquire about your products.
+Name: ${name}
+Contact No.: ${mobile}
+Pincode: ${pincode}
+Inquiry Type: ${inquiryType}`;
+
+                    // Replace '91XXXXXXXXXX' with the actual WhatsApp number for inquiries
+                    const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+
+                    window.open(whatsappUrl, '_blank');
+                    inquiryModalOverlay.style.display = 'none'; // Close modal after submission
+                    showMessageBox('Your inquiry has been sent!');
+                });
+            }
+
+            function showMessageBox(message) {
+                messageBoxText.textContent = message;
+                messageBoxOverlay.style.display = 'flex';
+            }
+
+            if (messageBoxCloseButton) {
+                messageBoxCloseButton.addEventListener('click', () => {
+                    messageBoxOverlay.style.display = 'none';
+                });
+            }
+
+            // Close inquiry modal if user clicks outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target == inquiryModalOverlay) {
+                    inquiryModalOverlay.style.display = 'none';
+                }
+                if (event.target == messageBoxOverlay) {
+                    messageBoxOverlay.style.display = 'none';
+                }
+            });
+
+            // Contact Form WhatsApp Submission Logic
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (event) => {
+                    event.preventDefault(); // Prevent default form submission
+
+                    const name = document.getElementById('contact-name').value;
+                    const email = document.getElementById('contact-email').value;
+                    const mobile = document.getElementById('contact-mobile').value;
+                    const subject = document.getElementById('contact-subject').value;
+                    const message = document.getElementById('contact-message').value;
+                    const robotCheck = document.getElementById('contact-robot-check').checked;
+
+                    if (!name || !email || !mobile || !message) {
+                        showMessageBox('Please fill in all required fields.');
+                        return;
+                    }
+                    if (!robotCheck) {
+                        showMessageBox('Please confirm you are not a robot.');
+                        return;
+                    }
+
+                    const whatsappMessage = `Hello GreenInfinity, I would like to contact you regarding: ${subject || 'General Inquiry'}.
+My Name: ${name}
+My Email: ${email}
+My Mobile: ${mobile}
+Message: ${message}`;
+
+                    // Replace '91XXXXXXXXXX' with the actual WhatsApp number for contact
+                    const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(whatsappMessage)}`;
+                    window.open(whatsappUrl, '_blank');
+                    showMessageBox('Your message has been prepared for WhatsApp!');
+                    contactForm.reset(); // Clear the form after submission attempt
+                });
+            }
+        });
+    </script>
+</body>
+</html>

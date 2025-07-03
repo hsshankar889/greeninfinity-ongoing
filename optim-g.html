@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optima G - GreenInfinity</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light gray background */
+        }
+        /* Custom red shades for consistency */
+        .bg-custom-red {
+            background-color: #DC2626; /* A strong red */
+        }
+        .text-custom-red {
+            color: #DC2626;
+        }
+        .border-custom-red {
+            border-color: #DC2626;
+        }
+        .bg-custom-red-dark {
+            background-color: #B91C1C; /* A darker red for accents */
+        }
+        .bg-custom-red-light {
+            background-color: #EF4444; /* A lighter red for highlights */
+        }
+        .text-custom-red-light {
+            color: #EF4444;
+        }
+        .bg-green-accent {
+            background-color: #4CAF50; /* Green for success/warranty elements */
+        }
+        .text-green-accent {
+            color: #4CAF50;
+        }
+        .border-green-accent {
+            border-color: #4CAF50;
+        }
+        .icon-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+        }
+        .icon-box i {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #DC2626; /* Red icons */
+        }
+        .icon-box p {
+            font-size: 0.875rem;
+            color: #333;
+        }
+
+        /* Fixed Enquiry Button Styling */
+        .enquiry-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #DC2626;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        .enquiry-button:hover {
+            background-color: #B91C1C;
+        }
+
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Accordion Styling */
+        .accordion-header {
+            background-color: #f0f0f0; /* Light gray for FAQ headers */
+            color: #333;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        .accordion-header:hover {
+            background-color: #e0e0e0;
+        }
+        .accordion-content {
+            background-color: white;
+            max-height: 0; /* Changed to 0 for collapse */
+            padding: 0 1.5rem; /* Changed to 0 for collapse */
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out, opacity 0.3s ease-out; /* Added opacity */
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            opacity: 0; /* Added opacity for collapse */
+            display: none; /* Hidden by default */
+        }
+        .accordion-content.active {
+            max-height: 400px; /* Set max-height to 400px */
+            padding: 1rem 1.5rem;
+            opacity: 1;
+            overflow-y: auto; /* Add scroll if content exceeds 400px */
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active .accordion-icon {
+            transform: rotate(45deg); /* Plus to X */
+        }
+
+        /* Product Carousel Styling */
+        .product-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 1rem; /* For scrollbar */
+        }
+        .product-card {
+            flex: 0 0 auto;
+            width: 280px; /* Fixed width for each card */
+            margin-right: 1.5rem; /* Space between cards */
+            scroll-snap-align: start;
+        }
+        .product-card:last-child {
+            margin-right: 0;
+        }
+        .scroll-button {
+            background-color: #DC2626;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        .scroll-button:hover {
+            background-color: #B91C1C;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md py-4 px-6 flex items-center justify-between sticky top-0 z-50">
+        <div class="text-2xl font-bold text-custom-red">GreenInfinity</div>
+        <div class="hidden md:flex space-x-8">
+            <a href="#" class="text-gray-600 hover:text-custom-red font-medium">Consumer</a>
+            <a href="#" class="text-gray-600 hover:text-custom-red font-medium">Investors</a>
+            <a href="#" class="text-gray-600 hover:text-custom-red font-medium">Products</a>
+            <a href="#" class="text-gray-600 hover:text-custom-red font-medium">Visualizer</a>
+        </div>
+        <!-- Mobile Menu Button (Hamburger) -->
+        <button id="mobile-menu-button" class="md:hidden text-gray-600 focus:outline-none">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg py-4 px-6 absolute w-full z-40">
+        <a href="#" class="block py-2 text-gray-600 hover:text-custom-red font-medium">Consumer</a>
+        <a href="#" class="block py-2 text-gray-600 hover:text-custom-red font-medium">Investors</a>
+        <a href="#" class="block py-2 text-gray-600 hover:text-custom-red font-medium">Products</a>
+        <a href="#" class="block py-2 text-gray-600 hover:text-custom-red font-medium">Visualizer</a>
+    </div>
+
+    <!-- Hero Section - Optima G -->
+    <header class="relative bg-cover bg-center h-96 flex items-center justify-center text-white" style="background-image: url('https://placehold.co/1200x400/333333/FFFFFF?text=Optima+G+Hero');">
+        <div class="absolute inset-0 bg-black opacity-40"></div> <!-- Overlay for text readability -->
+        <div class="relative z-10 text-center">
+            <!-- Removed the OPTIMA G Logo image as requested -->
+            <h1 class="text-5xl font-bold mb-2">For Optimal Performance</h1>
+        </div>
+    </header>
+
+    <!-- For Optimal Performance Content Section -->
+    <section class="container mx-auto px-4 py-12 flex flex-col md:flex-row items-center md:space-x-12">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+            <img src="https://placehold.co/600x400/DC2626/FFFFFF?text=Optima+G+Kitchen" alt="Optima G Kitchen" class="rounded-lg shadow-lg w-full h-auto">
+        </div>
+        <div class="md:w-1/2">
+            <h2 class="text-3xl font-bold mb-4">For Optimal Performance</h2>
+            <p class="text-gray-700 leading-relaxed">
+                Optima G 710 plywood is engineered for excellence, delivering performance guaranteed across diverse interior applications. From plywood crafted with advanced 4 Press Technology for superior durability, to weather resistant, warp free doors that ensure long term stability, every product is built for reliability. Even the pre-laminated particle boards are precision engineered with homogeneous particle alignment, ensuring exceptional machinability and screw holding strength. With Optima G performance it is just a promise but a guaranteed excellence.
+            </p>
+        </div>
+    </section>
+
+    <!-- Optima G Product Categories -->
+    <section class="container mx-auto px-4 py-12 text-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/DC2626/FFFFFF?text=Optima+G+Plywood" alt="Optima G Plywood & Blockboard" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <p class="font-semibold text-lg text-gray-800">Optima G-Plywood & Blockboard</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://placehold.co/600x400/DC2626/FFFFFF?text=Optima+G+Doors" alt="Optima G Doors" class="w-full h-64 object-cover">
+                <div class="p-4">
+                    <p class="font-semibold text-lg text-gray-800">Optima G-Doors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design your Interiors with Greenply -->
+    <section class="bg-custom-red text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-8">Design your Interiors with Greenply</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div class="flex flex-col items-center">
+                    <img src="https://placehold.co/300x200/FFFFFF/DC2626?text=Bedroom" alt="Bedroom" class="w-full h-40 object-cover rounded-lg shadow-md mb-2">
+                    <p class="font-semibold text-lg">Bedroom</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="https://placehold.co/300x200/FFFFFF/DC2626?text=Kitchen" alt="Kitchen" class="w-full h-40 object-cover rounded-lg shadow-md mb-2">
+                    <p class="font-semibold text-lg">Kitchen</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="https://placehold.co/300x200/FFFFFF/DC2626?text=Living+Room" alt="Living Room" class="w-full h-40 object-cover rounded-lg shadow-md mb-2">
+                    <p class="font-semibold text-lg">Living Room</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="https://placehold.co/300x200/FFFFFF/DC2626?text=Office" alt="Office" class="w-full h-40 object-cover rounded-lg shadow-md mb-2">
+                    <p class="font-semibold text-lg">Office</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <button class="bg-white text-custom-red font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-chair mr-2"></i>Chair
+                </button>
+                <button class="bg-white text-custom-red font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-table mr-2"></i>Study Table
+                </button>
+                <button class="bg-white text-custom-red font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-couch mr-2"></i>Sofa
+                </button>
+                <button class="bg-white text-custom-red font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-bed mr-2"></i>Bed
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore Products Section (Carousel-like) -->
+    <section class="container mx-auto px-4 py-12 text-center">
+        <h2 class="text-3xl font-bold mb-8">Explore products</h2>
+        <div class="relative flex items-center justify-center">
+            <button id="scroll-left" class="scroll-button absolute left-0 z-10 -ml-5">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="product-carousel" class="product-carousel flex-grow">
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/280x200/DC2626/FFFFFF?text=Optima+G+MR+Blockboard" alt="Optima G MR Grade Blockboard" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <p class="font-semibold text-lg text-gray-800 mb-4">Optima G MR Grade Blockboard</p>
+                        <button class="bg-custom-red text-white text-sm font-semibold py-2 px-4 rounded-md hover:bg-custom-red-dark transition duration-300">VIEW PRODUCT</button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/280x200/DC2626/FFFFFF?text=Optima+G+Doors" alt="Optima G Doors" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <p class="font-semibold text-lg text-gray-800 mb-4">Optima G Doors</p>
+                        <button class="bg-custom-red text-white text-sm font-semibold py-2 px-4 rounded-md hover:bg-custom-red-dark transition duration-300">VIEW PRODUCT</button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/280x200/DC2626/FFFFFF?text=Optima+G+710+Blockboard" alt="Optima G 710 Blockboard" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <p class="font-semibold text-lg text-gray-800 mb-4">Optima G 710 Blockboard</p>
+                        <button class="bg-custom-red text-white text-sm font-semibold py-2 px-4 rounded-md hover:bg-custom-red-dark transition duration-300">VIEW PRODUCT</button>
+                    </div>
+                </div>
+                <!-- New Product Cards Added Below -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/280x200/DC2626/FFFFFF?text=Optima+G+710+Plywood" alt="Optima G 710 Plywood" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <p class="font-semibold text-lg text-gray-800 mb-4">Optima G 710 Plywood</p>
+                        <button class="bg-custom-red text-white text-sm font-semibold py-2 px-4 rounded-md hover:bg-custom-red-dark transition duration-300">VIEW PRODUCT</button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/280x200/DC2626/FFFFFF?text=Optima+G+MR+Plywood" alt="Optima G MR Plywood" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <p class="font-semibold text-lg text-gray-800 mb-4">Optima G MR Plywood</p>
+                        <button class="bg-custom-red text-white text-sm font-semibold py-2 px-4 rounded-md hover:bg-custom-red-dark transition duration-300">VIEW PRODUCT</button>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                    <img src="https://placehold.co/280x200/DC2626/FFFFFF?text=OPTIMAG+PRE+LAM+PARTICLE+BOARDS" alt="OPTIMAG PRE LAM PARTICLE BOARDS" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <p class="font-semibold text-lg text-gray-800 mb-4">OPTIMAG PRE LAM PARTICLE BOARDS</p>
+                        <button class="bg-custom-red text-white text-sm font-semibold py-2 px-4 rounded-md hover:bg-custom-red-dark transition duration-300">VIEW PRODUCT</button>
+                    </div>
+                </div>
+            </div>
+            <button id="scroll-right" class="scroll-button absolute right-0 z-10 -mr-5">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <button class="mt-8 bg-custom-red text-white font-semibold py-3 px-8 rounded-md shadow-lg hover:bg-custom-red-dark transition duration-300">VIEW ALL</button>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="container mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold mb-4 text-custom-red">Frequently Asked Questions</h2>
+        <p class="text-gray-600 mb-8">Need Answers? We got them</p>
+
+        <div class="flex flex-col md:flex-row md:space-x-8">
+            <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center items-start">
+                <img src="https://placehold.co/300x200/DC2626/FFFFFF?text=Engineer" alt="Engineer" class="rounded-lg shadow-md w-full max-w-xs">
+            </div>
+            <div class="md:w-2/3">
+                <div class="mb-4">
+                    <button class="bg-custom-red text-white font-semibold py-2 px-6 rounded-full">General</button>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" data-target="faq-optima-g-1">
+                        What sets Optima G doors apart from ordinary doors?
+                        <i class="fas fa-plus accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content" id="faq-optima-g-1">
+                        <p>
+                            Optima G doors stand out with their weather resistance, warp-free construction, and dimensional stability. Each door not only ensures enhanced durability and aesthetic appeal but also prioritizes the safety and privacy of your home and family.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" data-target="faq-optima-g-2">
+                        How does Greenply ensure the safety and longevity of its products?
+                        <i class="fas fa-plus accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content" id="faq-optima-g-2">
+                        <p>
+                            As India's largest interior infrastructure company, Greenply is committed to delivering the best structural products. Our doors, made from the finest wood, are weather and fungus-resistant, borer-proof, termite-resistant, and dimensionally stable. With innovation and technology at our core, we promise both quality and longevity.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" data-target="faq-optima-g-3">
+                        Are OPTIMA G products environmentally friendly?
+                        <i class="fas fa-plus accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content" id="faq-optima-g-3">
+                        <p>
+                            Yes, OPTIMA G products contribute to safe indoor environments with negligible emissions as they carry a formaldehyde Emission Level Rating of E1 that meets European Standards. Additionally, they conform to strict quality standards, ensuring that they not only meet but exceed industry expectations for environmental and structural performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fixed Enquiry Button -->
+    <div id="enquiry-button" class="enquiry-button">
+        <i class="fas fa-info"></i>
+    </div>
+
+    <!-- Enquiry Form Modal (Copied from previous page) -->
+    <div id="enquiry-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <button id="modal-close-button" class="modal-close">&times;</button>
+            <h3 class="text-2xl font-bold text-center mb-6">Inquire Now</h3>
+            <form id="enquiry-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="name" placeholder="Enter Your Name" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-red">
+                <input type="tel" id="mobile" placeholder="Enter Your Mobile Number" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-red">
+                <input type="text" id="pincode" placeholder="Enter Pincode" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-red">
+                <select id="inquiry-type" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-red">
+                    <option value="">Select Inquiry Type</option>
+                    <option value="Product Inquiry">Product Inquiry</option>
+                    <option value="Service Inquiry">Service Inquiry</option>
+                    <option value="General Inquiry">General Inquiry</option>
+                </select>
+                <div class="md:col-span-2 flex items-center mt-2">
+                    <input type="checkbox" id="robot-checkbox" class="mr-2 rounded text-custom-red focus:ring-custom-red">
+                    <label for="robot-checkbox" class="text-gray-600 text-sm">I'm not a robot</label>
+                    <a href="#" class="text-custom-red text-sm ml-4 hover:underline">Privacy Policy</a>
+                </div>
+                <button type="submit" class="md:col-span-2 bg-custom-red text-white font-semibold py-3 px-6 rounded-md shadow-lg hover:bg-custom-red-dark transition duration-300 mt-6">Inquire Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer (Copied from previous page) -->
+    <footer class="bg-gray-900 text-white py-12 mt-12">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-custom-red-light">Products</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Categories</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Plywood & Blockboard</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Doors</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Veneers</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">MDF</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Speciality Plywood</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">PVC</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-custom-red-light">Speciality Feature</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Water Proof</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Fire Retardant</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Zero Emission</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-custom-red-light">Brands</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">GreenInfinity</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Ecotec</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Optima G</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">GreenInfinity Ndure</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Wood Crest</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">GreenInfinity MDF</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">OPTIMAG</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-custom-red-light">Furniture Type</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Chair</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Study Table</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Sofa</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-custom-red-light">Quick Links & More</h4>
+                <ul>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Investors</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Sustainability</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Blogs</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">Disclaimer</a></li>
+                    <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white">HKS Award</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 border-t border-gray-700 mt-8 pt-8 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fas fa-globe"></i></a>
+            </div>
+            <p class="text-gray-500 text-sm">Copyright &copy; 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Get elements
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const enquiryButton = document.getElementById('enquiry-button');
+        const enquiryModalOverlay = document.getElementById('enquiry-modal-overlay');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        const enquiryForm = document.getElementById('enquiry-form');
+        const productCarousel = document.getElementById('product-carousel');
+        const scrollLeftBtn = document.getElementById('scroll-left');
+        const scrollRightBtn = document.getElementById('scroll-right');
+
+
+        // Mobile menu toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Show modal when enquiry button is clicked
+        enquiryButton.addEventListener('click', () => {
+            enquiryModalOverlay.classList.add('show');
+        });
+
+        // Hide modal when close button or overlay is clicked
+        modalCloseButton.addEventListener('click', () => {
+            enquiryModalOverlay.classList.remove('show');
+        });
+
+        enquiryModalOverlay.addEventListener('click', (event) => {
+            if (event.target === enquiryModalOverlay) {
+                enquiryModalOverlay.classList.remove('show');
+            }
+        });
+
+        // Handle form submission for WhatsApp (Enquiry Form)
+        enquiryForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+            const pincode = document.getElementById('pincode').value;
+            const inquiryType = document.getElementById('inquiry-type').value;
+            const robotCheckbox = document.getElementById('robot-checkbox').checked;
+
+            // Basic validation
+            if (!name || !mobile || !pincode || !inquiryType) {
+                alert('Please fill in all required fields.'); // Using alert for simplicity, consider a custom modal for better UX
+                return;
+            }
+
+            if (!robotCheckbox) {
+                alert('Please confirm you are not a robot.'); // Using alert for simplicity
+                return;
+            }
+
+            // Construct WhatsApp message
+            const message = `
+                Enquiry Details:
+                Name: ${name}
+                Mobile: ${mobile}
+                Pincode: ${pincode}
+                Inquiry Type: ${inquiryType}
+            `.trim(); // Trim to remove leading/trailing whitespace
+
+            // Replace with your WhatsApp number (e.g., country code + number)
+            const whatsappNumber = '+919876543210'; // Example: +91 for India
+
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(message);
+
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+
+            // Optionally, close the modal after sending
+            enquiryModalOverlay.classList.remove('show');
+
+            // Clear the form
+            enquiryForm.reset();
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const contentId = header.dataset.target;
+                const content = document.getElementById(contentId);
+                const icon = header.querySelector('.accordion-icon');
+
+                // Check if the clicked accordion is already active
+                const isActive = header.classList.contains('active');
+
+                // Close all other open accordions
+                document.querySelectorAll('.accordion-content').forEach(openContent => {
+                    if (openContent.id !== contentId && openContent.style.maxHeight !== '0px') {
+                        openContent.previousElementSibling.classList.remove('active');
+                        openContent.previousElementSibling.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                        openContent.style.maxHeight = '0';
+                        openContent.style.padding = '0 1.5rem';
+                        openContent.style.opacity = '0';
+                        setTimeout(() => {
+                            openContent.style.display = 'none';
+                        }, 300);
+                    }
+                });
+
+                // Toggle current accordion
+                if (isActive) {
+                    header.classList.remove('active');
+                    icon.style.transform = 'rotate(0deg)';
+                    content.style.maxHeight = '0';
+                    content.style.padding = '0 1.5rem';
+                    content.style.opacity = '0';
+                    setTimeout(() => {
+                        content.style.display = 'none';
+                    }, 300);
+                } else {
+                    header.classList.add('active');
+                    content.style.display = 'block'; // Set display: block before applying max-height
+                    content.style.maxHeight = '400px'; // Set fixed max-height
+                    content.style.padding = '1rem 1.5rem'; // Expand padding
+                    content.style.opacity = '1';
+                    icon.style.transform = 'rotate(45deg)';
+                }
+            });
+        });
+
+        // Product Carousel Scroll functionality
+        scrollLeftBtn.addEventListener('click', () => {
+            productCarousel.scrollBy({
+                left: -300, // Scroll left by 300px
+                behavior: 'smooth'
+            });
+        });
+
+        scrollRightBtn.addEventListener('click', () => {
+            productCarousel.scrollBy({
+                left: 300, // Scroll right by 300px
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
