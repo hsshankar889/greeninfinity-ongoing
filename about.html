@@ -3,419 +3,538 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greeninfinity - About Us</title>
+    <title>About Us - GreenInfinity</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Updated font to Roboto -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        /* Custom CSS Variables for Theme */
+        :root {
+            --primary-red: #EF4444; /* Tailwind red-600 */
+            --light-red: #FEE2E2; /* Tailwind red-100 */
+            --dark-red: #DC2626; /* Tailwind red-700 */
+            --text-gray: #374151; /* Tailwind gray-700 */
+            --light-gray: #F3F4F6; /* Tailwind gray-100 */
+            --white: #FFFFFF;
+            --black: #1F2937; /* Tailwind gray-800 */
+            --dark-bg: #212529; /* Updated: Dark background for the new footer to match image */
+            --footer-text: #B0B0B0; /* Lighter text for footer links */
+            --footer-heading: #EF4444; /* Updated: Red for footer headings */
+        }
+
         body {
-            font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
-            background-color: #ffffff;
-            color: #333333;
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-gray);
         }
 
-        /* Header styles */
-        .header-bg {
-            background-color: #f3f4f6; /* Light gray from image */
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .greeninfinity-button {
-            background-color: #ef4444; /* Red from image */
-            color: #ffffff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem; /* Rounded corners */
-            font-weight: 600;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease-in-out;
-        }
-        .greeninfinity-button:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transform: translateY(-2px);
-        }
-        .nav-link {
-            color: #4b5563; /* Dark gray for header links */
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .nav-link:hover {
-            color: #ef4444; /* Red on hover */
-        }
-        .text-red-theme {
-            color: #ef4444;
+        /* General Section Header Styling */
+        .section-header {
+            font-size: 2.5rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 2.5rem; /* mb-10 */
+            color: var(--text-gray);
+            position: relative;
+            display: inline-block;
         }
 
-        /* Top-level navigation icons (WhatsApp in this case) */
-        .top-nav-icon {
-            background-color: #2D4F32; /* Dark green from image */
-            color: #ffffff;
-            width: 40px;
-            height: 40px;
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-red);
+            border-radius: 2px;
+        }
+
+        /* Specific header color override for dark background */
+        .section-header.text-white::after {
+            background-color: var(--white);
+        }
+
+
+        /* Floating Icons Styling */
+        .floating-icon {
+            position: fixed;
+            background-color: var(--primary-red);
+            color: white;
             border-radius: 50%;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease-in-out;
-            position: fixed;
-            right: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1000;
-        }
-        .top-nav-icon:hover {
-            background-color: #3A6641;
+            font-size: 28px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transform: translateY(-50%) scale(1.05);
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+            cursor: pointer; /* Add cursor pointer for clickability */
         }
 
-        /* Common section header style */
-        .section-header {
-            font-size: 2.5rem; /* text-4xl */
-            font-weight: 800; /* font-extrabold */
-            color: #333333;
-            margin-bottom: 2.5rem; /* mb-10 */
-        }
-        @media (min-width: 768px) {
-            .section-header {
-                font-size: 3rem; /* text-5xl on md screens */
-            }
+        .floating-icon:hover {
+            transform: scale(1.1);
+            background-color: var(--dark-red);
         }
 
-        /* Core Value Cards */
-        .core-value-card {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            height: 300px; /* Fixed height for consistent sizing */
-            justify-content: center; /* Center content vertically */
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .core-value-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-        .core-value-card svg {
-            color: #ef4444; /* Red icon color */
-            margin-bottom: 1rem;
-            width: 3rem; /* w-12 */
-            height: 3rem; /* h-12 */
-        }
-        .core-value-card h3 {
-            font-weight: 700; /* font-semibold */
-            margin-bottom: 0.5rem;
-        }
-        .core-value-card p {
-            font-size: 0.95rem;
-            line-height: 1.5;
+        .inquiry-icon {
+            top: 50%; /* Center vertically */
+            right: 20px; /* Position on the right side */
+            transform: translateY(-50%); /* Adjust for vertical centering */
         }
 
-        /* Carousel Wrapper and Container */
-        .carousel-wrapper {
-            position: relative;
-            overflow: hidden; /* Hide scrollbar but allow scrolling */
-            padding: 1rem 0; /* Padding for nav buttons */
-        }
-        .carousel-container {
-            display: flex;
-            overflow-x: auto; /* Enable horizontal scrolling */
-            scroll-snap-type: x mandatory; /* Snap to cards */
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
-            -ms-overflow-style: none;  /* Hide scrollbar for IE/Edge */
-            gap: 2rem;
-            padding-bottom: 1rem; /* Space for scrollbar if it appears */
-        }
-        /* Hide scrollbar for Chrome, Safari, Opera */
-        .carousel-container::-webkit-scrollbar {
+
+        /* Navigation Menu Toggle for Mobile */
+        #navbar-menu.hidden-mobile {
             display: none;
         }
 
-        .carousel-card {
-            flex-shrink: 0; /* Prevent cards from shrinking */
-            width: 300px; /* Fixed width for carousel cards */
-            height: 350px; /* Fixed height for carousel cards */
-            background-color: #ffffff;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            scroll-snap-align: start; /* Snap to start of card */
+        #navbar-menu.flex-mobile {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            background-color: var(--white);
+            border-top: 1px solid var(--light-gray);
+            padding-top: 1rem;
+        }
+
+        #navbar-menu.flex-mobile .nav-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        #navbar-menu.flex-mobile .nav-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Core Value Card Styling */
+        .core-value-card {
+            background-color: var(--white);
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            padding: 1.5rem; /* p-6 */
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        .carousel-card:hover {
+
+        .core-value-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        .carousel-card h3 {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #333333;
+
+        .core-value-card svg {
+            color: var(--primary-red);
+            margin-bottom: 1rem;
         }
-        .carousel-card p {
-            font-size: 0.95rem;
-            color: #555555;
-            line-height: 1.4;
-            flex-grow: 1; /* Allow paragraph to take available space */
+
+        /* Carousel Styling */
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 0 40px; /* Space for nav buttons */
+        }
+
+        .carousel-container {
             display: flex;
-            align-items: center; /* Vertically center content */
-            margin-bottom: 1rem;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            padding-bottom: 1rem; /* Space for scrollbar on some browsers */
         }
+
+        .carousel-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, Opera */
+        }
+
+        .carousel-card {
+            flex: 0 0 auto;
+            width: 300px; /* Fixed width for each card */
+            scroll-snap-align: start;
+            background-color: var(--white);
+            color: var(--text-gray);
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            padding: 1.5rem; /* p-6 */
+            margin-right: 1.5rem; /* gap-6 */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align content to top */
+            min-height: 280px; /* Ensure consistent height */
+        }
+
+        .carousel-card:last-child {
+            margin-right: 0;
+        }
+
         .carousel-card-image {
-            width: 80px; /* Example size for SVG icons/placeholder images */
+            width: 80px;
             height: 80px;
+            color: var(--primary-red);
             margin-bottom: 1rem;
-            color: #2D4F32; /* Green for icons */
+            object-fit: contain; /* Ensure images fit without distortion */
+        }
+
+        .carousel-card img.carousel-card-image {
+            width: auto; /* Override default SVG width for images */
+            height: auto;
+            max-width: 150px;
+            max-height: 150px;
+            margin: 0 auto 1rem auto; /* Center image */
         }
 
         .carousel-nav-button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.6);
-            color: #ffffff;
+            background-color: var(--primary-red);
+            color: var(--white);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             z-index: 10;
-            opacity: 0.8;
-            transition: opacity 0.2s, background-color 0.2s;
-        }
-        .carousel-nav-button:hover {
-            opacity: 1;
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-        .carousel-nav-button.left {
-            left: 0.5rem;
-        }
-        .carousel-nav-button.right {
-            right: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        /* Management Cards */
+        .carousel-nav-button:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .carousel-nav-button.left {
+            left: 0;
+        }
+
+        .carousel-nav-button.right {
+            right: 0;
+        }
+
+        .carousel-nav-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: translateY(-50%);
+        }
+
+        /* Management Card Styling */
         .management-card {
-            background-color: #ffffff;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            background-color: var(--white);
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            padding: 1.5rem; /* p-6 */
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            height: 320px; /* Fixed height to accommodate button consistently */
-            justify-content: space-between; /* Distribute space to push button down */
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            position: relative;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
+
         .management-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+
         .management-card-image {
-            width: 200px; /* Rectangular width */
-            height: 150px; /* Rectangular height */
-            border-radius: 0.75rem; /* Curved corners */
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #ef4444; /* Red border */
             margin-bottom: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--primary-red);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .management-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333333;
-            margin-bottom: 0.25rem;
-        }
+
         .management-card .title {
-            font-size: 0.9rem;
-            color: #6b7280;
+            color: var(--primary-red);
+            font-weight: 500;
             margin-bottom: 1rem;
         }
+
         .know-more-button {
-            margin-top: auto; /* Push the button to the bottom */
-            cursor: pointer;
+            background-color: var(--primary-red);
+            color: var(--white);
             padding: 0.75rem 1.5rem;
-            background-color: #ef4444;
-            color: #ffffff;
-            border-radius: 0.5rem;
+            border-radius: 0.5rem; /* rounded-lg */
             font-weight: 600;
-            transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .know-more-button:hover {
-            background-color: #d13a3a;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        .know-more-button svg {
-            color: #ffffff;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        /* Full Description Container (Hidden by default, shown below management cards) */
+        .know-more-button:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-2px);
+        }
+
+        /* Full Description Modal/Container */
         .full-description-container {
-            background-color: #f9fafb; /* Light gray background */
+            background-color: var(--light-gray);
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 3rem; /* Space from management cards */
+            margin-top: 2rem;
             text-align: left;
-            display: none; /* Hidden by default */
-            animation: slideInFromTop 0.5s ease-out forwards;
+            color: var(--text-gray);
+            max-width: 800px;
+            animation: fadeIn 0.5s ease-out;
         }
-        @keyframes slideInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .full-description-container.active {
-            display: block;
-        }
+
         .full-description-container h3 {
-            font-size: 2rem;
+            font-size: 1.75rem; /* text-2xl */
             font-weight: 700;
-            color: #333333;
+            color: var(--primary-red);
             margin-bottom: 1rem;
         }
+
         .full-description-container p {
-            font-size: 1.05rem;
-            color: #555555;
-            line-height: 1.8;
+            line-height: 1.75;
             margin-bottom: 1.5rem;
         }
-        .full-description-container .close-description-button {
-            background-color: #6b7280; /* Gray close button */
-            color: #ffffff;
-            padding: 0.6rem 1.2rem;
+
+        .close-description-button {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .full-description-container .close-description-button:hover {
-            background-color: #4b5563;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        /* Glance Section Cards */
+        .close-description-button:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-2px);
+        }
+
+        /* Glance Card Styling */
         .glance-card {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            background-color: var(--white);
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            padding: 1.5rem; /* p-6 */
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            height: 200px; /* Fixed height for consistent sizing */
             justify-content: center;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
+
         .glance-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-        .glance-card .text-5xl {
-            font-size: 3rem; /* Adjusted for better fit in the card */
-        }
-        .glance-card .text-red-600 {
-            color: #ef4444;
-        }
-        .glance-card .text-lg {
-            font-size: 1.125rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        /* Awards Carousel Card Shadow */
-        #awards-carousel .carousel-card {
-            box-shadow: 0 4px 15px rgba(0, 0, 139, 0.15), 0 6px 20px rgba(0, 0, 139, 0.1); /* Dark blue tint */
-        }
-        #awards-carousel .carousel-card:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 139, 0.25), 0 10px 30px rgba(0, 0, 139, 0.15);
+        .glance-card p:first-child {
+            color: var(--primary-red);
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* Footer styles */
-        .footer-dark-bg {
-            background-color: #212529;
-            color: #ffffff;
+        /* Responsive Adjustments */
+        @media (max-width: 767px) {
+            .section-header {
+                font-size: 2rem; /* Smaller on mobile */
+            }
+
+            .carousel-card {
+                width: 85%; /* Adjust card width for smaller screens */
+                margin-right: 1rem;
+            }
+
+            .carousel-wrapper {
+                padding: 0 20px; /* Less space for nav buttons on mobile */
+            }
+
+            .carousel-nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            /* Footer responsive adjustments */
+            .footer-section {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+                text-align: center;
+            }
+
+            .footer-column {
+                margin-bottom: 2rem;
+            }
+
+            .footer-column:last-child {
+                margin-bottom: 0;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
         }
-        .footer-dark-bg .footer-heading {
-            color: #ffffff;
-            font-weight: 600;
+
+        /* Modal specific styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        .footer-dark-bg .footer-link {
-            color: #9ca3af;
-            transition: color 0.2s;
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
         }
-        .footer-dark-bg .footer-link:hover {
-            color: #ffffff;
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
         }
-        .social-icon-footer {
-            background-color: #4b5563;
-            color: #ffffff;
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-red);
+        }
+
+        .modal-close-button {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close-button:hover {
+            color: var(--dark-red);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
             padding: 0.75rem;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+            border: 1px solid var(--light-gray);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            color: var(--text-gray);
+            background-color: var(--light-gray);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .send-whatsapp-button {
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
             justify-content: center;
-            width: 3rem;
-            height: 3rem;
         }
-        .social-icon-footer:hover {
-            background-color: #ef4444;
-            color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        .send-whatsapp-button:hover {
+            background-color: #1DA851; /* Darker WhatsApp Green */
             transform: translateY(-2px);
         }
     </style>
 </head>
-<body class="bg-white text-gray-800">
+<body class="bg-gray-50 text-gray-800">
     <!-- Header Section -->
     <header class="bg-white shadow-md py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
         <div class="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0">
-            <img src="https://placehold.co/100x40/EF4444/FFFFFF?text=GreenInfinity" alt="GreenInfinity Logo" class="h-10 rounded">
+            <img src="https://placehold.co/100x40/EF4444/FFFFFF?text=GreenInfinity" alt="GreenInfinity Logo" class="h-10 rounded-lg">
             <button id="menu-button" class="md:hidden text-gray-700 focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
             </button>
         </div>
         <nav id="navbar-menu" class="hidden md:flex flex-col md:flex-row md:items-center md:space-x-4 w-full md:w-auto">
             <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
-            <a href="./investers.html0" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
-            <a href="./about.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">About Us</a>
+            <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            <a href="./about.html" class="text-gray-600 hover:text-red-600 font-medium  transition duration-300 ease-in-out py-1 nav-item">About Us</a>
             <a href="./Inspiration.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
             <a href="./products.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
         </nav>
     </header>
 
-    <!-- Fixed WhatsApp Icon -->
-    <a href="https://wa.me/919606628099" target="_blank" class="top-nav-icon">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <!-- Fixed Inquiry Icon -->
+    <div id="inquiry-button" class="floating-icon inquiry-icon">
+        <i class="fas fa-info"></i>
+    </div>
 
     <main>
         <!-- Hero Section for About Us -->
-        <section class="bg-red-600 text-white py-20 px-6 md:px-12 text-center">
+        <section class="bg-red-600 text-white py-20 px-6 md:px-12 text-center rounded-b-lg">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">About GreenInfinity</h1>
             <p class="text-lg md:text-xl max-w-3xl mx-auto">
                 Driven by innovation and a commitment to excellence, GreenInfinity is a leading name in the wood panel industry, crafting sustainable and high-quality solutions for modern living.
@@ -426,9 +545,9 @@
         <section class="bg-gray-100 py-16 px-6 md:px-12">
             <div class="max-w-7xl mx-auto text-center">
                 <h2 class="section-header">Progressing Sustainably</h2>
-                <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="flex flex-col lg:flex-row items-center gap-12 mt-10">
                     <div class="lg:w-1/2">
-                        <img src="https://www.greenply.com:5001/thumbnail1709200007825-6162.jpg" alt="Sustainable Practices" class="rounded-lg shadow-lg mx-auto mb-6 lg:mb-0 w-full h-auto object-cover max-h-96">
+                        <img src="https://www.greenply.com:5001/thumbnail1709200007825-6162.jpg" alt="Sustainable Practices" class="rounded-xl shadow-xl mx-auto mb-6 lg:mb-0 w-full h-auto object-cover max-h-96">
                     </div>
                     <div class="lg:w-1/2 text-lg text-gray-700 text-left">
                         <p class="mb-4">
@@ -449,7 +568,7 @@
         <section class="bg-white py-16 px-6 md:px-12">
             <div class="max-w-7xl mx-auto text-center">
                 <h2 class="section-header">Our Core Values</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
                     <div class="core-value-card">
                         <!-- Icon for Innovation (Wrench/Gear) -->
                         <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
@@ -481,161 +600,162 @@
         <!-- GreenInfinity Journey Section - Updated to Carousel -->
         <section class="bg-gray-800 py-16 px-6 md:px-12 text-white">
             <div class="max-w-7xl mx-auto text-center">
-            <h2 class="section-header !text-white mb-10" style="color: white;">GreenInfinity Journey</h2>
-                <div class="carousel-wrapper">
+                <!-- The heading for "GreenInfinity Journey" is already set to white using !text-white -->
+                <h2 class="section-header !text-white mb-10">GreenInfinity Journey</h2>
+                <div class="carousel-wrapper mt-10">
                     <div id="journey-carousel" class="carousel-container">
-                        <!-- Journey Card 1: 1984 -->
+                        <!-- Journey Card 1: 1984 - Saw Mill -->
                         <div class="carousel-card">
-                            <h3 class="text-lg font-semibold text-gray-900">1984</h3>
-                            <p class="text-gray-700">Mr. Rajesh Mittal starts operations with a saw mill</p>
+                            <!-- Icon for Saw Mill / Factory -->
                             <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M22 20V4c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zM11 15H9.5V8H11v7zm2-9c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V6zM18 15h-1.5V8H18v7zm2-9c0-.55-.45-1-1-1h-5c-.55 0-1 .45-1 1v12c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V6z"/>
-                                <!-- Simple factory icon -->
                             </svg>
+                            <h3 class="text-lg font-semibold text-gray-900">1984</h3>
+                            <p class="text-gray-700">Mr. Rajesh Mittal starts operations with a saw mill</p>
                         </div>
-                        <!-- Journey Card 2: 1988 -->
+                        <!-- Journey Card 2: 1988 - 1st Plywood Unit -->
                         <div class="carousel-card">
+                            <!-- Icon for Factory / Building -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">1988</h3>
                             <p class="text-gray-700">Setting up 1st plywood unit in Tizit, Nagaland</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                                <!-- Star/Award icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 3: 1990 -->
+                        <!-- Journey Card 3: 1990 - Incorporated as company -->
                         <div class="carousel-card">
+                            <!-- Icon for Company / Document -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 15.93L5.46 14l6.54-3.07 6.54 3.07L12 17.93zM12 4.07L17.46 7 12 9.93 6.54 7 12 4.07z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">1990</h3>
                             <p class="text-gray-700">Incorporated as company under the name Mittal Laminates Pvt. Ltd</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M19 10h-2V7h-4V5h4V2h2v3h3v2h-3v3zM10 12c-1.1 0-2-.9-2-2V4h2v6h-2c0 1.1.9 2 2 2zM14 16h-4v-2h4v2zM16 13V3H8v10h8zM6 6H4v14c0 1.1.9 2 2 2h14v-2H6V6z"/>
-                                <!-- Building icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 4: 1994 -->
+                        <!-- Journey Card 4: 1994 - Public Limited Company -->
                         <div class="carousel-card">
+                            <!-- Icon for Legal Document / Transformation -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm-3 15h2v-2h-2v2zm0-4h2V8h-2v5zm4 0h2V8h-2v5z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">1994</h3>
                             <p class="text-gray-700">Transformed into public limited company - Mittal Laminated Limited</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 14c-1.1 0-2-.9-2-2V4h2v8c0 1.1.9 2 2 2zM12 16c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM16 13V3H8v10h8zM6 6H4v14c0 1.1.9 2 2 2h14v-2H6V6z"/>
-                                <!-- Document/Company icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 5: 1996 -->
+                        <!-- Journey Card 5: 1996 - Name changed Greenply Industries Limited -->
                         <div class="carousel-card">
+                            <!-- Icon for Leaf / Green -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.5c-2.58 0-4.66-2.09-4.66-4.66 0-2.4 1.83-4.38 4.14-4.63l.52-.05v-2.1c0-.28.22-.5.5-.5s.5.22.5.5v2.1l.52.05c2.31.25 4.14 2.23 4.14 4.63 0 2.57-2.08 4.66-4.66 4.66zM12 5.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">1996</h3>
                             <p class="text-gray-700">Name changed Greenply Industries Limited</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                                <!-- Star/Award icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 6: 1997 -->
+                        <!-- Journey Card 6: 1997 - Launch of Greenply brand -->
                         <div class="carousel-card">
+                            <!-- Icon for Tag / Brand -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 7L9 19l-5.5-5.5L2 15.5l7 7 14-14z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">1997</h3>
                             <p class="text-gray-700">Launch of Greenply brand (Flagship Premium Brand)</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm-1.5 15h3V9h-3v8zm0-10.5h3V6h-3v.5z"/>
-                                <!-- Tag/Brand icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 7: 2005 -->
+                        <!-- Journey Card 7: 2005 - Amalgamation -->
                         <div class="carousel-card">
+                            <!-- Icon for Handshake / Merge -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2005</h3>
                             <p class="text-gray-700">Amalgamation of worthy plywood, now Kriparamour factory</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Handshake icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 8: 2007 -->
+                        <!-- Journey Card 8: 2007 - Acquisition -->
                         <div class="carousel-card">
+                            <!-- Icon for Building / Acquisition -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2007</h3>
                             <p class="text-gray-700">Acquisition of two plywood units in Gujarat, now in Bamanbore Factory</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Factory/Acquisition icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 9: 2008 -->
+                        <!-- Journey Card 9: 2008 - SAP & Optima Brand -->
                         <div class="carousel-card">
+                            <!-- Icon for Software / Gear -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.46 12.92l-.9-.9c-.61-.61-1.6-.61-2.21 0l-.9.9c-.61.61-.61 1.6 0 2.21l.9.9c.61.61 1.6.61 2.21 0l.9-.9c.61-.61.61-1.6 0-2.21zm-1.88 1.88l-2.21-2.21c-.3-.3-.79-.3-1.09 0l-2.21 2.21c-.3.3-.3.79 0 1.09l2.21 2.21c.3.3.79.3 1.09 0l2.21-2.21c.3-.3.3-.79 0-1.09zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2008</h3>
                             <p class="text-gray-700">Implementation of SAP and launch of Optima Brand & flush doors</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Software/Gear icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 10: 2014 -->
+                        <!-- Journey Card 10: 2014 - Face Veneer Myanmar -->
                         <div class="carousel-card">
+                            <!-- Icon for Production / Plant -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.5c-2.58 0-4.66-2.09-4.66-4.66 0-2.4 1.83-4.38 4.14-4.63l.52-.05v-2.1c0-.28.22-.5.5-.5s.5.22.5.5v2.1l.52.05c2.31.25 4.14 2.23 4.14 4.63 0 2.57-2.08 4.66-4.66 4.66zM12 5.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2014</h3>
                             <p class="text-gray-700">Commenced production of Face Veneer in Myanmar</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Production/Factory icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 11: 2015 -->
+                        <!-- Journey Card 11: 2015 - Demerger of Decorative Business -->
                         <div class="carousel-card">
+                            <!-- Icon for Split / Demerge -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm-1-9H7V7h4V3h2v4h4v2h-4v4h4v2h-4v4h-2v-4z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2015</h3>
                             <p class="text-gray-700">Demerger of Decorative Business comprising of Laminates and allied products into Greenlam</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Merge icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 12: 2017 -->
+                        <!-- Journey Card 12: 2017 - Face Veneer Gabon -->
                         <div class="carousel-card">
+                            <!-- Icon for Globe / International -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.5c-2.58 0-4.66-2.09-4.66-4.66 0-2.4 1.83-4.38 4.14-4.63l.52-.05v-2.1c0-.28.22-.5.5-.5s.5.22.5.5v2.1l.52.05c2.31.25 4.14 2.23 4.14 4.63 0 2.57-2.08 4.66-4.66 4.66zM12 5.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2017</h3>
                             <p class="text-gray-700">Face Veneer plant with capacity of 36,000 CBM has commenced production at Gabon in West Africa</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Lightbulb/Innovation icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 13: 2018 -->
+                        <!-- Journey Card 13: 2018 - Decorative Veneers Bamanbore -->
                         <div class="carousel-card">
+                            <!-- Icon for Production / Material -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm-1-9H7V7h4V3h2v4h4v2h-4v4h4v2h-4v4h-2v-4z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2018</h3>
                             <p class="text-gray-700">Production of Decorative Veneers starts at Bamanbore Plant</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Production/Plant icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 14: 2019 -->
+                        <!-- Journey Card 14: 2019 - Demerger of MDF Business -->
                         <div class="carousel-card">
+                            <!-- Icon for Split / Demerge -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm-1-9H7V7h4V3h2v4h4v2h-4v4h4v2h-4v4h-2v-4z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2019</h3>
                             <p class="text-gray-700">Demerger of MDF Business and Pantnagar Plywood Unit into Greenpanel</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Club/Community icon -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 15: 2020 -->
+                        <!-- Journey Card 15: 2020 - E-Zero Range -->
                         <div class="carousel-card">
+                            <!-- Icon for Eco-friendly / Zero Emission -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.5c-2.58 0-4.66-2.09-4.66-4.66 0-2.4 1.83-4.38 4.14-4.63l.52-.05v-2.1c0-.28.22-.5.5-.5s.5.22.5.5v2.1l.52.05c2.31.25 4.14 2.23 4.14 4.63 0 2.57-2.08 4.66-4.66 4.66zM12 5.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2020</h3>
-                            <p class="text-gray-700">Introduction of E-Zero Range</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- Zero Emission icon -->
-                            </svg>
+                            <p class="text-700">Introduction of E-Zero Range</p>
                         </div>
-                        <!-- Journey Card 16: 2021 -->
+                        <!-- Journey Card 16: 2021 - Foray into MDF segment -->
                         <div class="carousel-card">
+                            <!-- Icon for Expansion / Growth -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.5c-2.58 0-4.66-2.09-4.66-4.66 0-2.4 1.83-4.38 4.14-4.63l.52-.05v-2.1c0-.28.22-.5.5-.5s.5.22.5.5v2.1l.52.05c2.31.25 4.14 2.23 4.14 4.63 0 2.57-2.08 4.66-4.66 4.66zM12 5.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2021</h3>
                             <p class="text-gray-700">Foray into MDF segment</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- MDF icon (generic) -->
-                            </svg>
                         </div>
-                        <!-- Journey Card 17: 2023 -->
+                        <!-- Journey Card 17: 2023 - Greenply Samet Pvt. Ltd -->
                         <div class="carousel-card">
+                            <!-- Icon for New Product / Launch -->
+                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.5c-2.58 0-4.66-2.09-4.66-4.66 0-2.4 1.83-4.38 4.14-4.63l.52-.05v-2.1c0-.28.22-.5.5-.5s.5.22.5.5v2.1l.52.05c2.31.25 4.14 2.23 4.14 4.63 0 2.57-2.08 4.66-4.66 4.66zM12 5.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
                             <h3 class="text-lg font-semibold text-gray-900">2023</h3>
                             <p class="text-gray-700">Greenplys entry into future fittings with the launch of Greenply Samet Pvt. Ltd</p>
-                            <svg class="carousel-card-image" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                                <!-- New Product/Launch icon -->
-                            </svg>
                         </div>
                     </div>
                     <button id="prev-journey" class="carousel-nav-button left">
@@ -652,7 +772,7 @@
         <section class="bg-white py-16 px-6 md:px-12">
             <div class="max-w-7xl mx-auto text-center">
                 <h2 class="section-header">Company Management</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
                     <!-- Management Member 1: Rajesh Mittal -->
                     <div class="management-card">
                         <img src="https://www.greenply.com:5001/image1714375279507-9959.jpg" alt="Rajesh Mittal" class="management-card-image">
@@ -702,21 +822,21 @@
         <section class="bg-gray-100 py-16 px-6 md:px-12">
             <div class="max-w-7xl mx-auto text-center">
                 <h2 class="section-header">GreenInfinity at a Glance</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
                     <div class="glance-card">
-                        <p class="text-5xl font-bold text-red-600 mb-2">50+</p>
+                        <p class="text-5xl font-bold mb-2">50+</p>
                         <p class="text-lg font-medium text-gray-800">Years of Experience</p>
                     </div>
                     <div class="glance-card">
-                        <p class="text-5xl font-bold text-red-600 mb-2">10+</p>
+                        <p class="text-5xl font-bold mb-2">10+</p>
                         <p class="text-lg font-medium text-gray-800">Manufacturing Units</p>
                     </div>
                     <div class="glance-card">
-                        <p class="text-5xl font-bold text-red-600 mb-2">2000+</p>
+                        <p class="text-5xl font-bold mb-2">2000+</p>
                         <p class="text-lg font-medium text-gray-800">Strong Workforce</p>
                     </div>
                     <div class="glance-card">
-                        <p class="text-5xl font-bold text-red-600 mb-2">1M+</p>
+                        <p class="text-5xl font-bold mb-2">1M+</p>
                         <p class="text-lg font-medium text-gray-800">Happy Customers</p>
                     </div>
                 </div>
@@ -730,79 +850,49 @@
                 <p class="text-center text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
                     Hard work always pays off. We at Greenply abide by this principle, thereby rightfully earning rewards for our excellent performance in the plywood industry of India.
                 </p>
-                <div class="carousel-wrapper">
+                <div class="carousel-wrapper mt-10">
                     <div id="awards-carousel" class="carousel-container">
                         <!-- Award Card 1: 2009 Ranked as Number One Brand -->
                         <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706866855092-2316.png" alt="Award: Ranked as the Number One Brand 2009" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
+                            <img src="https://www.greenply.com:5001/image1706866855092-2316.png" alt="Award: Ranked as the Number One Brand 2009" class="carousel-card-image">
                             <h3 class="text-lg font-semibold text-gray-900">2009</h3>
                             <p class="text-gray-700">Greenply was ranked the number one brand, being recognized as one of the plywood company in terms of the construction world.</p>
                         </div>
                         <!-- Award Card 2: 2010 Chosen as a Power Brand -->
                         <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706866912712-1282.png" alt="Award: Chosen as a Power Brand 2010" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
+                            <img src="https://www.greenply.com:5001/image1706866912712-1282.png" alt="Award: Chosen as a Power Brand 2010" class="carousel-card-image">
                             <h3 class="text-lg font-semibold text-gray-900">2010</h3>
                             <p class="text-gray-700">Chosen as a 'Power Brand' by Indian consumer.</p>
                         </div>
                         <!-- Award Card 3: 2012 Dun & Bradstreet Corporate Awards -->
                         <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706866989981-4624.png" alt="Award: Dun & Bradstreet Corporate Awards 2012" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
+                            <img src="https://www.greenply.com:5001/image1706866989981-4624.png" alt="Award: Dun & Bradstreet Corporate Awards 2012" class="carousel-card-image">
                             <h3 class="text-lg font-semibold text-gray-900">2012</h3>
                             <p class="text-gray-700">Recognized as the largest Indian Company in the Plywood sector at the Dun & Bradstreet Corporate Awards.</p>
                         </div>
                         <!-- Award Card 4: 2013 Limca Book of Records -->
                         <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867052317-3709.png" alt="Award: Limca Book of Records 2013" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
+                            <img src="https://www.greenply.com:5001/image1706867052317-3709.png" alt="Award: Limca Book of Records 2013" class="carousel-card-image">
                             <h3 class="text-lg font-semibold text-gray-900">2013</h3>
                             <p class="text-gray-700">Entered into Limca Book of Records for planting over 10 million saplings.</p>
                         </div>
                         <!-- Award Card 5: 2014 Reader's Digest Trusted Brand -->
                         <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867084641-3436.png" alt="Award: Reader's Digest Trusted Brand 2014" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
+                            <img src="https://www.greenply.com:5001/image1706867084641-3436.png" alt="Award: Reader's Digest Trusted Brand 2014" class="carousel-card-image">
                             <h3 class="text-lg font-semibold text-gray-900">2014</h3>
                             <p class="text-gray-700">Awarded the prestigious 'Reader's Digest Trusted Brand' for excellence.</p>
                         </div>
                         <!-- Award Card 6: 2015 Most Promising Brand -->
                         <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867116704-9718.png" alt="Award: Most Promising Brand 2015" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
+                            <img src="https://www.greenply.com:5001/image1706867116704-9718.png" alt="Award: Most Promising Brand 2015" class="carousel-card-image">
                             <h3 class="text-lg font-semibold text-gray-900">2015</h3>
                             <p class="text-gray-700">Recognized as one of the 'Most Promising Brands' in India.</p>
                         </div>
                         <!-- Award Card 7: 2019 Economic Times for the Best Brand -->
                         <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867178533-9923.png" alt="Award: Economic Times Best Brand 2019" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
+                            <img src="https://www.greenply.com:5001/image1706867178533-9923.png" alt="Award: Economic Times Best Brand 2019" class="carousel-card-image">
                             <h3 class="text-lg font-semibold text-gray-900">2019</h3>
-                            <p class="text-gray-700">Received an award by Economic Times for the Best Brand of 2019 in the plywood manufacturing category.</p>
-                        </div>
-                        <!-- Award Card 8: 2020 Great Place to Work -->
-                        <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867213161-509.png" alt="Award: Great Place to Work 2020" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
-                            <h3 class="text-lg font-semibold text-gray-900">2020</h3>
-                            <p class="text-gray-700">Recognized as the Great Place to Work</p>
-                        </div>
-                        <!-- Award Card 9: 2020 CARB Certified -->
-                        <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867260508-1452.png" alt="Award: CARB Certified 2020" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
-                            <h3 class="text-lg font-semibold text-gray-900">2020</h3>
-                            <p class="text-gray-700">Green Gold Platinum & Wood Crest Platinum now CARB certified.</p>
-                        </div>
-                        <!-- Award Card 10: 2021 Certified as Great Place to Work (2nd time) -->
-                        <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867335457-9355.jpg" alt="Award: Certified as Great Place to Work 2021" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
-                            <h3 class="text-lg font-semibold text-gray-900">2021</h3>
-                            <p class="text-gray-700">Certified as Great Place to Work second time in a row!</p>
-                        </div>
-                        <!-- Award Card 11: 2022 Most Trusted Brands -->
-                        <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867376883-9665.jpg" alt="Award: Most Trusted Brands 2022" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
-                            <h3 class="text-lg font-semibold text-gray-900">2022</h3>
-                            <p class="text-gray-700">Greenply Industries Ltd. recognized as one of the Most Trusted Brands of India.</p>
-                        </div>
-                        <!-- Award Card 12: 2022 Best Green Manufacturing Company -->
-                        <div class="carousel-card">
-                            <img src="https://www.greenply.com:5001/image1706867445277-8974.jpg" alt="Award: Best Green Manufacturing Company 2022" class="carousel-card-image !w-auto !h-auto max-w-[150px] max-h-[150px] object-contain">
-                            <h3 class="text-lg font-semibold text-gray-900">2022</h3>
-                            <p class="text-gray-700">Greenply Industries Ltd. was conferred the Best Green Manufacturing Company award by National Feather Awards.</p>
+                            <p class="text-gray-700">Awarded by Economic Times for being the best brand in the plywood industry.</p>
                         </div>
                     </div>
                     <button id="prev-awards" class="carousel-nav-button left">
@@ -816,193 +906,243 @@
         </section>
     </main>
 
-    <!-- Full Description Container (Hidden by default, shown below management cards) -->
-    <div id="full-description-display" class="full-description-container hidden mx-auto max-w-4xl">
-        <h3 id="description-heading"></h3>
-        <p id="description-content"></p>
-        <button class="close-description-button" id="close-description-display">Close</button>
-    </div>
-
-    <!-- Footer Section (Same as Front Page) -->
-    <footer class="footer-dark-bg py-10 px-6 md:px-12 mt-12 text-sm">
-        <div class="container mx-auto grid grid-cols-1 md:grid-cols-5 gap-8 text-center md:text-left">
-            <!-- Column 1: Products -->
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8">
             <div>
-                <h4 class="text-lg font-semibold footer-heading mb-4">Products</h4>
-                <div class="grid grid-cols-1 gap-y-2">
-                    <div>
-                        <h5 class="font-semibold text-white mb-2">Categories</h5>
-                        <ul class="space-y-1">
-                            <li><a href="#" class="footer-link">Plywood & Blockboard</a></li>
-                            <li><a href="#" class="footer-link">Doors</a></li>
-                            <li><a href="#" class="footer-link">Veneers</a></li>
-                            <li><a href="#" class="footer-link">MDF</a></li>
-                            <li><a href="#" class="footer-link">Speciality Plywood</a></li>
-                            <li><a href="#" class="footer-link">PVC</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Column 2: Speciality Feature -->
-            <div>
-                <h4 class="text-lg font-semibold footer-heading mb-4">Speciality Feature</h4>
-                <ul class="space-y-1">
-                    <li><a href="#" class="footer-link">Water Proof</a></li>
-                    <li><a href="#" class="footer-link">Fire Retardant</a></li>
-                    <li><a href="#" class="footer-link">Zero Emission</a></li>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme" style="color: red;">Products</h3>
+                <ul class="space-y-2">
+                    <li><a href="./products.html" class="footer-link">Categories</a></li>
+                    <li><a href="./Speciality Plywood.html" class="footer-link">Plywood & Blockboard</a></li>
+                    <li><a href="./doors.html" class="footer-link">Doors</a></li>
+                    <li><a href="./Veneer.html" class="footer-link">Veneers</a></li>
+                    <li><a href="./MDF and Board.html" class="footer-link">MDF</a></li>
+                    <li><a href="./Speciality Plywood.html" class="footer-link">Speciality Plywood</a></li>
+                    <li><a href="./pvc.html" class="footer-link">PVC</a></li>
                 </ul>
             </div>
-
-            <!-- Column 3: Brands -->
             <div>
-                <h4 class="text-lg font-semibold footer-heading mb-4">Brands</h4>
-                <ul class="space-y-1">
-                    <li><a href="#" class="footer-link">Greeninfinity</a></li>
-                    <li><a href="#" class="footer-link">Ecotec</a></li>
-                    <li><a href="#" class="footer-link">Optima G</a></li>
-                    <li><a href="#" class="footer-link">Greeninfinity Ndure</a></li>
-                    <li><a href="#" class="footer-link">Wood Crest</a></li>
-                    <li><a href="#" class="footer-link">Greeninfinity MDF</a></li>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme" style="color: red;">Speciality Feature</h3>
+                <ul class="space-y-2">
+                    <li><a href="./waterproof.html" class="footer-link">Water Proof</a></li>
+                    <li><a href="./Fire Retardant .html" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="./zero-emission.html" class="footer-link">Zero Emission</a></li>
                 </ul>
             </div>
-
-            <!-- Column 4: Furniture Type -->
             <div>
-                <h4 class="text-lg font-semibold footer-heading mb-4">Furniture Type</h4>
-                <ul class="space-y-1">
-                    <li><a href="#" class="footer-link">Chair</a></li>
-                    <li><a href="#" class="footer-link">Study Table</a></li>
-                    <li><a href="#" class="footer-link">Sofa</a></li>
-                    <li><a href="#" class="footer-link">Bed</a></li>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme" style="color: red;">Brands</h3>
+                <ul class="space-y-2">
+                    <li><a href="./products.html" class="footer-link">GreenInfinity</a></li>
+                    <li><a href="./Ecotec.html" class="footer-link">Ecotec</a></li>
+                    <li><a href="./optim-g.html" class="footer-link">Optima G</a></li>
+                    <li><a href="./Greenply WPC PVC uPVC.html" class="footer-link">GreenInfinity Ndure</a></li>
+                    <li><a href="./woodcreest.html" class="footer-link">Wood Crrest</a></li>
+                    <li><a href="./greeninfinity-mdf.html" class="footer-link">GreenInfinity MDF</a></li>
                 </ul>
             </div>
-
-            <!-- Column 5: Quick Links & More -->
             <div>
-                <h4 class="text-lg font-semibold footer-heading mb-4">Quick Links & More</h4>
-                <ul class="space-y-1">
+                <h3 class="text-xl font-semibold mb-4 text-red-theme" style="color: red;">Furniture Type</h3>
+                <ul class="space-y-2">
+                    <li><a href="./chair.html" class="footer-link">Chair</a></li>
+                    <li><a href="./Study table.html" class="footer-link">Study Table</a></li>
+                    <li><a href="./Sofa.html" class="footer-link">Sofa</a></li>
+                    <li><a href="./bed.html" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme" style="color: red;">Quick Links & More</h3>
+                <ul class="space-y-2">
                     <li><a href="./about.html" class="footer-link">About Us</a></li>
-                    <li><a href="#" class="footer-link">Contact Us</a></li>
-                    <li><a href="#" class="footer-link">Investors</a></li>
-                    <li><a href="#" class="footer-link">Sustainability</a></li>
-                    <li><a href="#" class="footer-link">Blogs</a></li>
-                    <li><a href="#" class="footer-link">FAQ</a></li>
-                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
-                    <li><a href="#" class="footer-link">Disclaimer</a></li>
-                    <li><a href="#" class="footer-link">HKS Award</a></li>
+                    <li><a href="./contact.html" class="footer-link">Contact Us</a></li>
+                    <li><a href="./investers.html" class="footer-link">Investors</a></li>
+                    <li><a href="./Sustainable.html" class="footer-link">Sustainability</a></li>
+                    <li><a href="./blog.html" class="footer-link">Blogs</a></li>
+                    <!-- <li><a href="#" class="footer-link">FAQ</a></li> -->
+                    <li><a href="./Privacy Policy.html" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="./Disclaimer.html" class="footer-link">Disclaimer</a></li>
+                    <!-- <li><a href="#" class="footer-link">HKS Award</a></li> -->
                 </ul>
             </div>
         </div>
 
-        <!-- Social Media and Copyright -->
-        <div class="mt-12 pt-8 border-t border-gray-700 text-center">
-            <h5 class="font-semibold text-white mb-4">Follow us on</h5>
-            <div class="flex justify-center space-x-4 mb-6">
+        <div class="container mx-auto px-6 mt-12 border-t border-gray-700 pt-8 flex flex-col items-center">
+            <p class="text-lg font-semibold mb-4">Follow us on</p>
+            <div class="flex space-x-4 text-2xl mb-8">
                 <a href="https://www.facebook.com/GreenplyPlywood/" class="social-icon-footer"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://twitter.com/greenplyplywood" class="social-icon-footer"><i class="fab fa-twitter"></i></a>
                 <a href="https://www.instagram.com/greenplyplywood/" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/channel/UCl3ckO1adsIiPFHsb8Uizvg" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="social-icon-footer"><i class="fas fa-globe"></i></a>
             </div>
-            <p class="text-gray-400 text-sm">&copy; Copyright 2025 Greeninfinity.com. All Rights Reserved</p>
-            <p class="text-gray-400 text-sm">Digital agency Tonic Worldwide</p>
+            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <!-- Inquiry Modal -->
+    <div id="inquiry-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send Us Your Inquiry</h2>
+                <button id="modal-close-button" class="modal-close-button">&times;</button>
+            </div>
+            <form id="inquiry-form">
+                <div class="form-group">
+                    <label for="inquiry-name">Name</label>
+                    <input type="text" id="inquiry-name" name="name" required class="rounded-lg">
+                </div>
+                <div class="form-group">
+                    <label for="inquiry-email">Email</label>
+                    <input type="email" id="inquiry-email" name="email" required class="rounded-lg">
+                </div>
+                <div class="form-group">
+                    <label for="inquiry-phone">Phone (Optional)</label>
+                    <input type="tel" id="inquiry-phone" name="phone" class="rounded-lg">
+                </div>
+                <div class="form-group">
+                    <label for="inquiry-message">Your Message</label>
+                    <textarea id="inquiry-message" name="message" rows="5" required class="rounded-lg"></textarea>
+                </div>
+                <button type="submit" class="send-whatsapp-button">
+                    Send via WhatsApp <i class="fab fa-whatsapp"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
             const menuButton = document.getElementById('menu-button');
             const navbarMenu = document.getElementById('navbar-menu');
 
-            menuButton.addEventListener('click', () => {
-                navbarMenu.classList.toggle('hidden');
-                navbarMenu.classList.toggle('flex');
-                navbarMenu.classList.toggle('flex-col'); // Stack items vertically on mobile
-                navbarMenu.classList.toggle('space-y-2'); // Add vertical spacing
-            });
-
-            // Universal Carousel Logic (for Journey and Awards sections)
-            function setupCarousel(carouselId, prevBtnId, nextBtnId, autoScroll = false) {
-                const carousel = document.getElementById(carouselId);
-                const prevBtn = document.getElementById(prevBtnId);
-                const nextBtn = document.getElementById(nextBtnId);
-
-                if (!carousel || !prevBtn || !nextBtn) return;
-
-                const scrollAmount = 350; // Adjust based on card width + gap
-                let autoScrollInterval;
-
-                const scrollNext = () => {
-                    if (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth) {
-                        carousel.scrollTo({ left: 0, behavior: 'smooth' }); // Loop back to start
-                    } else {
-                        carousel.scrollBy({
-                            left: scrollAmount,
-                            behavior: 'smooth'
-                        });
-                    }
-                };
-
-                prevBtn.addEventListener('click', () => {
-                    clearInterval(autoScrollInterval); // Stop auto-scroll on manual interaction
-                    carousel.scrollBy({
-                        left: -scrollAmount,
-                        behavior: 'smooth'
-                    });
-                    if (autoScroll) {
-                        autoScrollInterval = setInterval(scrollNext, 3000); // Restart interval
-                    }
+            if (menuButton && navbarMenu) {
+                menuButton.addEventListener('click', () => {
+                    navbarMenu.classList.toggle('hidden');
+                    navbarMenu.classList.toggle('flex-mobile'); // Add/remove custom class for mobile styling
                 });
-
-                nextBtn.addEventListener('click', () => {
-                    clearInterval(autoScrollInterval); // Stop auto-scroll on manual interaction
-                    scrollNext(); // Call the scrollNext logic
-                    if (autoScroll) {
-                        autoScrollInterval = setInterval(scrollNext, 3000); // Restart interval
-                    }
-                });
-
-                if (autoScroll) {
-                    autoScrollInterval = setInterval(scrollNext, 3000); // Auto-scroll every 3 seconds
-                }
             }
 
-            // Enable auto-scroll for both journey and awards carousels
-            setupCarousel('journey-carousel', 'prev-journey', 'next-journey', true);
-            setupCarousel('awards-carousel', 'prev-awards', 'next-awards', true);
-
-
-            // Company Management Description Display Logic
+            // "Know More" functionality for Management Section
             const knowMoreButtons = document.querySelectorAll('.know-more-button');
             const fullDescriptionDisplay = document.getElementById('full-description-display');
             const descriptionHeading = document.getElementById('description-heading');
             const descriptionContent = document.getElementById('description-content');
-            const closeDescriptionDisplay = document.getElementById('close-description-display');
+            const closeDescriptionButton = document.getElementById('close-description-display');
 
             knowMoreButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const name = button.dataset.name;
                     const fullBio = button.dataset.fullBio;
 
-                    // Populate the description div
-                    descriptionHeading.textContent = `About ${name}`;
+                    descriptionHeading.innerHTML = name;
                     descriptionContent.innerHTML = fullBio;
-
-                    // Show the description div
-                    fullDescriptionDisplay.classList.add('active');
                     fullDescriptionDisplay.classList.remove('hidden');
-
-                    // Scroll to the displayed description for better UX
-                    fullDescriptionDisplay.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    fullDescriptionDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 });
             });
 
-            closeDescriptionDisplay.addEventListener('click', () => {
-                fullDescriptionDisplay.classList.remove('active');
-                fullDescriptionDisplay.classList.add('hidden');
-            });
+            if (closeDescriptionButton) {
+                closeDescriptionButton.addEventListener('click', () => {
+                    fullDescriptionDisplay.classList.add('hidden');
+                });
+            }
+
+            // Carousel Functionality
+            function setupCarousel(carouselId, prevBtnId, nextBtnId) {
+                const carousel = document.getElementById(carouselId);
+                const prevButton = document.getElementById(prevBtnId);
+                const nextButton = document.getElementById(nextBtnId);
+
+                if (!carousel || !prevButton || !nextButton) return;
+
+                const scrollAmount = 300; // Adjust based on card width + gap
+
+                function updateButtonStates() {
+                    prevButton.disabled = carousel.scrollLeft === 0;
+                    nextButton.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1; // -1 for precision
+                }
+
+                prevButton.addEventListener('click', () => {
+                    carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+
+                nextButton.addEventListener('click', () => {
+                    carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
+
+                carousel.addEventListener('scroll', updateButtonStates);
+
+                // Initial update and update on resize
+                window.addEventListener('resize', updateButtonStates);
+                updateButtonStates(); // Call initially
+            }
+
+            setupCarousel('journey-carousel', 'prev-journey', 'next-journey');
+            setupCarousel('awards-carousel', 'prev-awards', 'next-awards');
+
+            // Inquiry Modal Logic
+            const inquiryButton = document.getElementById('inquiry-button');
+            const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
+            const modalCloseButton = document.getElementById('modal-close-button');
+            const inquiryForm = document.getElementById('inquiry-form');
+
+            // Show modal when inquiry button is clicked
+            if (inquiryButton) {
+                inquiryButton.addEventListener('click', () => {
+                    inquiryModalOverlay.classList.add('show');
+                });
+            }
+
+            // Hide modal when close button is clicked
+            if (modalCloseButton) {
+                modalCloseButton.addEventListener('click', () => {
+                    inquiryModalOverlay.classList.remove('show');
+                });
+            }
+
+            // Hide modal when clicking outside the content
+            if (inquiryModalOverlay) {
+                inquiryModalOverlay.addEventListener('click', (event) => {
+                    if (event.target === inquiryModalOverlay) {
+                        inquiryModalOverlay.classList.remove('show');
+                    }
+                });
+            }
+
+            // Handle form submission for WhatsApp
+            if (inquiryForm) {
+                inquiryForm.addEventListener('submit', (event) => {
+                    event.preventDefault(); // Prevent default form submission
+
+                    const name = document.getElementById('inquiry-name').value;
+                    const email = document.getElementById('inquiry-email').value;
+                    const phone = document.getElementById('inquiry-phone').value;
+                    const message = document.getElementById('inquiry-message').value;
+
+                    // Construct the WhatsApp message
+                    let whatsappMessage = `Inquiry from GreenInfinity Website:\n\n`;
+                    whatsappMessage += `Name: ${name}\n`;
+                    whatsappMessage += `Email: ${email}\n`;
+                    if (phone) {
+                        whatsappMessage += `Phone: ${phone}\n`;
+                    }
+                    whatsappMessage += `Message: ${message}`;
+
+                    // Encode the message for URL
+                    const encodedMessage = encodeURIComponent(whatsappMessage);
+
+                    // Replace with your WhatsApp number (e.g., your business WhatsApp number)
+                    const whatsappNumber = '919945015544'; // Example: +91 99450 15544
+
+                    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+                    // Open WhatsApp in a new tab
+                    window.open(whatsappUrl, '_blank');
+
+                    // Optionally, clear the form and hide the modal after sending
+                    inquiryForm.reset();
+                    inquiryModalOverlay.classList.remove('show');
+                });
+            }
         });
     </script>
 </body>

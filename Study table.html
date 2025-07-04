@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Table - GreenInfinity</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom CSS Variables for Theme */
+        :root {
+            --primary-red: #EF4444; /* Tailwind red-600 */
+            --light-red: #FEE2E2; /* Tailwind red-100 */
+            --dark-red: #DC2626; /* Tailwind red-700 */
+            --text-gray: #374151; /* Tailwind gray-700 */
+            --light-gray: #F3F4F6; /* Tailwind gray-100 */
+            --white: #FFFFFF;
+            --black: #1F2937; /* Tailwind gray-800 */
+            --dark-bg: #1A202C; /* Changed to a darker gray for footer background */
+            --footer-text: #E2E8F0; /* Lighter text for footer links */
+            --footer-heading: #EF4444; /* Red for footer headings */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-gray);
+            background-color: var(--light-gray); /* Apply light-gray background to body */
+        }
+
+        /* General Section Header Styling */
+        .section-header {
+            font-size: 2.5rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 2.5rem; /* mb-10 */
+            color: var(--text-gray);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-red);
+            border-radius: 2px;
+        }
+
+        /* Specific header color override for dark background */
+        .section-header.text-white::after {
+            background-color: var(--white);
+        }
+
+        /* Floating Icons Styling */
+        .floating-icon {
+            position: fixed;
+            background-color: var(--primary-red);
+            color: white;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+            cursor: pointer; /* Add cursor pointer for clickability */
+        }
+
+        .floating-icon:hover {
+            transform: scale(1.1);
+            background-color: var(--dark-red);
+        }
+
+        .inquiry-icon {
+            top: 50%; /* Center vertically */
+            right: 20px; /* Position on the right side */
+            transform: translateY(-50%); /* Adjust for vertical centering */
+        }
+
+        /* Navigation Menu Toggle for Mobile */
+        #navbar-menu.hidden-mobile {
+            display: none;
+        }
+
+        #navbar-menu.flex-mobile {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            background-color: var(--white);
+            border-top: 1px solid var(--light-gray);
+            padding-top: 1rem;
+        }
+
+        #navbar-menu.flex-mobile .nav-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        #navbar-menu.flex-mobile .nav-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Carousel Styling */
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 0 40px; /* Space for nav buttons */
+        }
+
+        .carousel-container {
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            padding-bottom: 1rem; /* Space for scrollbar on some browsers */
+        }
+
+        .carousel-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, Opera */
+        }
+
+        .carousel-card {
+            flex: 0 0 auto;
+            width: 300px; /* Fixed width for each card */
+            scroll-snap-align: start;
+            background-color: var(--white);
+            color: var(--text-gray);
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            padding: 1.5rem; /* p-6 */
+            margin-right: 1.5rem; /* gap-6 */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align content to top */
+            min-height: 280px; /* Ensure consistent height */
+        }
+
+        .carousel-card:last-child {
+            margin-right: 0;
+        }
+
+        .carousel-card-image {
+            width: 80px;
+            height: 80px;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            object-fit: contain; /* Ensure images fit without distortion */
+        }
+
+        .carousel-card img.carousel-card-image {
+            width: auto; /* Override default SVG width for images */
+            height: auto;
+            max-width: 150px;
+            max-height: 150px;
+            margin: 0 auto 1rem auto; /* Center image */
+        }
+
+        .carousel-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--primary-red);
+            color: var(--white);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .carousel-nav-button:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .carousel-nav-button.left {
+            left: 0;
+        }
+
+        .carousel-nav-button.right {
+            right: 0;
+        }
+
+        .carousel-nav-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: translateY(-50%);
+        }
+
+        /* Specific styles for the Study Table page content */
+        .hero-study-table {
+            background-image: url('https://placehold.co/1920x600/000000/FFFFFF?text=Study+Table+Hero'); /* Placeholder for hero image */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            min-height: 400px; /* Ensure hero section has height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .hero-study-table .breadcrumbs {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-study-table h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .image-grid-card {
+            background-color: var(--white);
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text */
+        }
+
+        .image-grid-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-grid-card img {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            object-fit: cover;
+            border-radius: 0.75rem 0.75rem 0 0; /* Rounded top corners */
+        }
+
+        .image-grid-card p {
+            padding: 1rem;
+            font-weight: 500;
+            color: var(--text-gray);
+            font-size: 1rem;
+            flex-grow: 1; /* Allow text to take available space */
+            display: flex;
+            align-items: center; /* Vertically center text if it's short */
+            justify-content: center;
+        }
+
+        .show-more-button {
+            background-color: var(--primary-red); /* Changed to primary-red */
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 2rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .show-more-button:hover {
+            background-color: var(--dark-red); /* Darker red */
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 767px) {
+            .section-header {
+                font-size: 2rem; /* Smaller on mobile */
+            }
+
+            .carousel-card {
+                width: 85%; /* Adjust card width for smaller screens */
+                margin-right: 1rem;
+            }
+
+            .carousel-wrapper {
+                padding: 0 20px; /* Less space for nav buttons on mobile */
+            }
+
+            .carousel-nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            /* Footer responsive adjustments */
+            .footer-section {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+                text-align: center;
+            }
+
+            .footer-column {
+                margin-bottom: 2rem;
+            }
+
+            .footer-column:last-child {
+                margin-bottom: 0;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .hero-study-table h1 {
+                font-size: 2.25rem;
+            }
+        }
+
+        /* Modal specific styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-gray);
+        }
+
+        .modal-close-button {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close-button:hover {
+            color: var(--dark-red);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select { /* Added select for dropdown */
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            color: var(--text-gray);
+            background-color: var(--light-gray);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .inquire-now-button { /* New button style for the modal */
+            background-color: var(--primary-red); /* Changed to primary-red */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .inquire-now-button:hover {
+            background-color: var(--dark-red); /* Darker red */
+            transform: translateY(-2px);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        .checkbox-group a {
+            color: var(--primary-red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer specific styles */
+        .text-red-theme {
+            color: var(--footer-heading); /* Use the CSS variable for red theme */
+        }
+
+        .footer-link {
+            color: var(--footer-text); /* Use the CSS variable for footer text color */
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-red); /* Hover color for footer links */
+        }
+
+        .social-icon-footer {
+            color: var(--footer-text); /* Use the CSS variable for social icon color */
+            transition: color 0.3s ease;
+        }
+
+        .social-icon-footer:hover {
+            color: var(--primary-red); /* Hover color for social icons */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header Section -->
+    <header class="bg-white shadow-md py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
+        <div class="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0">
+            <img src="https://placehold.co/100x40/EF4444/FFFFFF?text=GreenInfinity" alt="GreenInfinity Logo" class="h-10 rounded-lg">
+            <button id="menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path></svg>
+            </button>
+        </div>
+        <nav id="navbar-menu" class="hidden md:flex flex-col md:flex-row md:items-center md:space-x-4 w-full md:w-auto">
+            <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
+            <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+            <a href="./about.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">About Us</a>
+            <a href="./Inspiration.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
+            <a href="./products.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
+        </nav>
+    </header>
+
+    <!-- Fixed Inquiry Icon -->
+    <div id="inquiry-button" class="floating-icon inquiry-icon">
+        <i class="fas fa-info"></i>
+    </div>
+
+    <main>
+        <!-- Hero Section for Study Table -->
+        <section class="hero-study-table py-20 px-6 md:px-12 text-center rounded-b-lg">
+            <p class="breadcrumbs">Home > Inspiration > Study Table</p>
+            <h1>Study table ideas to match your interior style</h1>
+        </section>
+
+        <!-- Discover Study Table Ideas Section -->
+        <section class="bg-white py-16 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header">Discover study table ideas</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Classic+Wooden+Desk" alt="Classic wooden desk old charm">
+                        <p>Classic wooden desk old charm</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Modern+Desk" alt="Modern Desk with Cozy Chair">
+                        <p>Modern Desk with Cozy Chair</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Minimalistic+Office" alt="Minimalistic Office with storage">
+                        <p>Minimalistic Office with storage</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Wooden+Home+Office" alt="Wooden finished Home Office setup">
+                        <p>Wooden finished Home Office setup</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Contemporary+Workplace" alt="Contemporary workplace home office">
+                        <p>Contemporary workplace home office</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Light+Brown+Table" alt="Light Brown table and chair">
+                        <p>Light Brown table and chair</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Elegant+Wooden+Desk" alt="Elegant wooden desk">
+                        <p>Elegant wooden desk</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Luxury+Classic+Library" alt="Luxury classic library sitting room">
+                        <p>Luxury classic library sitting room</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Simple+Wooden+Worktable" alt="Simple wooden worktable">
+                        <p>Simple wooden worktable</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Antique+Floral+Table" alt="Antique Floral dark brown study table">
+                        <p>Antique Floral dark brown study table</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Vintage+Wooden+Study" alt="Vintage wooden study or work table">
+                        <p>Vintage wooden study or work table</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Classic+Leather+Furniture" alt="Classic style leather wood furniture">
+                        <p>Classic style leather wood furniture</p>
+                    </div>
+                </div>
+                <button class="show-more-button">Show more</button>
+            </div>
+        </section>
+
+        <!-- Explore Greenply Products Section - Carousel -->
+        <section class="bg-gray-100 py-16 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header">Explore Greenply Products</h2>
+                <div class="carousel-wrapper mt-10">
+                    <div id="products-carousel" class="carousel-container">
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/300x200/EF4444/FFFFFF?text=Plywood+%26+Blockboard" alt="Plywood & Blockboard" class="carousel-card-image">
+                            <p class="text-gray-700">Plywood & Blockboard</p>
+                        </div>
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/300x200/EF4444/FFFFFF?text=Doors" alt="Doors" class="carousel-card-image">
+                            <p class="text-gray-700">Doors</p>
+                        </div>
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/300x200/EF4444/FFFFFF?text=Veneers" alt="Veneers" class="carousel-card-image">
+                            <p class="text-gray-700">Veneers</p>
+                        </div>
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/300x200/EF4444/FFFFFF?text=MDF+and+Board" alt="MDF and Board" class="carousel-card-image">
+                            <p class="text-gray-700">MDF and Board</p>
+                        </div>
+                        <div class="carousel-card">
+                            <img src="https://placehold.co/300x200/EF4444/FFFFFF?text=PVC" alt="PVC" class="carousel-card-image">
+                            <p class="text-gray-700">PVC</p>
+                        </div>
+                    </div>
+                    <button id="prev-products" class="carousel-nav-button left">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button id="next-products" class="carousel-nav-button right">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Explore Other Furniture Section -->
+        <section class="bg-white py-16 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto text-center">
+                <h2 class="section-header">Explore other furniture</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Chair+Ideas" alt="Chair ideas to match your interior style">
+                        <p>Chair ideas to match your interior style</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Bed+Ideas" alt="Discover bed ideas">
+                        <p>Discover bed ideas</p>
+                    </div>
+                    <div class="image-grid-card">
+                        <img src="https://placehold.co/400x200/F3F4F6/374151?text=Sofa+Ideas" alt="Discover Sofa ideas">
+                        <p>Discover Sofa ideas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Inquiry Form Modal -->
+    <div id="inquiry-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Inquire Now</h2>
+                <button id="modal-close-button" class="modal-close-button">&times;</button>
+            </div>
+            <form id="inquiry-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" placeholder="Enter Your Mobile Number">
+                </div>
+                <div class="form-group">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" id="pincode" placeholder="Enter Pincode">
+                </div>
+                <div class="form-group">
+                    <label for="inquiry-type">Inquiry Type</label>
+                    <select id="inquiry-type">
+                        <option value="">Select Inquiry Type</option>
+                        <option value="Product Inquiry">Product Inquiry</option>
+                        <option value="Service Inquiry">Service Inquiry</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                    </select>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="robot-checkbox">
+                    <label for="robot-checkbox">I'm not a robot</label>
+                    <a href="#">Privacy Policy</a>
+                </div>
+                <button type="submit" class="inquire-now-button">
+                    Inquire Now
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-12 relative">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Products</h3>
+                <ul class="space-y-2">
+                    <li><a href="./products.html" class="footer-link">Categories</a></li>
+                    <li><a href="./Speciality Plywood.html" class="footer-link">Plywood & Blockboard</a></li>
+                    <li><a href="./doors.html" class="footer-link">Doors</a></li>
+                    <li><a href="./Veneer.html" class="footer-link">Veneers</a></li>
+                    <li><a href="./MDF and Board.html" class="footer-link">MDF</a></li>
+                    <li><a href="./Speciality Plywood.html" class="footer-link">Speciality Plywood</a></li>
+                    <li><a href="./pvc.html" class="footer-link">PVC</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Speciality Feature</h3>
+                <ul class="space-y-2">
+                    <li><a href="./waterproof.html" class="footer-link">Water Proof</a></li>
+                    <li><a href="./Fire Retardant .html" class="footer-link">Fire Retardant</a></li>
+                    <li><a href="./zero-emission.html" class="footer-link">Zero Emission</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Brands</h3>
+                <ul class="space-y-2">
+                    <li><a href="./products.html" class="footer-link">GreenInfinity</a></li>
+                    <li><a href="./Ecotec.html" class="footer-link">Ecotec</a></li>
+                    <li><a href="./optim-g.html" class="footer-link">Optima G</a></li>
+                    <li><a href="./Greenply WPC PVC uPVC.html" class="footer-link">GreenInfinity Ndure</a></li>
+                    <li><a href="./woodcreest.html" class="footer-link">Wood Crrest</a></li>
+                    <li><a href="./greeninfinity-mdf.html" class="footer-link">GreenInfinity MDF</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Furniture Type</h3>
+                <ul class="space-y-2">
+                    <li><a href="./chair.html" class="footer-link">Chair</a></li>
+                    <li><a href="./Study table.html" class="footer-link">Study Table</a></li>
+                    <li><a href="./Sofa.html" class="footer-link">Sofa</a></li>
+                    <li><a href="./bed.html" class="footer-link">Bed</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-red-theme">Quick Links & More</h3>
+                <ul class="space-y-2">
+                    <li><a href="./about.html" class="footer-link">About Us</a></li>
+                    <li><a href="./contact.html" class="footer-link">Contact Us</a></li>
+                    <li><a href="./investers.html" class="footer-link">Investors</a></li>
+                    <li><a href="./Sustainable.html" class="footer-link">Sustainability</a></li>
+                    <li><a href="./blog.html" class="footer-link">Blogs</a></li>
+                    <li><a href="./Privacy Policy.html" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="./Disclaimer.html" class="footer-link">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 mt-12 border-t border-gray-700 pt-8 flex flex-col items-center">
+            <p class="text-lg font-semibold mb-4">Follow us on</p>
+            <div class="flex space-x-4 text-2xl mb-8">
+                <a href="https://www.facebook.com/GreenplyPlywood/" class="social-icon-footer"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/greenplyplywood" class="social-icon-footer"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/greenplyplywood/" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/channel/UCl3ckO1adsIiPFHsb8Uizvg" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-center text-sm text-gray-400">Copyright &copy; 2025 GreenInfinity.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Get elements
+        const menuButton = document.getElementById('menu-button');
+        const navbarMenu = document.getElementById('navbar-menu');
+        const inquiryButton = document.getElementById('inquiry-button');
+        const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        const inquiryForm = document.getElementById('inquiry-form');
+        const productsCarousel = document.getElementById('products-carousel');
+        const prevProductsBtn = document.getElementById('prev-products');
+        const nextProductsBtn = document.getElementById('next-products');
+
+        // Mobile menu toggle
+        menuButton.addEventListener('click', () => {
+            navbarMenu.classList.toggle('hidden-mobile');
+            navbarMenu.classList.toggle('flex-mobile');
+        });
+
+        // Show modal when inquiry button is clicked
+        inquiryButton.addEventListener('click', () => {
+            inquiryModalOverlay.classList.add('show');
+        });
+
+        // Hide modal when close button or overlay is clicked
+        modalCloseButton.addEventListener('click', () => {
+            inquiryModalOverlay.classList.remove('show');
+        });
+
+        inquiryModalOverlay.addEventListener('click', (event) => {
+            if (event.target === inquiryModalOverlay) {
+                inquiryModalOverlay.classList.remove('show');
+            }
+        });
+
+        // Handle form submission for WhatsApp
+        inquiryForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+            const pincode = document.getElementById('pincode').value;
+            const inquiryType = document.getElementById('inquiry-type').value;
+            const robotCheckbox = document.getElementById('robot-checkbox').checked;
+
+            // Basic validation
+            if (!name || !mobile || !pincode || !inquiryType) {
+                alert('Please fill in all required fields.'); // Using alert for simplicity, consider a custom modal for better UX
+                return;
+            }
+
+            if (!robotCheckbox) {
+                alert('Please confirm you are not a robot.'); // Using alert for simplicity
+                return;
+            }
+
+            // Construct WhatsApp message
+            const message = `
+                Enquiry Details:
+                Name: ${name}
+                Mobile: ${mobile}
+                Pincode: ${pincode}
+                Inquiry Type: ${inquiryType}
+            `.trim(); // Trim to remove leading/trailing whitespace
+
+            // Replace with your WhatsApp number (e.g., country code + number)
+            const whatsappNumber = '+919876543210'; // Example: +91 for India
+
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(message);
+
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+
+            // Optionally, close the modal after sending
+            inquiryModalOverlay.classList.remove('show');
+
+            // Clear the form
+            inquiryForm.reset();
+        });
+
+        // Carousel Scroll functionality for products
+        prevProductsBtn.addEventListener('click', () => {
+            productsCarousel.scrollBy({
+                left: -324, // Card width (300px) + margin (24px)
+                behavior: 'smooth'
+            });
+        });
+
+        nextProductsBtn.addEventListener('click', () => {
+            productsCarousel.scrollBy({
+                left: 324, // Card width (300px) + margin (24px)
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
