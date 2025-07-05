@@ -3,248 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenInfinity - Living Room Themes</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Living Room Themes - GreenInfinity</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Import Google Fonts - Inter */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        /* Custom CSS Variables for Theme */
+        :root {
+            --primary-red: #EF4444; /* Tailwind red-600 */
+            --light-red: #FEE2E2; /* Tailwind red-100 */
+            --dark-red: #DC2626; /* Tailwind red-700 */
+            --text-gray: #374151; /* Tailwind gray-700 */
+            --light-gray: #F3F4F6; /* Tailwind gray-100 */
+            --white: #FFFFFF;
+            --black: #1F2937; /* Tailwind gray-800 */
+            --dark-bg: #1A202C; /* Changed to a darker gray for footer background */
+            --footer-text: #E2E8F0; /* Lighter text for footer links */
+            --footer-heading: #EF4444; /* Red for footer headings */
+        }
 
-        /* Base styles */
         body {
             font-family: 'Inter', sans-serif;
-            color: #333;
-            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-gray);
+            background-color: var(--white);
         }
 
-        /* Custom color variables for consistency */
-        :root {
-            --green-theme: #38A169; /* Tailwind's green-600 for this page */
-            --green-theme-hover: #2F855A; /* Darker green for hover */
-            --red-theme: #e53e3e; /* Keeping red for inquiry button */
-            --red-theme-hover: #c53030;
-            --dark-green: #10B981; /* A darker green for specific elements */
+        /* Custom theme colors for Tailwind-like classes */
+        .text-red-theme {
+            color: var(--primary-red);
+        }
+        .bg-red-theme {
+            background-color: var(--primary-red);
+        }
+        .hover-red-theme:hover {
+            background-color: var(--dark-red);
+        }
+        .focus\:ring-red-theme:focus {
+            --tw-ring-color: rgba(239, 68, 68, 0.5); /* Primary red with opacity */
+        }
+        .focus\:border-red-theme:focus {
+            border-color: var(--primary-red);
         }
 
-        /* Tailwind-like utility classes for custom colors */
-        .bg-green-theme { background-color: var(--green-theme); }
-        .text-green-theme { color: var(--green-theme); }
-        .border-green-theme { border-color: var(--green-theme); }
-        .hover-green-theme:hover { background-color: var(--green-theme-hover); }
-
-        .bg-red-theme { background-color: var(--red-theme); } /* Added for consistency */
-        .text-red-theme { color: var(--red-theme); } /* Added for consistency */
-        .border-red-theme { border-color: var(--red-theme); } /* Added for consistency */
-        .hover-red-theme:hover { background-color: var(--red-theme-hover); } /* Added for consistency */
-
-        .bg-dark-green { background-color: var(--dark-green); }
-        .text-dark-green { color: var(--dark-green); }
-
-        /* Footer link hover effect */
-        .footer-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Accordion styles */
-        .accordion-button {
-            cursor: pointer;
-            padding: 1rem;
-            width: 100%;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            transition: background-color 0.3s ease; /* Smooth transition for background */
-        }
-        .accordion-button.active {
-            background-color: #f0fdf4; /* Light green background when active */
-            border-bottom: 1px solid var(--green-theme); /* Green border when active */
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out, border 0.3s ease-out; /* Added padding to transition */
-            padding-top: 0; /* No top padding when closed */
-            padding-bottom: 0; /* No bottom padding when closed */
-            padding-left: 1rem;
-            padding-right: 1rem;
-            background-color: #f9f9f9;
-            border-left: 5px solid transparent; /* Default transparent border */
-            border-radius: 0 0 8px 8px; /* Rounded corners only at bottom */
-        }
-        .accordion-content.active {
-            padding-top: 2rem; /* Increased top padding when active */
-            padding-bottom: 2rem; /* Increased bottom padding when active */
-            min-height: 150px; /* Minimum height for active content */
-            border-left-color: var(--green-theme); /* Green border when active */
-        }
-        .rotate-icon {
-            transform: rotate(45deg); /* Rotates plus to an 'x' or minus-like symbol */
-            transition: transform 0.3s ease;
-        }
-
-        /* Custom styles for footer social icons */
-        .social-icon-circle {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for circles */
-            transition: background-color 0.3s ease;
-        }
-        .social-icon-circle:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Fixed navigation bar */
-        .fixed-navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 20;
-            background-color: white;
+        /* Header Specific Styles */
+        header {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .fixed-navbar .nav-link {
-            color: #333;
-        }
-        .fixed-navbar .nav-link:hover {
-            color: var(--green-theme);
-        }
-
-        /* Inquiry Modal styles */
-        .modal-overlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
-        }
-        .inquiry-form-modal {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 8px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        .modal-close-button {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .modal-close-button:hover,
-        .modal-close-button:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Custom Message Box Styles */
-        .message-box-overlay {
-            display: none;
-            position: fixed;
-            z-index: 101; /* Higher than inquiry modal */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            justify-content: center;
-            align-items: center;
-        }
-        .message-box-content {
-            background-color: #fefefe;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            max-width: 400px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        /* Hero Section Specific Styles for Living Room Themes Page */
-        .living-room-hero {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            background-image: url('image_682c82.jpg'); /* Background image from uploaded files */
-            background-size: cover;
-            background-position: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+        }
+        @media (min-width: 768px) {
+            header {
+                flex-direction: row;
+                padding-left: 3rem;
+                padding-right: 3rem;
+            }
+        }
+
+        /* Navigation Menu Toggle for Mobile */
+        #navbar-menu.hidden {
+            display: none;
+        }
+        #navbar-menu.flex-col {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            background-color: var(--white);
+            border-top: 1px solid var(--light-gray);
+            padding-top: 1rem;
+        }
+        #navbar-menu.flex-col .nav-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        #navbar-menu.flex-col .nav-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Floating Inquiry Button */
+        #open-inquiry-modal {
+            position: fixed;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            background-color: #EF4444; /* red-600 */
+            color: white;
+            border-radius: 50%;
+            width: 56px; /* w-14 */
+            height: 56px; /* h-14 */
+            display: flex;
+            align-items: center;
             justify-content: center;
+            font-size: 1.5rem; /* text-2xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            cursor: pointer;
+            z-index: 999;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border: none;
+            outline: none;
+        }
+        #open-inquiry-modal:hover {
+            background-color: #DC2626; /* red-700 */
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Inquiry Form Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none; /* Hidden by default */
+        }
+        .inquiry-form-modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6B7280; /* gray-500 */
+        }
+
+        /* Custom Message Box */
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            display: none; /* Hidden by default */
+        }
+        .message-box-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+        }
+
+        /* Hero Section for Living Room Themes */
+        .living-room-hero {
+            background-image: url('https://placehold.co/1200x400/333333/FFFFFF?text=Living+Room+Hero'); /* Placeholder image */
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             color: white;
             text-align: center;
-            overflow: hidden;
+            position: relative;
+            padding-top: 120px; /* To account for fixed header */
         }
         .living-room-hero::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4); /* Dark overlay */
-            z-index: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            z-index: 1;
         }
         .living-room-hero-content {
             position: relative;
-            z-index: 1;
-            padding: 0 2rem;
+            z-index: 2;
         }
-        .living-room-hero-content h1 {
-            font-size: 3.5rem;
+        .living-room-hero h1 {
+            font-size: 3.5rem; /* text-6xl */
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
-        .living-room-hero-content p {
-            font-size: 1.5rem;
+        .living-room-hero p {
+            font-size: 1.25rem; /* text-xl */
         }
         .breadcrumb {
             position: absolute;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1;
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
+            top: 100px; /* Adjust based on header height */
+            left: 1.5rem;
+            z-index: 2;
+            color: white;
+            font-size: 0.875rem; /* text-sm */
         }
         .breadcrumb a {
-            color: rgba(255,255,255,0.8);
+            color: white;
             text-decoration: none;
+            opacity: 0.8;
         }
         .breadcrumb a:hover {
             text-decoration: underline;
         }
+        .breadcrumb > a:not(:last-child)::after {
+            content: ' > ';
+            margin: 0 0.25rem;
+        }
 
-        /* Living Room Themes Grid */
+        /* Theme Cards */
         .theme-card {
-            border-radius: 0.5rem;
-            overflow: hidden;
+            border-radius: 0.75rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .theme-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
         }
         .theme-card img {
             width: 100%;
@@ -258,98 +261,104 @@
 
         /* Furniture Type Section */
         .furniture-type-section {
-            background-color: var(--dark-green); /* Dark green background */
-            color: white;
-        }
-        .furniture-card {
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            background-color: rgba(255,255,255,0.1); /* Slightly transparent white for cards */
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        .furniture-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
+            background-color: #1F2937; /* gray-800 */
         }
         .furniture-carousel-container {
             display: flex;
-            overflow-x: hidden;
+            overflow-x: scroll;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
-            gap: 1.5rem;
-            padding-bottom: 1rem;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            padding-bottom: 1rem; /* Space for scrollbar on some browsers */
+            gap: 1.5rem; /* space-x-6 */
+        }
+        .furniture-carousel-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, Opera */
         }
         .furniture-carousel-item {
             flex: 0 0 auto;
             width: 300px; /* Fixed width for each card */
             scroll-snap-align: start;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        .furniture-carousel-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .furniture-carousel-item h3 {
+            padding: 1rem;
+            color: #1F2937; /* gray-800 */
         }
         .furniture-carousel-nav-arrow {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            padding: 0.5rem;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-            z-index: 5;
             top: 50%;
             transform: translateY(-50%);
-        }
-        .furniture-carousel-nav-arrow:hover {
-            background-color: rgba(255, 255, 255, 1);
+            background-color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+            border: none;
+            outline: none;
         }
         .furniture-carousel-nav-arrow.left {
-            left: 1rem;
+            left: -20px;
         }
         .furniture-carousel-nav-arrow.right {
-            right: 1rem;
+            right: -20px;
+        }
+        .furniture-carousel-nav-arrow:hover {
+            background-color: #E5E7EB; /* gray-200 */
         }
 
-        /* GreenSpaces Section */
+        /* GreenSpaces Grid */
         .greenspaces-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem; /* space-x-6 and space-y-6 */
+        }
+        .greenspaces-item {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .greenspaces-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
         }
         .greenspaces-item img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Floating Inquiry Button */
-        #open-inquiry-modal {
-            position: fixed;
-            right: 1.5rem; /* Equivalent to Tailwind's right-6 (24px) */
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 99999 !important; /* Extremely high z-index to ensure it's always on top */
-            background-color: var(--red-theme); /* Tailwind's red-600 */
-            color: white;
-            padding: 1rem; /* Equivalent to p-4 */
-            border-radius: 9999px; /* Full rounded */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, transform 0.2s ease;
+        /* Footer Links */
+        .footer-link {
+            color: var(--footer-text);
+            transition: color 0.3s ease;
         }
-        #open-inquiry-modal:hover {
-            background-color: var(--red-theme-hover); /* Darker red for hover */
-            transform: translateY(-2px) translateY(-50%); /* Apply hover transform while maintaining vertical center */
+        .footer-link:hover {
+            color: var(--white);
         }
-        #open-inquiry-modal:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.5); /* Focus ring */
+        .social-icon-footer {
+            color: var(--footer-text);
+            transition: color 0.3s ease;
+        }
+        .social-icon-footer:hover {
+            color: var(--primary-red);
         }
     </style>
 </head>
@@ -357,17 +366,23 @@
 
     <!-- Header Section -->
     <header class="bg-white shadow-md py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
-        <div style="height:100px; width: 150px;  display: flex;justify-content: center; align-items: center;">
+        <div style="height:100px; width: 150px; display: flex;justify-content: center; align-items: center;">
             <img src="./Green Infinity Logo Final-01.png" alt="GreenInfinity Logo" style="opacity: 2.5;">
-        </div>>
+        </div>
         <!-- Updated Navigation Structure: Single row -->
         <nav id="navbar-menu" class="hidden md:flex flex-row md:items-center md:space-x-4 w-full md:w-auto">
             <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
             <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
-            <a href="./about.html" class="text-gray-600 hover:text-red-600 font-medium  transition duration-300 ease-in-out py-1 nav-item">About Us</a>
+            <a href="./about.html" class="text-gray-600 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">About Us</a>
             <a href="./Inspiration.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
             <a href="./products.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
         </nav>
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+            <button id="mobile-menu-toggle" class="text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
     </header>
 
     <!-- Floating Inquiry Button (Right-middle) -->
@@ -438,25 +453,25 @@
     <section class="py-16 px-6 md:px-12 bg-gray-100">
         <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="theme-card bg-white">
-                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Opulent+Living+Room" alt="Opulent Living Room Theme">
+                <img src="https://www.greenply.com:5001/image1704534467717-2055.jpg" alt="Opulent Living Room Theme">
                 <div class="theme-card-content">
                     <h3 class="text-xl font-semibold text-gray-900">Opulent</h3>
                 </div>
             </div>
             <div class="theme-card bg-white">
-                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Artistic+Den+Living+Room" alt="Artistic Den Living Room Theme">
+                <img src="https://www.greenply.com:5001/image1704534502892-2858.jpg" alt="Artistic Den Living Room Theme">
                 <div class="theme-card-content">
                     <h3 class="text-xl font-semibold text-gray-900">Artistic Den</h3>
                 </div>
             </div>
             <div class="theme-card bg-white">
-                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Modern+Minimalism+Living+Room" alt="Modern Minimalism Living Room Theme">
+                <img src="https://www.greenply.com:5001/image1704534429033-1465.jpg" alt="Modern Minimalism Living Room Theme">
                 <div class="theme-card-content">
                     <h3 class="text-xl font-semibold text-gray-900">Modern Minimalism</h3>
                 </div>
             </div>
             <div class="theme-card bg-white">
-                <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Indian+Ethos+Living+Room" alt="Indian Ethos Living Room Theme">
+                <img src="https://www.greenply.com:5001/image1704534532885-345.jpg" alt="Indian Ethos Living Room Theme">
                 <div class="theme-card-content">
                     <h3 class="text-xl font-semibold text-gray-900">Indian Ethos</h3>
                 </div>
@@ -472,37 +487,37 @@
                 <div id="furniture-carousel" class="furniture-carousel-container">
                     <!-- Furniture Card 1 -->
                     <div class="furniture-carousel-item furniture-card">
-                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Sofa" alt="Sofa">
+                        <img src="https://craftsmill.in/cdn/shop/files/sofas-accent-chairs-cider-orange-soft-velvet-touch-fabric-emily-flared-arm-2-seater-sofa-60-46567514931491.jpg?v=1725047510" alt="Sofa">
                         <h3 class="text-xl font-semibold text-white">Sofa</h3>
                     </div>
                     <!-- Furniture Card 2 -->
                     <div class="furniture-carousel-item furniture-card">
-                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Bookshelf" alt="Bookshelf">
+                        <img src="https://media.istockphoto.com/id/1339845062/photo/reading-room-or-library-interior-with-leather-armchair-bookshelf-and-floor-lamp.jpg?s=612x612&w=0&k=20&c=2ghOW2DCvb49Up3D0eFeVzv1kbSMjUq-_psohUYeZB0=" alt="Bookshelf">
                         <h3 class="text-xl font-semibold text-white">Bookshelf</h3>
                     </div>
                     <!-- Furniture Card 3 -->
                     <div class="furniture-carousel-item furniture-card">
-                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Coffee+Table" alt="Coffee Table">
+                        <img src="https://m.media-amazon.com/images/I/81x53kVivOL.jpg" alt="Coffee Table">
                         <h3 class="text-xl font-semibold text-white">Coffee Table</h3>
                     </div>
                     <!-- Furniture Card 4 -->
                     <div class="furniture-carousel-item furniture-card">
-                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=TV+Unit" alt="TV Unit">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbaheiG6VWv0w2fRv4Tt0CJX21TfZqWbANzw&s" alt="TV Unit">
                         <h3 class="text-xl font-semibold text-white">TV Unit</h3>
                     </div>
-                     <!-- Furniture Card 5 -->
+                    <!-- Furniture Card 5 -->
                     <div class="furniture-carousel-item furniture-card">
-                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Accent+Chair" alt="Accent Chair">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhdhvvZDOBFsh4guaR-FTSFNlJT_e7lNyyog&s" alt="Accent Chair">
                         <h3 class="text-xl font-semibold text-white">Accent Chair</h3>
                     </div>
                     <!-- Furniture Card 6 -->
                     <div class="furniture-carousel-item furniture-card">
-                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Sideboard" alt="Sideboard">
+                        <img src="https://m.media-amazon.com/images/I/71TmPvRg13L.jpg" alt="Sideboard">
                         <h3 class="text-xl font-semibold text-white">Sideboard</h3>
                     </div>
                     <!-- Furniture Card 7 -->
                     <div class="furniture-carousel-item furniture-card">
-                        <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Ottoman" alt="Ottoman">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYik6fSz8VzWwHoE9GaPWRuffqtKlIztuZncASXkoWOhAEoRnadSDjjiw5_I_Yk0DEg6s&usqp=CAU" alt="Ottoman">
                         <h3 class="text-xl font-semibold text-white">Ottoman</h3>
                     </div>
                 </div>
@@ -517,25 +532,25 @@
         </div>
     </section>
 
-    <!-- Explore Greenply Products Section -->
+    <!-- Explore GreenInfinity Products Section -->
     <section class="py-16 px-6 md:px-12 bg-white">
         <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8">Explore Greenply Products</h2>
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Explore GreenInfinity Products</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="bg-white rounded-xl shadow-lg p-4">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Plywood+%26+Blockboard" alt="Plywood & Blockboard" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <img src="https://www.greenply.com:5001/image1710152637199-717.jpg" alt="Plywood & Blockboard" class="rounded-lg mb-4 w-full h-40 object-cover">
                     <h3 class="text-xl font-semibold text-gray-900">Plywood & Blockboard</h3>
                 </div>
                 <div class="bg-white rounded-xl shadow-lg p-4">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Doors" alt="Doors" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <img src="https://www.greenply.com:5001/image1704350929535-122.jpg" alt="Doors" class="rounded-lg mb-4 w-full h-40 object-cover">
                     <h3 class="text-xl font-semibold text-gray-900">Doors</h3>
                 </div>
                 <div class="bg-white rounded-xl shadow-lg p-4">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Veneers" alt="Veneers" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <img src="https://www.greenply.com:5001/image1710152649795-2364.jpg" alt="Veneers" class="rounded-lg mb-4 w-full h-40 object-cover">
                     <h3 class="text-xl font-semibold text-gray-900">Veneers</h3>
                 </div>
                 <div class="bg-white rounded-xl shadow-lg p-4">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=MDF+and+Board" alt="MDF and Board" class="rounded-lg mb-4 w-full h-40 object-cover">
+                    <img src="https://www.greenply.com:5001/image1704351029220-2769.jpg" alt="MDF and Board" class="rounded-lg mb-4 w-full h-40 object-cover">
                     <h3 class="text-xl font-semibold text-gray-900">MDF and Board</h3>
                 </div>
             </div>
@@ -554,22 +569,22 @@
             </div>
             <div class="greenspaces-grid">
                 <div class="greenspaces-item">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+1" alt="Living Room GreenSpace 1">
+                    <img src="https://media.designcafe.com/wp-content/uploads/2020/03/21012613/luxury-living-room-designs.jpg" alt="Living Room GreenSpace 1">
                 </div>
                 <div class="greenspaces-item">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+2" alt="Living Room GreenSpace 2">
+                    <img src="https://media.architecturaldigest.com/photos/64efa7a4022e3959b07c3a68/master/w_1600%2Cc_limit/YUXY102_0224%2520(1).jpg" alt="Living Room GreenSpace 2">
                 </div>
                 <div class="greenspaces-item">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+3" alt="Living Room GreenSpace 3">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXQ-Mh92sf9j5Tx2Wvz4bhpH7yST5pNYBlwQ&s" alt="Living Room GreenSpace 3">
                 </div>
                 <div class="greenspaces-item">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+4" alt="Living Room GreenSpace 4">
+                    <img src="https://www.marthastewart.com/thmb/lxfu2-95SWCS0jwciHs1mkbsGUM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/modern-living-rooms-wb-1-bc45b0dc70e541f0ba40364ae6bd8421.jpg" alt="Living Room GreenSpace 4">
                 </div>
                 <div class="greenspaces-item">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+5" alt="Living Room GreenSpace 5">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ1Uawk4ILDlFALRVYLeNnqZdmzvfb_ZJGew&s" alt="Living Room GreenSpace 5">
                 </div>
                 <div class="greenspaces-item">
-                    <img src="https://placehold.co/400x200/d1d5db/4b5563?text=Living+Room+6" alt="Living Room GreenSpace 6">
+                    <img src="https://cdn.shopify.com/s/files/1/0683/7338/1440/files/Living-and-dining_1_1.jpg?v=1713951337" alt="Living Room GreenSpace 6">
                 </div>
             </div>
         </div>
@@ -626,10 +641,8 @@
                     <li><a href="./investers.html" class="footer-link">Investors</a></li>
                     <li><a href="./Sustainable.html" class="footer-link">Sustainability</a></li>
                     <li><a href="./blog.html" class="footer-link">Blogs</a></li>
-                    <!-- <li><a href="#" class="footer-link">FAQ</a></li> -->
                     <li><a href="./Privacy Policy.html" class="footer-link">Privacy Policy</a></li>
                     <li><a href="./Disclaimer.html" class="footer-link">Disclaimer</a></li>
-                    <!-- <li><a href="#" class="footer-link">HKS Award</a></li> -->
                 </ul>
             </div>
         </div>
@@ -642,18 +655,40 @@
                 <a href="https://www.instagram.com/greenplyplywood/" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/channel/UCl3ckO1adsIiPFHsb8Uizvg" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
             </div>
-            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
+            <p class="text-center text-sm text-gray-400">Copyright &copy; 2025 GreenInfinity.com. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Mobile menu toggle
-            const menuButton = document.getElementById('menu-button');
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
             const navbarMenu = document.getElementById('navbar-menu');
 
-            if (menuButton && navbarMenu) {
-                menuButton.addEventListener('click', () => {
+            // Function to ensure correct menu state on resize/load
+            const ensureMenuState = () => {
+                if (window.innerWidth >= 768) { // Desktop view (md breakpoint)
+                    // On desktop, ensure the menu is visible and in row layout
+                    navbarMenu.classList.remove('hidden', 'flex-col', 'space-y-4', 'p-4', 'bg-white', 'w-full', 'items-center');
+                    // Explicitly set display to flex to override any potential 'hidden' or conflicting styles
+                    navbarMenu.style.display = 'flex';
+                } else { // Mobile view
+                    // If the menu is currently visible (i.e., 'hidden' is not present), apply mobile-specific styles
+                    if (!navbarMenu.classList.contains('hidden')) {
+                         navbarMenu.classList.add('flex-col', 'space-y-4', 'p-4', 'bg-white', 'w-full', 'items-center');
+                         navbarMenu.style.display = 'flex'; // Ensure it's flex for mobile expanded state
+                    } else {
+                         navbarMenu.style.display = 'none'; // Ensure it's hidden for mobile collapsed state
+                    }
+                }
+            };
+
+            if (mobileMenuToggle && navbarMenu) {
+                // Initial state check on DOMContentLoaded
+                ensureMenuState();
+
+                // Event listener for mobile menu button
+                mobileMenuToggle.addEventListener('click', () => {
                     navbarMenu.classList.toggle('hidden');
                     navbarMenu.classList.toggle('flex-col');
                     navbarMenu.classList.toggle('space-y-4');
@@ -661,8 +696,12 @@
                     navbarMenu.classList.toggle('bg-white');
                     navbarMenu.classList.toggle('w-full');
                     navbarMenu.classList.toggle('items-center');
-                    navbarMenu.classList.toggle('md:flex-row'); /* Ensure it reverts to row on desktop */
+                    // Re-evaluate display after toggle for immediate visual update
+                    ensureMenuState();
                 });
+
+                // Add a resize listener to ensure correct display on desktop
+                window.addEventListener('resize', ensureMenuState);
             }
 
             // Inquiry Form (Floating Button and Modal) Logic
@@ -744,33 +783,29 @@ Inquiry Type: ${inquiryType}`;
             const furniturePrevButton = document.getElementById('furniture-carousel-prev');
             const furnitureNextButton = document.getElementById('furniture-carousel-next');
 
-            let furnitureCurrentIndex = 0;
-            const furnitureItems = furnitureCarousel.querySelectorAll('.furniture-carousel-item');
-            const furnitureTotalItems = furnitureItems.length;
-
-            function updateFurnitureCarousel() {
-                if (furnitureItems.length === 0) return;
-                const itemWidth = furnitureItems[0].offsetWidth + 24; // Item width + gap (1.5rem = 24px)
-                furnitureCarousel.style.transform = `translateX(-${furnitureCurrentIndex * itemWidth}px)`;
-            }
-
-            if (furniturePrevButton) {
+            if (furniturePrevButton && furnitureCarousel) {
                 furniturePrevButton.addEventListener('click', () => {
-                    furnitureCurrentIndex = (furnitureCurrentIndex > 0) ? furnitureCurrentIndex - 1 : furnitureTotalItems - 1;
-                    updateFurnitureCarousel();
+                    // Scroll left by the width of one item + gap
+                    const itemWidth = furnitureCarousel.querySelector('.furniture-carousel-item').offsetWidth;
+                    const gap = 24; // 1.5rem = 24px
+                    furnitureCarousel.scrollBy({
+                        left: -(itemWidth + gap),
+                        behavior: 'smooth'
+                    });
                 });
             }
 
-            if (furnitureNextButton) {
-                furnitureNextButton.addEventListener('click', () => { // Corrected from furnitureNextIndex to furnitureNextButton
-                    furnitureCurrentIndex = (furnitureCurrentIndex < furnitureTotalItems - 1) ? furnitureCurrentIndex + 1 : 0;
-                    updateFurnitureCarousel();
+            if (furnitureNextButton && furnitureCarousel) {
+                furnitureNextButton.addEventListener('click', () => {
+                    // Scroll right by the width of one item + gap
+                    const itemWidth = furnitureCarousel.querySelector('.furniture-carousel-item').offsetWidth;
+                    const gap = 24; // 1.5rem = 24px
+                    furnitureCarousel.scrollBy({
+                        left: (itemWidth + gap),
+                        behavior: 'smooth'
+                    });
                 });
             }
-
-            // Initial update for furniture carousel
-            updateFurnitureCarousel();
-            window.addEventListener('resize', updateFurnitureCarousel); // Recalculate on resize
         });
     </script>
 </body>

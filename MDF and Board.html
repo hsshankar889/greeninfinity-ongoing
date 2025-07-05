@@ -3,163 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenInfinity MDF & Boards</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>MDF and Board - GreenInfinity</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        /* Custom CSS Variables for Theme */
+        :root {
+            --primary-red: #EF4444; /* Tailwind red-600 */
+            --light-red: #FEE2E2; /* Tailwind red-100 */
+            --dark-red: #DC2626; /* Tailwind red-700 */
+            --text-gray: #374151; /* Tailwind gray-700 */
+            --light-gray: #F3F4F6; /* Tailwind gray-100 */
+            --white: #FFFFFF;
+            --black: #1F2937; /* Tailwind gray-800 */
+            --footer-text: #E2E8F0; /* Lighter text for footer links */
+            --footer-heading: #EF4444; /* Red for footer headings */
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            color: #333;
-            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-gray);
+            background-color: var(--white);
+        }
+
+        /* Custom theme colors for Tailwind-like classes */
+        .text-red-theme {
+            color: var(--primary-red);
         }
         .bg-red-theme {
-            background-color: #e53e3e; /* A shade of red */
-        }
-        .text-red-theme {
-            color: #e53e3e;
-        }
-        .border-red-theme {
-            border-color: #e53e3e;
+            background-color: var(--primary-red);
         }
         .hover-red-theme:hover {
-            background-color: #c53030;
+            background-color: var(--dark-red);
         }
-        .footer-link:hover {
-            text-decoration: underline;
+        .focus\:ring-red-theme:focus {
+            --tw-ring-color: rgba(239, 68, 68, 0.5); /* Primary red with opacity */
         }
-        .accordion-button {
-            cursor: pointer;
-            padding: 1rem;
+        .focus\:border-red-theme:focus {
+            border-color: var(--primary-red);
+        }
+
+        /* Fixed Navbar Styling */
+        .fixed-navbar {
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
             width: 100%;
+        }
+        /* Header/Hero Section for MDF */
+        .mdf-hero {
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            padding-left: 4rem; /* Equivalent to pl-16 */
+            color: white;
+            position: relative;
+            margin-top: 8rem; /* Added margin-top to clear the fixed navbar */
+        }
+        .mdf-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+            z-index: 1;
+        }
+        .mdf-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .mdf-hero h1 {
+            font-size: 3.5rem; /* text-5xl */
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        @media (max-width: 767px) {
+            .mdf-hero {
+                padding-left: 1.5rem; /* Adjust for mobile */
+                height: 300px;
+            }
+            .mdf-hero h1 {
+                font-size: 2.5rem; /* Adjust for mobile */
+            }
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: max-height 0.3s ease-out;
+            overflow: hidden;
+            max-height: 0;
+        }
+        #mobile-menu.active {
+            max-height: 500px; /* Adjust as needed to fit content */
+        }
+
+        /* Floating Inquiry Button */
+        #open-inquiry-modal {
+            position: fixed;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            background-color: #EF4444; /* red-600 */
+            color: white;
+            border-radius: 50%;
+            width: 56px; /* w-14 */
+            height: 56px; /* h-14 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem; /* text-2xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            cursor: pointer;
+            z-index: 999;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border: none;
+            outline: none;
+        }
+        #open-inquiry-modal:hover {
+            background-color: #DC2626; /* red-700 */
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Inquiry Form Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none; /* Hidden by default */
+        }
+        .inquiry-form-modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6B7280; /* gray-500 */
+        }
+
+        /* Custom Message Box */
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            display: none; /* Hidden by default */
+        }
+        .message-box-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+        }
+
+        /* Product Carousel Styling */
+        .carousel-container {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .carousel-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .carousel-item {
+            position: relative;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .carousel-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 200px; /* Adjust height as needed */
+            object-fit: cover;
+        }
+        .carousel-prev, .carousel-next {
+            border: none;
+            outline: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Accordion Styling */
+        .accordion-button {
+            width: 100%;
+            background-color: #f0f0f0;
+            color: var(--text-gray);
+            padding: 1rem 1.5rem;
+            border: none;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            outline: none;
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            transition: background-color 0.3s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 500;
-            transition: background-color 0.3s ease; /* Smooth transition for background */
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
         }
-        .accordion-button.active {
-            background-color: #f0fdf4; /* Light green background when active */
-            border-bottom: 1px solid #34d399; /* Green border when active */
+        .accordion-button:hover {
+            background-color: #e0e0e0;
         }
         .accordion-content {
+            background-color: white;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out, border 0.3s ease-out;
-            padding: 0 1rem;
-            background-color: #f9f9f9;
-            border-left: 5px solid transparent; /* Default transparent border */
-            border-radius: 0 0 8px 8px; /* Rounded corners only at bottom */
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 1.5rem; /* Initial padding for collapsed state */
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #e0e0e0;
+            border-top: none;
         }
         .accordion-content.active {
-            padding: 1rem;
-            border-left-color: #34d399; /* Green border when active */
+            max-height: 500px; /* Adjust as needed to fit content */
+            padding: 1rem 1.5rem; /* Expanded padding */
         }
-        .rotate-icon {
-            transform: rotate(45deg); /* Rotates plus to an 'x' or minus-like symbol */
+        .accordion-button .fa-plus {
             transition: transform 0.3s ease;
         }
-        /* Custom styles for footer social icons */
-        .social-icon-circle {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for circles */
-            transition: background-color 0.3s ease;
-        }
-        .social-icon-circle:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        /* Updated styles for fixed navigation bar */
-        .fixed-navbar {
-            position: fixed; /* Changed to fixed */
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 20; /* Ensure it's above other content */
-            background-color: white; /* Changed background to white */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
-        }
-        .fixed-navbar .nav-link {
-            color: #333; /* Make links dark for contrast on white background */
-        }
-        .fixed-navbar .nav-link:hover {
-            color: #e53e3e; /* Red on hover */
+        .accordion-button.active .fa-plus {
+            transform: rotate(45deg);
         }
 
-        /* Styles for the inquiry modal */
-        .inquiry-modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
+        /* Footer Links */
+        .footer-link {
+            color: var(--footer-text);
+            transition: color 0.3s ease;
         }
-        .inquiry-modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 8px;
-            position: relative;
+        .footer-link:hover {
+            color: var(--white);
         }
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+        .social-icon-footer {
+            color: var(--footer-text);
+            transition: color 0.3s ease;
         }
-        .close-button:hover,
-        .close-button:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+        .social-icon-footer:hover {
+            color: var(--primary-red);
         }
     </style>
 </head>
 <body class="bg-white">
 
     <!-- Navigation Bar (Fixed at top with white background) -->
-    <nav class="fixed-navbar py-4 px-6 flex justify-between items-center">
-        <div style="height:100px; width: 150px;  display: flex;justify-content: center; align-items: center;">
+    <nav class="fixed-navbar py-4 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between">
+        <div style="height:100px; width: 150px; display: flex;justify-content: center; align-items: center;">
             <img src="./Green Infinity Logo Final-01.png" alt="GreenInfinity Logo" style="opacity: 2.5;">
         </div>
-        <div class="hidden md:flex space-x-8">
+        <div id="navbar-menu" class="hidden md:flex flex-row md:items-center md:space-x-4 w-full md:w-auto">
              <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
-            <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
-            <a href="./about.html" class="text-gray-600 hover:text-red-600 font-medium  transition duration-300 ease-in-out py-1 nav-item">About Us</a>
-            <a href="./Inspiration.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
-            <a href="./products.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
+             <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
+             <a href="./about.html" class="text-gray-600 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">About Us</a>
+             <a href="./Inspiration.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
+             <a href="./products.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
         </div>
-        <!-- Mobile menu button (if needed, not explicitly in image but good practice) -->
+        <!-- Mobile menu button -->
         <div class="md:hidden">
-            <button class="text-gray-700 focus:outline-none">
+            <button id="mobile-menu-toggle" class="text-gray-700 focus:outline-none">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
     </nav>
 
     <!-- Header/Hero Section for MDF -->
-    <header class="relative bg-gray-200 h-96 overflow-hidden">
-        <img src="https://placehold.co/1920x400/1a4031/ffffff?text=GreenInfinity+MDF+Engineered+with+Precision" alt="GreenInfinity MDF Engineered with Precision" class="absolute inset-0 w-full h-full object-cover">
-        <div class="absolute inset-0 bg-black opacity-40"></div>
-        <div class="relative z-10 flex items-center h-full pl-16 text-white">
-            <div>
-                <h1 class="text-5xl font-bold mb-2">Engineered with precision</h1>
-            </div>
+    <header class="mdf-hero" style="background-image: url('https://www.greenply.com:5001/banner1712581628996-289.jpg');">
+        <div class="mdf-hero-content">
+            <h1 class="text-5xl font-bold mb-2">Engineered with precision</h1>
         </div>
     </header>
 
@@ -172,16 +326,55 @@
         </div>
     </nav>
 
-    <!-- Inquiry Form Section (Now part of the modal) -->
-    <section class="py-12 bg-white hidden" id="inquiryFormSection">
-        <!-- This section is now hidden and its content moved to the modal -->
-    </section>
+    <!-- Floating Inquiry Button (Right-middle) -->
+    <button id="open-inquiry-modal">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+        <span class="sr-only">Open Inquiry Form</span>
+    </button>
+
+    <!-- Inquiry Form Modal -->
+    <div id="inquiry-modal-overlay" class="modal-overlay">
+        <div class="inquiry-form-modal">
+            <button class="modal-close-button" id="close-inquiry-modal">&times;</button>
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Inquire Now</h3>
+            <form class="flex flex-wrap gap-4">
+                <input type="text" id="inquiry-name" placeholder="Enter Your Name" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <input type="text" id="inquiry-mobile" placeholder="Enter Your Mobile Number" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <!-- Added Pincode input field -->
+                <input type="text" id="inquiry-pincode" placeholder="Enter Pincode" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                <select id="inquiry-type" class="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 ease-in-out shadow-sm">
+                    <option value="">Select Inquiry Type</option>
+                    <option value="product">Product Inquiry</option>
+                    <option value="support">Support</option>
+                    <option value="other">Other</option>
+                </select>
+                <!-- Added "I'm not a robot" checkbox and Privacy Policy link -->
+                <div class="w-full flex items-center gap-2 mt-2">
+                    <input type="checkbox" id="robot-check" class="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                    <label for="robot-check" class="text-sm text-gray-700">I'm not a robot</label>
+                    <a href="#" class="text-sm text-green-600 hover:underline ml-4">Privacy Policy</a>
+                </div>
+                <button type="button" id="submit-inquiry-button" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Inquire Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="message-box-overlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <p id="message-box-text" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="message-box-close" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out">OK</button>
+        </div>
+    </div>
 
     <!-- Engineered with Precision Section for MDF -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:space-x-12">
             <div class="lg:w-1/2 mb-8 lg:mb-0">
-                <img src="https://placehold.co/600x400/1a4031/ffffff?text=GreenInfinity+MDF+PROD-IQ+NEO+TECH" alt="GreenInfinity MDF PROD-IQ NEO TECH" class="rounded-lg shadow-lg w-full h-auto">
+                 <div class="relative pt-[56.25%]">
+                    <!-- Added iframe for YouTube video -->
+                    <iframe src="https://www.youtube.com/embed/qG7UdZAwMXk" title="Greenply MDF | A new era of Precision: German Prod-IQ NEO Tech" class="rounded-lg shadow-lg absolute top-0 left-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
             </div>
             <div class="lg:w-1/2">
                 <h2 class="text-4xl font-bold text-red-theme mb-6">Engineered with precision</h2>
@@ -206,15 +399,15 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 mt-8">
                     <div class="flex flex-col items-center text-center">
-                        <img src="https://placehold.co/60x60/d1d5db/4b5563?text=Prod+IQ" alt="Prod IQ" class="mb-2">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDg5IDg5IiB3aWR0aD0iODkiIGhlaWdodD0iODkiPgoJPHRpdGxlPlBST0QtSVEtSWNvbjwvdGl0bGU+Cgk8ZGVmcz4KCQk8aW1hZ2UgIHdpZHRoPSI4OSIgaGVpZ2h0PSI4OSIgaWQ9ImltZzEiIGhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBRmtBQUFCWkNBTUFBQUJpMVhpZEFBQUFBWE5TUjBJQjJja3Nmd0FBQXdCUVRGUkZFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4eFdjV0lBQUFBUUIwVWs1VEFCb3VLeXd2RVE4akJpa0pQZGJ3Nit6MXZCUmt5ZS9rcENVK3RmTkNlUDg1MVI0NjlEWnp0SStXbDVQTytqc1k0TzZaeFlVRHN2eXVyd2R5aTBBYzVyc1p3T2toa0tVRU9MTVY0ZE1XRXQ1TGZFU1N6Y1p0cU5tY0FmS0RDc0VrU3VkL2JvMEx2VXpMOFZ4ZVNheFNJR3RITUU1aVhmaWQ0ekpoWmJCZys5SElBaE5tYXVwZjl0eVVSV3pRTkZudHZ4MHFESTZWRGFyOWhQbFFMV2VleCtYUEtQNnBzZWpNZ0hlSHVDZVJ2aEFGVDR6U2U0aEJSc1E4bndocG1OaWpmcUVmY0tiWHc3bFIyek8zTjRsSTJ0U0tNVk0vYjNXZ3dxZXREc3JpV3Jhcm01cjNWR05WSWx0TlE3cFlvbWpmZWhkMEpvRWJoblp4TlZaOWVZSlgzYS9BVW1FQUFBcUNTVVJCVkhpYzdWbDVYTTVaRjcrS0tVc2xTeW5NdDVKOUhoS1BSeFNTUkp0OUxBblpVaEtESWtzSW80aW15WmpxalNLeWhXeGpleGtpRExLTXZhWXhHTXVNd1ZobVhzWXM3N20vMzlPejlYc2V2K21QOS9QK01lZWY1M2Z2UGZmYnVmZWVlODczM0JqN1IvNWZwSXFaT1plcTFkNFRtaGJtbHRxeDZqWE1hMVlhdUphVnRRMlgycloxNmxLelhuMDcrd1lPNmpISGhyVWIxV2xjV2VUM29SRW5BaFkrbkYyRW9TYld2T0hhdEpMSXpZRG1MVnEyYXYwQkZHMVlXemUwYzI4UGRPQWp5bzVRZGZKUW9Ibm55aUYzQVlUMWVrTGh4THlBRnF4ck4zVG5QZDV1Nk1GWWMvajByRFN5Ri8vMTVjaU9RQysvM2pib3czdjhBeEFZRk53ZWZiMWxnL1dyMDE4UGVRRC9IY2lSTFFZQmcrMkJENFdoSWNCUUsyRFljTm5BSWNBSWFXUTJ3SVlmbWtlb01HUTVramNDUjhrRkhoM0c5Y2VVTjhmcUlUT3ZRS2pHalZlUHRlMEJUSENRd0pDVWNCOWdZanN0dEFFeUc0RUlyWkdSd0NTNXdGRVJ3T1RnNkVicURaa3kxUm40U0JmWkV5SFROTnJUZ1JreWdmc1JjQ2ZheFpoWXNucDg0NW16YUdOczQzU1JmWFdSWndOejVBR1A3Z2JNNVplWXpZdUhhcjRyNFNvV1RGcW9pOXhDaTV5d2lCYTBXSjdGUzhqaUJQSDc0Nlg4SUJPVGx2bUo3UXJJd2N1VFNTRnNoUnpnS0hLM3VlWG56bGFtNEpQbHFacEJRdTZ0aTl3a2tIRGJKWDBxQnppY0FveEhtcmJkTzJxOHp1Z0lLTXo1N3lvMThtZUFkV3N6T2Jnc2l1K3h2L1RZNmlseG55TjlyRU13WXhtSUVKQmJJdk5mc25CWkZPMnhSN0RVU05hYXRkazVtYlQyZEp0MWs4ZDBoK3Q2M2pzUTNicktBbllNUWU2R1VBbHJJemZhUUY5eVo0akllZXRsSWJjRUFpcHVoZC9zVFVKd0QreVV0SGxMLzYwdHQ3bmxVbk9wZTFWK2tqNzVzcENkVXFEYXJqVG9iRHFYNzhHT0xXMTJxanNLWEhidDNrTjk5bnVEOThsRlpsOVFJSnFwbnk0WFUvaXdYYnRmREpLaEZtblZoWStka1FjSWUxQ3liR1IyMEEwNHBPTjBoMzBKb0NGUGNnVk4vMzFrMjZBOTZ4WnMzQjNEbzFITkdVZjVIdVhKRHArT2VRU3QyWkNhWHdLWnh3NVQ2bGk4dzFWN2ZEbkh3d3NvVUcyZ3o5b3VCZ0NGSjFydXpaS0U5ckxUV3EwOENhU0UwKzhhZnRkZ1czVHFkUGZzQUJYL2JuNlFpTVpXK2ppaFA3MDMxOHc1STcwaFh3RlR4YzlWNUN0bkdjcy9SOW9wWDg0NVg1ZkNVazBYci9mYmMxY3BEaFZ5amF2bXFxejJUeGlmVDRrckhnaVI5a1dQOHFnWVEzK2R3c1IweW5raHJhdnFhS1JkNkVqWTJ3b1o2MDg3WFVQc2pMYTZlR2tkcVRZd3U1eUxZMUxBWHkrQnN4RHFMQU1RZjRXQ0VtM1BoS3NHU243WHFEZWI5dGlkTHEzUVU5ZFpmUWhYMkxSWURKUkM3Z0JjNTcvRGJ3QVpqQzBqci90c2RVVzE4L09CbXhZc2VDSVF3OXQ3Z2FKRHR3WURPNmFYQUdNbGdFdUhJa3dJbStFS2ZCUEtVc3VBY1ZJR01PLzZ0SElsR3hBQ0s0bzAvb25JSVFjTWJTallmVEZJWXNLM0VKY3kvRFl3bXJIdjZPcElBcE4vRFFWbUM1RzBpMkJ5TWU5MDRUYzJXeThUOUN3K2RPZnUzU090aWdSQWNwOVluS1pqQWI0eEVsUnBvK0tSR01UeTdXRFQ2dmc5V0lzbjJYbjBpU3NKZW1vak5QZkFTZ2lqcTVEN1BRczloY3dMeG9BWmF3M3VCR3ZGYVhlTmFaSHZwc3pLeWNrSks3dlBteGJPY0M1bEQ0RGp4b0ZaWVE0dUpyQUxLc1RhKzl4OGFFeXJHSzVYVWg4NlBMU2NJalFIQU5zNWFZdDNOSUhNTGdPUDJQaExjRnN4SmMybzBtNUVtT3MwdHlEM0FmTXV3K0FDVThoT21meDhoOEhhMG9RUzBSNG5uZVloZEZ2UGZzalZZWTFTVW5NaUF0OWp5NEZvVFZmQmovTkc2OXV2ajF6OU1UYXQ1a1hFZEpQSWxJV3NwN0dvWFBGdWNablNrUUxXSnIzYVlyY2VzdjhsYk9UeklxcVpSdjRRMk1YTTJtR1l1cjN6dE9BblI2c1l0YmxuR1c3d0EzUXpETDhHOGhOd256MHNROW1USncxSWJweWlhN0tvRC9EVXFNM3I4K0RPMksxM0Zna3JPYWRMZGRQTjZ0K3pPQVZhRzBVbU13NHh0Z0hQVWcyeEt0aGNqeXU3RHIzNEZZa1Y4WlZlV1JrcS9LeWpvNzhiejR0UXd0aGQrTHlEekQvbGJtRnVnOC85ZzZxUTFJMmo0RURCMFZxWGtlbmJuRllmSXcrenpWQzhvempkQ3RlRHpFdWh0WEVaSjl2dDlQaTB2czBMYjJHV0pWL3JDNVBBeW0zbzY4SnIycFdhcnBldmpvODRxNmZraVFqZGp2NVFSYkgxZHBockVybEdiZlJaU0JXQTdkY21sRHpScUpiU3owOVpYU0QzdlBoNHhkaGpSTlF3aFV6dWZJMHBEK0Jab1o5eHBSWklIenpadzhQajluZEN6dnVsRzI0TzV6VlZoZ25nOFFzUWtzOVcyTUs2NDhaeEVobE5sQ1NOUTJZTGJQUWs3dFZpM2tWWVlvSUVrV2ZRNWZ0Vm5QWWZZMXBlUFp6bkp5ZXZHMlNOOUNqZTNpV2txZGZBQmtNS3FaSDhQSVJVWTBGOUtiZFNuZzFRWDZwUmJ3eUwrelQvaElTRTkwb3BDcTNsemRCa0hsWkxKeHAzajRMSHdEN0dYZ0FuZzByZDFVWXJpOE1hemZLVlRIQmR3eEFteEpNNVpDNnhVd1dXL2lZSnJEeENPVEtCWDhBQTR2ME9OdWhyUWIzN2hKMHBrWHordVFPOEZ0WXdFcmsvQ2Nkdk8wOUNiZWNUWUpZWmp3QWlvL0lrUStvdGJrQ2RTWHQ0cHBHUWoyS3hTUWpkVjJOaGJ5WWUwT1VLeXp0TFVjMkhNdGsxcXBnRWJqMXFpZG9CRnJFZkZWZ2x1VXphUHBGTDBzcXlud3RVQWhOLzB5dGZ2Ti9XcGlPaklqLzhIbkxVb2VWblc1VktRYXFiTzg5T0Y3bUhvUVFUZy9wZCtBcWxNTDZOM0RTR09EVStXWnlscmd3VHZJb3ZVc2NFcXR0cWRVTjhwSHFlMHF0ZjQ2dXpRK0RhUGdWWUpnSGNOaHNJTEJTL254TUxuRURadnNZUXpwa2JMWGhTL09xUDdTVzhSa0ZaTXlvcmRsSEZsYVEvL2FuQXJqdEl2TkNrMHY1dDBqamsra0hrcTl5OXZZNm42RWIzUGNkSVpYZ3pXcnpyTkFPQWZpWEpIYVZPM0xzT3NFNkhLdWZUSDhvY3dhdXFyT1ZEUHZDeGpWMXExN2VIYnpRbmhGVFE4anFsd3B1WDMwNHBJaEUwa3V6UnE4K0RHdkFhcXA3QTFDdytQZS9ZcE5vdlFuV1Y1VXM3Y2M5SGJtM2xUV1hDZ2lrR25WT3BGTWY4TVcxMElrN2I2Smw4YzI2M0dTZ1htYnc5cnlJOUc1VVV3c3VmK1EzNlIrN2Z2LytIT1IzNjlCVUMxOG9DbWlBVGVRMmdlQ1hSMzd1Vk9qdG54c2FtaTErcURINlhXOE5IWHQzTnh0Q2NWVkp2ZWwzcjlicFVYaENtUDN0Y0JPdVh2SHM3d2d3M3o1aThvcG0rMG1IVC84MmZ5d2NqM2YxTXJVSWlydUxMeVJIWXlYcVA0VUpsbUo3eisrdVJwQXdvQkpjY3AwYW1JbW5pZmVQOHRxTFYybmlTMVQ3Ujg0MTJzQmdLZ1F5V3Z5TkY4eGVzbTQ5a3ZoRC9RY3JqeERUTHpIalZIdHZwMi9KUTUybjQ5dlhGUnY1T2M2NVFIdlJtMGgwbzVPSnBBZVFzL05DY1c4UkpJeE01ZDQvbkRFeWU4TDNtbEM4dWtiS0QwL1ZOM05IK2NqQ0N6QjhjS1NiTEZHNjFKM080UkVHVTRyUEZsVjRoNm5kUlNlU3JRbGtvVTNnSnQ1YmkzRGwxTGJwUEhYSExrVHZBV2tzbDkvK050MXpSYWdJdVZUY1hxMStKMWNoVmRpRCt2a2FYTXUzSmhmS2gzeEp3SDR2eVZoYzk1Sjc4ZldPcG1uNlczdUV2WVhmL3h2OXEzdHFYYUl0Y1BXVGxMU0xJNmJ4QVVhOU9jUS9TaWMrSWpEcXMvZFpEcm1hTEEyK2UybkkyUXRSdVB1ejNleVhpcU5IcTNMUVE4a0grK3l0SEhzQnA2bXA3VE9BOXFmWTR4MGxIbnFsYTA0UTBvK1dlZWZUb3ozTlFOR0U5YStQbzAxYnhPTUpIcWg5QW85OWZMRUcyM09oaElEci90Mm9qRlA4OGxZdVBHSlBFN3BqS0FiTUhxbkxnTW9wOUZtc3BWRnVGaTBNTFgxTTJ5N3R1ZXI1eDZieHN6and1TSthSUZjZjV5R2h0b2ZqeTR4aHpZeFAva2YrRi9CZUE0a1dNMi9CdkpnQUFBQUJKUlU1RXJrSmdnZz09Ii8+Cgk8L2RlZnM+Cgk8c3R5bGU+Cgk8L3N0eWxlPgoJPHVzZSBpZD0iQmFja2dyb3VuZCIgaHJlZj0iI2ltZzEiIHg9IjAiIHk9IjAiLz4KPC9zdmc+" alt="Prod IQ" class="mb-2 rounded-full">
                         <span class="text-sm text-gray-600">Prod IQ</span>
                     </div>
                     <div class="flex flex-col items-center text-center">
-                        <img src="https://placehold.co/60x60/d1d5db/4b5563?text=Renewable+Energy" alt="Made with Renewable Energy" class="mb-2">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDg5IDg5IiB3aWR0aD0iODkiIGhlaWdodD0iODkiPgoJPHRpdGxlPk1hZGUtd2l0aC1SZW5ld2FibGUtRW5lcmd5PC90aXRsZT4KCTxkZWZzPgoJCTxpbWFnZSAgd2lkdGg9Ijg5IiBoZWlnaHQ9Ijg5IiBpZD0iaW1nMSIgaHJlZj0iZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFGa0FBQUJaQ0FNQUFBQmkxWGlkQUFBQUFYTlNSMElCMmNrc2Z3QUFBdjFRVEZSRkVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeDBSUmxHd0FBQVA5MFVrNVRBQWNTSVROS1ZsNXBibVpiVWtZMUpod1FDQUVQTFl5M3p0N202dTN1N09qazNNMjdwb05oTnhwTWw4emo4djcvK2UvbDA1Qk9Dd1ZCbFBldkU4YjZuVUI4NGg0V3VDOEtkZW5yWEFOVTEveTJHQzRwRGdRZ2dFZXR4TDY2c0o1WkxBbHM0VU00RmYxeElpdkFkTkdjY0NVQ29ESEYrUFNLRE5tb2JSR2k4YUcxazhyMjJrdFZycy9RaVQ5djV6N1dmbUNzQnZ1T3kvWEhXa1R6bGtLNWFCY3k4SHNmRkZjNXA3T0VLbVdrWHlTcHBXZGt3amJmZ21xYUd6eDRSZFREbjZOUVQxaVYyejA2M1dPeHF6QjV2eG5JU1EwN3laSjNIWnVSS0UyR2NqU1BVWE9ZMkVqVmpXSW40SUdIdmJ3amVzRjlhNHVxbVgrMGhiTFNVMTJJaXhSYkFBQUFDTDVKUkVGVWVKenRtWHRjVTBjV3h3T0NDb3FnQ1FUazVSTkVTdzRQQVJzQlFjVW9SZ05JRUJDUXlDUGxvWmpsSWJvS1dGQkJVTlJrQVlzZ2p5cTBha0VRdGFoZ0xXSkJTdkdKYmlrK2xpSzE2bTUzV1hmNzJrOXZDQVp5Nzh3RnkvN1ozMS9KM0RuZnpEMXo1c3laQ1lQeGg5NU9hdXJqTkRUSFQ1aW9wVDFwc3M0VVhiMnAwLzR2V0NaTGY1SUIyOUJvdXJHSnFabjVqSm16WnMrWmEyRTVqNlhHSENPWVpUVi93VHZXSEJnbUcxczdlL1pDQjhjeGNaMFd2V3ZQQlpRVzY0ekpKYzdhTHE1SXJ1MFNOOVpZdkRIUGZTbVNDOXo1eThZeVlNYnl1V1pvTUhpc0dCT1l0M0lWQnV5NW1qOFdNSC9OV2d4WTRLVTdhb3Ezdm8vK3VtVyt3dUZ0Zmw0WU1GaXZaNDJhN0I4UXVDRW9PR1Q5eGxBbFhMVEpGRWNPMDJUb2hVZEVqb3Fzd1I0d0VkdDV2QmMxMkJRZG83STZURHh0bEo5ai9KaXhtd08zeFBsdkZkSlM1WkpveW4zcWFtd0czRC9GRDdRSUozZ080eTUxU1RCS2ZQTWxhWnNvT1VUdTd1MDcvanp5eUhmdUVnT2tKS1NtR1VOYXFMeGhXWWhBeVRXT21iLzcvWFRsMTR3OURNZTlDL2RsRWlHWm1MVS8yM21FUWVjY0FPQ2tzTFZ6c2pnaHk0bUdnN2x2UU55c1E0ZEQ3SVl0eFNQZURLWTBlWG04OWhKN2E1QmwvTVdTUG9GazU4bU44Z3VPZnNBMlBxekdZRmdVRG5JOGp4VnRMTFlkNWhtNzQ0UGVuVlpTdXFtNERHeXl5aitrSTU5SVZkamxuYXlvL0VpZndmcFlwdmhlTUVGM1FxQjQrRndHK3cxWmlVNVo3Q3VFbElBOVRqVG8wK1lLd3dRM2pUT2ZDS3VxQnlLajhHeUZiNDNxZ3BsZXEyTEdQNVZ6RGlCVGF6bWVIRFU0YURnYjVUL1J1ODVGL3ZIOGhXV01pek5Vd0p4UDYwbUd3a3Z2SGdEUGJUVExzcWhZRWJHbWw5VWpUbHlSRDdTaFpockRRaFVNamRsVVMrZWNCa2k4Nm9NbDh5cyttekdRNUExRHBReUxWU0JvdkNabGZFN0tIZHZYb0JhSHlHbzJDS28xc0dobWZkUDF3T1l3ODd3aXhyZzVJQXU2d1dkOGNVNFYzTkxLUTVwSzZtNEtCRzFmNGgwaUxWbFhjV1hQRjZ6SWhVa2Nqd2dHWTl4VmxhZ1E1RFVsNDB4OXFzWGlPZXZ3YUlYVTJtM2hxMHVFZnk2cUpDV3oxQ0thNE5JUDRDVHU3cUFIQ3ljWndTMGQ0Z1AvOXFmbmpQSVZJWkd5K2JQVFZiUm1FYlBCdFB3T2JaZTc5NkNsU2Y2QnlTKzVPK0hROVRsdGJaWDNPeDFHM1BrMERXSG1aTHB0OTBHSTJMcHp5Sjk4VVdUOXZCS2VaQ1F1MGZPNEo3QnBYQzA5YlFxcHRJa0FxNDc3QXU3NnFkakhsZ213ZGhIMnFkcUpqaEtGT3B5cGtUM0ZCYmFINDB3ZEQ4bnkyN0h6NEtqZDVuVlRvZUtIRVpRTjNJbDQzNytXWUd5elowSGoxOWdobDk0YUNrTHpqZFFZakVvRG95NjBLZThiY2RsS2JNSEc2eDZXcUJNZVVlUEF5Y0lZSHFNOUhSRUk1L0NwSmNwTE1EVGtPRFZFRHo4UDJJejBORC9XbXZzeGRzaVNKM1pEMmZSSUZLcUwydE15Z1RzcWFYVUVRQ1krTU9yL0psT1NlOWFnMTRSR0FlenpvelpMdnUyQjFCTlljbml2RWl4N2hpbVRIT2ZEV2dmcWo0cmM4NjNqc0t0TmRIbW9NaWhBYkFBSzFScW50MVBkY2VJc1pQbGpoN3hpcU5CTHY0eWRqTHBBMkVWOW4rZ0NDTUR2WjMzR1NqSWJYejg3cDBMQ2QrUkdwdVp6MklZdFN6b2VLc0YySi9IMU0vOTdhTGxOZml5dE5iSEp3YWJCYS9aS1h6eWtxK1pPcDVnY0ovdnFqbnU2WnhQT1FPMkZzaGcxNzV3U3NjaU5VRkZGQjNVZ0RpMkpjMzFKYmVvTHhjMDZPTExQUzZVekVtZG0yZmMyTkRUMFp2UWlOaEdpamx0Q3Jtc2lkMEhlWFF4WXFHVU9DRjBYVVhvK2VnbHQ1UHhldnhnMlBNS1E2d05RWUVNcmFzL3ZGc05INUpYL1lSb0V4YVBCVE0wZUJQakFSVVJZKzFYQ3E3K1QydlJ1UWxBcG1zd3lLS1NDdWNncUlHb0hiQ0NUUzRoZnc1RHJNcWxnTVJ2Wk9hb2FQTWpreUJCd2lVQ0NIYnRUcU9UbUxtU0srVG9ZMkdRL1R6VVE1QlloeVZQTGJRVTJycTZ1Tm9sRDVWaVpPM3E3MUhnSmxmTkliY24vU0xkelFQWjJLczFwZnhvYit6VHVrSEloeWlvUmFWZ3V0MW1jNnp0SmJXbzF0a21IMGQwWlRsSkNRbjc4RDIvSUNUY3dQWitFcGYrVFhGZ3lyZDdoZE5MZldvelBHQVNIdGVJNi9vdHIzRWZaSWxjWUF1VkZWSlQ4T0VrQlR1OVh4M1NSYm9ObWY4clVsZ1RESzh4U1VVZzNabkRJd2FHNExuci9oa1pxam5mOHh2WDVHaHF3OE1sekJiZ1hVNjRRY2xzQVY2bEI0elRKVHVCT2N5bWkzcTlZaWRiZDJOcWZxWlZTdUJKUkZrUTNRZ0JObmJ6MTVjQXBVWFlHWDZ2dVRBVkRWRjNCZXczTm4rUEpPbUVEUTc2SEN6aENsekxoREdySFlmYXRraGxRVSs2Z2ZNc0h5b0xucmZqaml1Zy8rZm5keUVXdisxOVlVSWN6TzVVbWQwWlNQNzc0WnVnMndnK1d5Q2Y4ZHB2OEgzSFQweVcvdmVQOFJITmdFRzBxRTVTaktrbENsakdRTlFYOWlOY3VQK0ptSWJZUnBlSVRZTlpCekRQcGUxelpRblJwdDdXU2NJWnBOODExS09zQzE3VWRXN0JFZThHTXZjaWNjRHVYQ0xqWEQvQmdodjkyYU1TdlllRlJjL0JBUGVhdkpKeXhBVDA5Q2xWVmdtY3R6U3N0dnk4VDNQZW10dGVuRWlmNjhUVDNhSGUrNTRxdmtuTytpa0pqd0N5V0doOVg3a0hLQlpwTXFOWWFoay9hQ2dsUFprQkxyWlRVS3Vrc2hKOW9MbDc0azMrR2x0VmtLNUljNDZhRC9XVFNlL3VtUXE0bWZsdVFoQmVBY1NjMlViMlI4NFVVV1BDTDZocm1kUzl1eGMrT1pFOGdGUFlqWm9jc3ZmNHlNT3hUaVV6SnNuWDRLd1pSMHkydzJZM1pjbFgxWUpzdEdLMGtYM1BoNUsyMUZncVBrY3NYak9wL25BRXB1K05IbUpFQkNYMmVtWUc1d2Fodi9xZE83QVZ4NENjME4zeURpdHc3MnhWNjRuQTdMa0s4YjRzVDRjQ1djRis2T29HWm5QMTZLYmdHZGRGZjg1Q3RRdWMrQjA3dWZSMzgzWHZ5QjQ4ekJURDlXZW5iL3FPZy9zc2NFK0Q4dktWdkJTcUJUWXYrOVZpV0dKSVdqeTk1UzY1Y1ZUWDdWaEZISHZaK2l4dFY2a05yUjhLcXVuSDBmMm5FQWQvRW96djZkM0RsMHAxWTNVTWM1RzNmcjN6MmRQVVR6VVVIM2E1MC9hcjFZa2VlQ1ZGQlp4elpwRCtLdXl1TWhKRlcvYS9PeTZzdVFaS25uVkZ6aHBGWnZ2ek9JT2w4ek9OckpiK2ZLeGVUNTdmSC9VeEN4cXBDRzVtWXd4RWtXcHR2djFYWjdsRGxPTmEvQ0FueGZlZWRjanQ1OGZMNi9mMEdMenByOW9iN2ROd1orUytQUHpTazN3QTNuaUdMR1UvZFh3QUFBQUJKUlU1RXJrSmdnZz09Ii8+Cgk8L2RlZnM+Cgk8c3R5bGU+Cgk8L3N0eWxlPgoJPHVzZSBpZD0iQmFja2dyb3VuZCIgaHJlZj0iI2ltZzEiIHg9IjAiIHk9IjAiLz4KPC9zdmc+" alt="Made with Renewable Energy" class="mb-2 rounded-full">
                         <span class="text-sm text-gray-600">Made with Renewable Energy</span>
                     </div>
                     <div class="flex flex-col items-center text-center">
-                        <img src="https://placehold.co/60x60/d1d5db/4b5563?text=IGBC+Certified" alt="IGBC Platinum Certified" class="mb-2">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDg5IDg5IiB3aWR0aD0iODkiIGhlaWdodD0iODkiPgoJPHRpdGxlPklHQkMtUGxhdGludW0tQ2VydGlmaWVkPC90aXRsZT4KCTxkZWZzPgoJCTxpbWFnZSAgd2lkdGg9Ijg5IiBoZWlnaHQ9Ijg5IiBpZD0iaW1nMSIgaHJlZj0iZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFGa0FBQUJaQ0FNQUFBQmkxWGlkQUFBQUFYTlNSMElCMmNrc2Z3QUFBdkZRVEZSRkVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUdBeEVHQXhFR0F4RUhTaUJBQUFBUHQwVWs1VEFBUmx2UExna3poUjNmK2VFUVdRNUVrWVBsQklPaW9pS1dyZjRTaW5JUzA5UlN5SStLRGx6VVRIMVF0aW1OQzZ5OWZjMmJkbW05TGJ3N3UvN3hQVXJoMGVwTENtc3lRL1o0R0ZlMUl6RnlOdkoxYjV2WUl1cTU4UzYwc082S3gvOEhSNWg1ejd2aloyaWdIR0cxeXFmRWJUb1RGa3dZVDFhZEZVcVhkc3RScGRGQTIyVGxNbHNnK1dqVUxFM3VkYlYwMytkYm1VcmZNUUw2T0FhK1lDTjdqSWN3YnhURXJ1bldIWWNVL3ByNHQ5SHh5R0ROb21XbUJZL0R4Zm1jK2FjSEkxK2xtVkNBbWxJRzIwQ3ZmME1JUGplRzZ4am5yOXlrQVpBNHdyWTBOZTloYVhhTlk1NmtIRlI4Q1I0aFUwTzg0SDdJL3RpWDdNd3NsdERoM1FBQUFKR1VsRVFWUjRuSzFaYTBCVlZSWStKS0orUmlJV3B2Z2lGUjhram1paEF2bkFERVJOSVh5ZytNeFVRb01LOFZHcE5Ka3ZWR0FjVFFNRlNRMFRDOFZNVXpNaUg0T01wcE1wVW1tSTJveVpQV2ZtMTZ6OU9PZnVlN21YY3k3VCtuUFdXbnZ0NzU2ejk5cnJzYSttV1NXUCt4cDVOdlpxWXRuZU1qVnRCazdONy85amNiMGZnRTR0ZlA0SXdKYStyUjU4eUsvMXcyM2FFcVIvbTNhK3pSbDJlOThPclR0MkNnaDRwT0hBbmJ2QVJsMjltY29uVUZGMTY5NUE0QjRLU00rbVVobmtwV2p4YUlPQWU5SE00TjZOL3RRbnBHKy94eFM5NytPaHpmcUhEaGdZRms0R3JSc0EvREROdTY5ZWk0Z25nTEFHSUE4Q0JwcVlERzdRUzBmUXJDRm1Sa09CU0xlUmh3RlBxdkx3cDZLaU80K0lHVGxxdEtKOG1uNituWnZBWTJqT1dGMElpdTNhMzNDSHVHZml4eGxtNDRHUUNIZHd4OUZuWW9JVUpzWWt3SUY2VDVKamswbEl0TzU2dmxQWTdCNVNtanFOZy9VZjd6VjErb3laenphYXhjWG5ab3ZSU1V4b05zY2E4Rnh4NUpLNDBQRjVKdlNKZnNvWVRwNDNuNE8vSU1TVUo1aVFHbUFCT0l4WnZ2aVNFRjVtUXRwSUI1TWhDOUpKSFRaUlNBc1hNYVBGcHNCUlpMVkUzKzlYU09qeXFoT3I1TmRvcEsyK2R3dFpNRmxxQXV4QlJzdDBZUTVOV09UaUtERG5DVnd1aFF4Njdaa215QjJBVUoyUHBjbXZKN215L0RPTFU3cndCdERQQkhtYzdVeXZvS2x2T2pWYXVXbzEvV0FuR3A4aU5XdklXMHlRMndGckpadEpQdUhVeG1jZHNKNmVHd2g2ZzFCbGtZK2JJQS9PUnFyZ2NwenZTbExUM3N3Vi9zTDRqWUFuendmYU11Q3ZKc2dyTjZFdFo3ekphZHM0REc1K2E4TVdmM0VLUGZuNk53YTI4cEczZ1dkTmtMMFRrSnZIbU9uS1ZuTGExbm43Sm5tNForWUR2RHhJQWJJM002WUFXRzJDdktNTGN0bnJKQlVDN3lqNm5XbDZ6TmkxMjAvYkNyekwxVVhBR1BiY1k0NjhreklVZTc0SDdMVnBseGNMMUQ1VDlxVk1KcmtOVUtCSnMxQTV6Zmx1MnlnRWlHRlBTdi92RzhxVzZ4anNhMjk4b0N1VzZldXJVUzRzb1VkZUM3UFV0aDlJT01DWVVtQzRBWnhJdU0wUEttWWZBaU1FMXg0NHhKNGZBWWZyUzF4SENHSW5ZeWpESmVicDJtNmsvZERPN21Qam5WOEZqbktHUXQ0eDE4QjV1Y0J4emoyaytPY25CT3hRY1JIZUNjRjlxcC9UcFdYNnJqb2orc2dRd1gwR2xFdmw1d1E4VmZJblR4M2xKMk9qWEFOTk95MTNYTlBPQUlVdWtRY0NVWUtiWTR0ZDd3THJKTnVkVHNaQ3h0RDZqQktxNVhIWTZ5RllmMlM3UkNZZkhpeTRlR01odGI4WjdIcm1JU25FVkp6Rk5EazZlUk1xSnd2MlJYaTZSTzRML0Yxdzd3UG5wUEk4RG91NjR3dDJUSGhxdlFCY2xLUDNweVA4cEdEWEl0MGw4bHlqeHFETThnLzVVdWt5a0h6SjRuRkx6aGFKV01jbytaSytOUjFwM0NVeWJRZGlPVWNCb2F2UVVTcmd5Q3dqRHR6QlZiN2t1L0k5V2ZVbkEzTXdaVG1YeU5vcW1zNFB5aVBBVjBLVkFReWd4MldsVGtoVlVoTWQ3MkdjT1VjR20xMGpzKy9rSzFqaENhd1VLdDhGVjJnNXo5SlNWQWtGN1VGbGxUN2hxb3dHMVFUOGRUM0Eya0V5K0lZeDI0RXNSZjhWY0ZiK2tnK1pmR3NNSEFPMnNTZUZ3a0gxQWZNendEZHh1bDFpWTZYQ0dzRlNYc0o0WStBRElKd3RmaFBnV24xcm9mSHE4ang3c3RMNHVxNnNvbjdsTzhIV2tMN0labjVjbG44bjlPVjJUY3N2SVpFdjRwUEE0N3FTV3JZYm5FbWhVNHJRbFlZMUs3SjVnVWRudHJNSmNrazJXdkFVNTJlcnpKY0NaVTIwa3RwelBka2h2S2hZVThuNlBHY29hajFnZ2x4dGZDeTkzaUxCa1MvR3BRVmU0bG5sNWtMRitCWXAvRGozdGVIL0xxa1d5RGZlRlBHY3M3V0E1d3N5Rk51Z09HQ0xZS2xHS2paQi9nWjRScko3OUVMbDI4eHJoMmRWM2lqZWQ5bmJ6dlkyT1hhRllMOEh0cHNnVXhtVnB2TVU1ZENLY3hISlYrcjZGS3RvdGtuK2lIbGRONXlLRk4zYlBPZ1k0SXdMdyt2L2hKSlUvMFVsdHdreSswUi92WjMyb0FpQlV6dWNtV1h0Z3N3Q1JGWDdTUGplREprMVloZ2ttNE1LMWdEY3FadmVEazZBN1kwamNsaEZacUV2RENqa0hZN3N6RFl5b1RUcUI5WGk3aW51Zno4S2FRKzN0OVJ3anU1VnhteHJoRFNwaUFuWElxTURxb2Y4MEhMNDdFUGx3ZHdCZTRrdUpTT2ZDVGZtV1FFbUdyeWZtZXRsM1lXYjBwdXp1NVRwam4xUk5tM2FQUktDWXkzaU1qcllnMXFmbjZSdzRORitsNkJRNC9KYTNlNHhFajl4QTVkb0I0WDZMMnhpU1ZiNTdhTEFuL2RtQmw4Y2MxZHBYZWdVL3VJZU1FOURDUTZxcXBNL09XaW9KbDNuc2tWeVNWU3R2R0ptczllQ0c5ZWxUck5RTnJwK0UwcUN0OTBINWhWVDRQcmFJMWxudGw3NDhZQTZzR0prenZUUGJqWHA5QjF0MzRVR0FFOVMzZUhYMWNiVjR1eElkV0J0ZlJBdWFEN3NLRUZtMkYvczFlamdOckIzT3RXYjczbE4ySDAxSm1vR2kydjRqV0xnZzZ4S3Y5WTgrbHo1bHVJbFYwZEZHblcwRzBSbFJUZWIxSXJsbGNvMGZyRG5YekhVVkdhWHVvMjhCTWhSeEhiRzUrOVd0QmwwM01jNXpqU2h6VEJxYVU2TERXUzd1NzgzalZiSU1sR1BrNnJLRktqanF4ZmZHa3R0MW1sRkhRRDBkUk81dDMwQnlENkJGekM3Z2F1S1B1bFhvTm90NEFvS2Jtb0JVS01YQ3lrTzRZU1N5Kzl1SVIreUZRZWNVdlZVbXhSdVM5aU1mTXpiWW52Nk42QmVEQStoeFVnVzdGQ2p6K0RrN1duL1MyYkVLbEgxbjRJY28zSmlQV2l1YWtydHNaY2J5RlFBL2tlVjg1VzZ3OS9vQlRsMXA3amxCdkp0Kzg2ZkZhTkcwRjl0N3gwYWRkUjNMUU9QcGlTbzFpODE2aVVZZGRyVDhwUkJxaHYyV1VhdVVSc0dvbERnSTV1VUtPOFRKRzBETmxWcEZ1bWUzaFlLR2d2TVVrTC9mdHNGTXFlYm9tVzJRaXNJcVVLUlkreHZCTWtGdzlYbEtGZjZEaE9hNFhDM0dDdzdPWjE2QXJjVWtWcmFteGFSNWN3dnc0YnlPOTBTNEdmSFh4YnQrWWhqLzEybThZdUFOWmFBcVJyMTFMUzNXUFk0eXlyRnFZNWZTNnRWRnFSeC93TTJWbWtMYk5jczlkUHY3RDY4Z0JkeTZFVnlDOERoLzZrYmZJY3JSTHp1dTFTajVUanBGTXFCOGxFWlN4MGs4dWtuRXZudHdpNEhyNHJtbDdnN3FSWm1yMTNZNmprN3IzUk5wVWhuLzdHdDBqUUtwUzlwdnprNEdkRjFhdU0rMXlKWkpieWhra3pKdzkrMmdoelB2ckdTRmZyRDJOMWtLVkRyYURJQXVNd3FIY3FCcC9zeDg3aGtLOGdzYjBTeWkwTjJ3WHljc2tsbUhZc3p3QUlLSm5lNGNLSVFtYVBxbURpbjFpdkVrNXJ3ZTBlQnVYVU1rb0cyeGNaVjAwUS95NmZib0h0ODk1MzhLeW9HL284L2t1ZXgrVDJjRExEckUvZzNIRmpUQ2tKeTJ3YzVHOWh6cHpDcy9yOEcvd2VQcXkzeXJ0WHBJd0FBQUFCSlJVNUVya0pnZ2c9PSIvPgoJPC9kZWZzPgoJPHN0eWxlPgoJPC9zdHlsZT4KCTx1c2UgaWQ9IkJhY2tncm91bmQiIGhyZWY9IiNpbWcxIiB4PSIwIiB5PSIwIi8+Cjwvc3ZnPg==" alt="IGBC Platinum Certified" class="mb-2 rounded-full">
                         <span class="text-sm text-gray-600">IGBC Platinum Certified</span>
                     </div>
                 </div>
@@ -227,54 +420,54 @@
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-3xl font-bold mb-12">Explore products</h2>
             <div class="flex items-center justify-center space-x-4">
-                <button class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                <button id="explore-prev" class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
                     <i class="fas fa-arrow-left text-gray-700"></i>
                 </button>
-                <div class="carousel-container flex overflow-x-scroll snap-x snap-mandatory space-x-6 w-full max-w-6xl">
+                <div id="product-carousel" class="carousel-container flex overflow-x-scroll snap-x snap-mandatory space-x-6 w-full max-w-6xl">
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
                         <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Ultimate Performance</span>
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+MDF+710+HDMR" alt="GreenInfinity MDF 710 HDMR" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://www.greenply.com:5001/thumbnail1710944313786-7024.jpg" alt="GreenInfinity MDF 710 HDMR" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">GreenInfinity MDF 710 HDMR</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
                         <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Superior Strength & Durability</span>
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+MDF+Exterior" alt="GreenInfinity MDF Exterior" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://www.greenply.com:5001/thumbnail1710944187731-4207.jpg" alt="GreenInfinity MDF Exterior" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">GreenInfinity MDF Exterior</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
                         <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Redefining Healthy Interiors</span>
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+MDF+CARB+P2" alt="GreenInfinity MDF CARB P2" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://www.greenply.com:5001/thumbnail1710944042754-659.jpg" alt="GreenInfinity MDF CARB P2" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">GreenInfinity MDF CARB P2</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
                         <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Redefining Protection</span>
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+MDF+Boil+Pro+500" alt="GreenInfinity MDF Boil Pro 500" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://www.greenply.com:5001/thumbnail1710944022022-2846.jpg" alt="GreenInfinity MDF Boil Pro 500" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">GreenInfinity MDF Boil Pro 500</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
                         <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Art of Precision</span>
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+MDF+Pre-laminated" alt="GreenInfinity MDF Pre-laminated" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://www.greenply.com:5001/originalthumbnail1740464284411-3000.jpg" alt="GreenInfinity MDF Pre-laminated" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">GreenInfinity MDF Pre-laminated</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
                         <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">For Versatile Application</span>
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=GreenInfinity+MDF+Interior" alt="GreenInfinity MDF Interior" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://www.greenply.com:5001/originalthumbnail1740464284411-3000.jpg" alt="GreenInfinity MDF Interior" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">GreenInfinity MDF Interior</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
                         <span class="absolute top-2 left-2 bg-yellow-400 text-gray-800 text-xs font-semibold px-2 py-1 rounded-full">Precision in Every Particle</span>
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=OPTIMAG+PRE+LAM+PARTICLE+BOARDS" alt="OPTIMAG PRE LAM PARTICLE BOARDS" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://www.greenply.com:5001/thumbnail1709201905949-3036.png" alt="OPTIMAG PRE LAM PARTICLE BOARDS" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">OPTIMAG PRE LAM PARTICLE BOARDS</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                 </div>
-                <button class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                <button id="explore-next" class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
                     <i class="fas fa-arrow-right text-gray-700"></i>
                 </button>
             </div>
@@ -288,22 +481,22 @@
             <h2 class="text-3xl font-bold mb-12">Design your Interiors with GreenInfinity</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Bedroom+Interior" alt="Bedroom Interior" class="rounded-lg shadow-md mb-4 w-full">
+                    <img src="https://www.greenply.com:5001/image1704392098372-7396.jpg" alt="Bedroom Interior" class="rounded-lg shadow-md mb-4 w-full">
                     <h3 class="text-lg font-semibold mb-2">Bedroom</h3>
                     <a href="#" class="text-red-theme hover:underline"><i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Kitchen+Interior" alt="Kitchen Interior" class="rounded-lg shadow-md mb-4 w-full">
+                    <img src="https://www.greenply.com:5001/image1704392131175-4572.jpg" alt="Kitchen Interior" class="rounded-lg shadow-md mb-4 w-full">
                     <h3 class="text-lg font-semibold mb-2">Kitchen</h3>
                     <a href="#" class="text-red-theme hover:underline"><i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Living+Room+Interior" alt="Living Room Interior" class="rounded-lg shadow-md mb-4 w-full">
+                    <img src="https://www.greenply.com:5001/image1704392170527-6407.jpg" alt="Living Room Interior" class="rounded-lg shadow-md mb-4 w-full">
                     <h3 class="text-lg font-semibold mb-2">Living Room</h3>
                     <a href="#" class="text-red-theme hover:underline"><i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Office+Interior" alt="Office Interior" class="rounded-lg shadow-md mb-4 w-full">
+                    <img src="https://www.greenply.com:5001/image1715923163378-1818.jpg" alt="Office Interior" class="rounded-lg shadow-md mb-4 w-full">
                     <h3 class="text-lg font-semibold mb-2">Office</h3>
                     <a href="#" class="text-red-theme hover:underline"><i class="fas fa-arrow-right"></i></a>
                 </div>
@@ -329,19 +522,6 @@
         </div>
     </section>
 
-    <!-- Certified By Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-12">Certified by</h2>
-            <div class="flex flex-wrap justify-center items-center gap-8">
-                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=CARB" alt="CARB Certified" class="h-16">
-                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=ISO" alt="ISO Certified" class="h-16">
-                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=CE" alt="CE Certified" class="h-16">
-                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=Forest" alt="Forest Stewardship Council" class="h-16">
-                <img src="https://placehold.co/100x60/d1d5db/4b5563?text=GreenGuard" alt="GreenGuard Certified" class="h-16">
-            </div>
-        </div>
-    </section>
 
     <!-- FAQ Section for MDF -->
     <section class="py-16 bg-gray-50">
@@ -352,7 +532,7 @@
                     <span class="bg-red-theme text-white text-sm px-3 py-1 rounded-full">General</span>
                 </div>
                 <p class="text-gray-700 mb-6">Need Answers? We got them</p>
-                <img src="https://placehold.co/400x300/d1d5db/4b5563?text=FAQ+Image" alt="FAQ" class="rounded-lg shadow-lg w-full h-auto">
+                <img src="https://www.greenply.com/assets/images/FAQ-banner.jpg" alt="FAQ" class="rounded-lg shadow-lg w-full h-auto">
             </div>
             <div class="lg:w-2/3">
                 <div class="accordion">
@@ -441,7 +621,7 @@
                             <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
                         </button>
                         <div class="accordion-content">
-                            <p class="py-2 text-gray-700">It is literally MDF, which stands for Medium-Density Fibreboard. It is not plywood, though again, as in the case of many modern product names, by the name alone, it can be guessed to be not even plywood, though an engineered wood product. Wood fibers, wax, and resin are compressed at high pressure to make furniture, cabinetry, and paneling material. Its smooth surface, versatility, and user-friendliness will win popularity. Plywood is made of thin layers called plies, which are hammered together to give it strength. The grain of each layer runs in different directions.</p>
+                            <p class="py-2 text-gray-700">It is literally MDF, which stands for Medium-Density Fibreboard. It is not plywood, though again, as in the case of many modern product names, by the name alone, it can be guessed to be not even plywood, though an engineered wood product. Wood fibers, wax, and resin are compressed at high pressure to make furniture, cabinetry, and paneling material. Its smooth surface, versatility, and user- friendliness will win popularity. Plywood is made of thin layers called plies, which are hammered together to give it strength. The grain of each layer runs in different directions.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -466,63 +646,36 @@
                 <button class="border border-red-theme text-red-theme py-2 px-6 rounded-full hover:bg-red-theme hover:text-white transition duration-300">Read all <i class="fas fa-arrow-right ml-2"></i></button>
             </div>
             <div class="flex items-center justify-center space-x-4">
-                <button class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                <button id="guide-prev" class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
                     <i class="fas fa-arrow-left text-gray-700"></i>
                 </button>
-                <div class="carousel-container flex overflow-x-scroll snap-x snap-mandatory space-x-6 w-full max-w-6xl">
+                <div id="guide-carousel-container" class="carousel-container flex overflow-x-scroll snap-x snap-mandatory space-x-6 w-full max-w-6xl">
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
-                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Wood+Veneers+vs+Laminates" alt="Wood Veneers vs Laminates" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://greenply.com:5001/file1708684349276-8098.png" alt="Wood Veneers vs Laminates" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">Wood Veneers vs Laminates - Pick the Best for Interiors</h3>
                         <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
-                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Water+Proof+Ply" alt="Water Proof Ply" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://greenply.com:5001/file1708940099875-7757.png" alt="Water Proof Ply" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">Best Applications of Water Proof Ply with Green Platinum</h3>
                         <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
-                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Healthy+Interiors" alt="Healthy Interiors" class="rounded-lg mb-4 mx-auto">
+                        <img src="https://www.greenply.com:5001/originalthumbnail1749794149477-4249.png" alt="Healthy Interiors" class="rounded-lg mb-4 mx-auto">
                         <h3 class="text-lg font-semibold mb-2">A Guide to Healthy Interiors with E0 Plywood in Festive Season</h3>
                         <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
+                    <!-- Add more guide items as needed -->
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
-                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Kitchen+Cabinets" alt="Kitchen Cabinets" class="rounded-lg mb-4 mx-auto">
-                        <h3 class="text-lg font-semibold mb-2">7 Ways to Protect Kitchen Plywood Cabinets from Water Damage</h3>
-                        <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
-                    </div>
-                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md snap-center">
-                        <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Interior+Guide+3" alt="Interior Guide 3" class="rounded-lg mb-4 mx-auto">
-                        <h3 class="text-lg font-semibold mb-2">Another Interior Design Tip</h3>
+                        <img src="https://catalog.wlimg.com/blog_images/blog_post-15378-11587730-ei.jpeg" alt="Plywood Buying Guide" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">Plywood Buying Guide: What to Look For</h3>
                         <a href="#" class="text-red-theme hover:underline">Read More <i class="fas fa-arrow-right ml-1"></i></a>
                     </div>
                 </div>
-                <button class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                <button id="guide-next" class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
                     <i class="fas fa-arrow-right text-gray-700"></i>
                 </button>
             </div>
-        </div>
-    </section>
-
-    <!-- Transform Spaces with Premium Decorative MDF by GreenInfinity Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-6">Transform Spaces with Premium Decorative MDF by GreenInfinity</h2>
-            <p class="mb-4 text-gray-700">MDF, short for Medium Density Fibreboard, is an engineered wood product crafted by compressing wood fibres with thermosetting resins under intense heat and pressure. This process results in a board that boasts uniformity, fine density, and a smooth surface, making it a go-to material for furniture, wall panels, wardrobes, and intricate cut designs. As manufacturing technologies have advanced, MDF boards have become more affordable, more durable, and increasingly popular in both residential and commercial interiors.</p>
-            <p class="mb-4 text-gray-700">From builders and architects to DIY enthusiasts, the demand for MDF wood has grown rapidly across the country and for good reason. Whether you’re looking for mdf sheet designs for a trendy wall décor piece or evaluating mdf board 8x4 price for your next modular wardrobe, understanding the versatility and quality of mdf can help you make smarter design decisions.</p>
-        </div>
-    </section>
-
-    <!-- Why Choose GreenInfinity? Section for MDF -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-6">Why Choose GreenInfinity?</h2>
-            <p class="mb-4 text-gray-700">GreenInfinity is one of the most trusted MDF and particle board brands in India, known for delivering excellence in both design and durability. Each board is thoughtfully crafted to ensure superior performance and aesthetic appeal. Our latest MDF designs speak of elegance and innovation, adding a rich depth to every setting. With GreenInfinity, you’re not just choosing a product, but a legacy of quality that enhances the appeal of your spaces.</p>
-            <p class="mb-4 text-gray-700">Our MDF and particle boards stand out not only in appearance but also in performance. Engineered at our cutting-edge decorative manufacturing facility in Bamanbore, Rajkot, every board is created with precision, maintaining superior quality standards. The result? A collection that goes beyond decor, offering a blend of luxury and endurance that lasts for years.</p>
-
-            <h3 class="text-2xl font-bold mb-4">Backed by Unmatched Quality Standards</h3>
-            <p class="mb-4 text-gray-700">At GreenInfinity, safety and sustainability go hand in hand with style. Our MDF products come with CARB P2 Zero Emission certification, ensuring extremely low formaldehyde emissions, making your interiors healthier and safer. The Boil PRO 500 option offers added water and fire resistance, especially in high-moisture areas like kitchens and bathrooms. Each board is also designed for durability and performance, reinforcing our commitment to quality and reliability.</p>
-            <p class="mb-4 text-gray-700">With competitive MDF sheet costs, transparent MDF rates, and consistent MDF board prices, GreenInfinity offers unmatched value without compromising on aesthetics or innovation.</p>
-            <p class="mb-4 text-gray-700">Explore the versatility of engineered wood through our curated range of MDF and particle boards. Discover the perfect blend of design and durability with GreenInfinity’s finest MDF and particle board collection, where every project finds its perfect foundation.</p>
         </div>
     </section>
 
@@ -577,10 +730,8 @@
                     <li><a href="./investers.html" class="footer-link">Investors</a></li>
                     <li><a href="./Sustainable.html" class="footer-link">Sustainability</a></li>
                     <li><a href="./blog.html" class="footer-link">Blogs</a></li>
-                    <!-- <li><a href="#" class="footer-link">FAQ</a></li> -->
                     <li><a href="./Privacy Policy.html" class="footer-link">Privacy Policy</a></li>
                     <li><a href="./Disclaimer.html" class="footer-link">Disclaimer</a></li>
-                    <!-- <li><a href="#" class="footer-link">HKS Award</a></li> -->
                 </ul>
             </div>
         </div>
@@ -593,209 +744,207 @@
                 <a href="https://www.instagram.com/greenplyplywood/" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/channel/UCl3ckO1adsIiPFHsb8Uizvg" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
             </div>
-            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
-        </div>
-
-        <!-- Floating Info Icon -->
-        <div class="fixed bottom-8 right-8 bg-red-theme text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-red-700 transition duration-300" id="inquiryButton">
-            <i class="fas fa-info text-2xl"></i>
-        </div>
-
-        <!-- Inquiry Modal -->
-        <div id="inquiryModal" class="inquiry-modal">
-            <div class="inquiry-modal-content">
-                <span class="close-button" onclick="closeInquiryModal()">&times;</span>
-                <h2 class="text-2xl font-semibold mb-6">Inquire Now</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="modalName" class="block text-sm font-medium text-gray-700">Name</label>
-                        <input type="text" id="modalName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Name">
-                    </div>
-                    <div>
-                        <label for="modalContact" class="block text-sm font-medium text-gray-700">Contact No.</label>
-                        <input type="text" id="modalContact" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Phone">
-                    </div>
-                    <div>
-                        <label for="modalPincode" class="block text-sm font-medium text-gray-700">Pincode</label>
-                        <input type="text" id="modalPincode" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme" placeholder="Enter Pincode">
-                    </div>
-                    <div>
-                        <label for="modalInquiryType" class="block text-sm font-medium text-gray-700">Inquiry Type</label>
-                        <select id="modalInquiryType" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-theme focus:border-red-theme">
-                            <option>Select Type</option>
-                            <option>Product Inquiry</option>
-                            <option>Dealer Inquiry</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="flex items-center mt-6">
-                    <input type="checkbox" id="modalRobotCheck" class="rounded border-gray-300 text-red-theme shadow-sm focus:border-red-theme focus:ring focus:ring-red-theme focus:ring-opacity-50">
-                    <label for="modalRobotCheck" class="ml-2 block text-sm text-gray-900">I'm not a robot</label>
-                    <a href="#" class="ml-4 text-sm text-red-theme hover:underline">Privacy Policy</a>
-                </div>
-                <button class="mt-6 bg-green-500 text-white py-3 px-8 rounded-full shadow-lg hover:bg-green-600 transition duration-300" onclick="handleModalInquirySubmit()">Inquire Now</button>
-            </div>
+            <p class="text-center text-sm text-gray-400">Copyright &copy; 2025 GreenInfinity.com. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // FAQ Accordion Logic
-            const accordionButtons = document.querySelectorAll('.accordion-button');
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
 
-            accordionButtons.forEach((button, index) => {
-                const accordionContent = button.nextElementSibling;
-                const icon = button.querySelector('i');
-
-                // Initialize the first accordion item to be open
-                if (index === 0) {
-                    button.classList.add('active');
-                    icon.classList.add('rotate-icon');
-                    accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
-                    accordionContent.classList.add('active');
-                }
-
-                button.addEventListener('click', () => {
-                    // Close all other open accordions
-                    accordionButtons.forEach((otherButton) => {
-                        if (otherButton !== button && otherButton.classList.contains('active')) {
-                            otherButton.classList.remove('active');
-                            otherButton.nextElementSibling.style.maxHeight = 0;
-                            otherButton.nextElementSibling.classList.remove('active');
-                            otherButton.querySelector('i').classList.remove('rotate-icon'); // Reset icon
-                        }
-                    });
-
-                    // Toggle the clicked accordion
-                    button.classList.toggle('active');
-                    icon.classList.toggle('rotate-icon');
-
-                    if (button.classList.contains('active')) {
-                        accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
-                        accordionContent.classList.add('active');
+            // Function to ensure correct menu state on resize/load
+            const ensureMenuState = () => {
+                if (window.innerWidth >= 768) { // Desktop view (md breakpoint)
+                    // On desktop, ensure the menu is visible and in row layout
+                    navbarMenu.classList.remove('hidden', 'flex-col', 'space-y-4', 'p-4', 'bg-white', 'w-full', 'items-center');
+                    // Explicitly set display to flex to override any potential 'hidden' or conflicting styles
+                    navbarMenu.style.display = 'flex';
+                } else { // Mobile view
+                    // If the menu is currently visible (i.e., 'hidden' is not present), apply mobile-specific styles
+                    if (!navbarMenu.classList.contains('hidden')) {
+                         navbarMenu.classList.add('flex-col', 'space-y-4', 'p-4', 'bg-white', 'w-full', 'items-center');
+                         navbarMenu.style.display = 'flex'; // Ensure it's flex for mobile expanded state
                     } else {
-                        accordionContent.style.maxHeight = 0;
-                        accordionContent.classList.remove('active');
+                         navbarMenu.style.display = 'none'; // Ensure it's hidden for mobile collapsed state
                     }
+                }
+            };
+
+            if (mobileMenuToggle && navbarMenu) {
+                // Initial state check on DOMContentLoaded
+                ensureMenuState();
+
+                // Event listener for mobile menu button
+                mobileMenuToggle.addEventListener('click', () => {
+                    navbarMenu.classList.toggle('hidden');
+                    navbarMenu.classList.toggle('flex-col');
+                    navbarMenu.classList.toggle('space-y-4');
+                    navbarMenu.classList.toggle('p-4');
+                    navbarMenu.classList.toggle('bg-white');
+                    navbarMenu.classList.toggle('w-full');
+                    navbarMenu.classList.toggle('items-center');
+                    // Re-evaluate display after toggle for immediate visual update
+                    ensureMenuState();
                 });
+
+                // Add a resize listener to ensure correct display on desktop
+                window.addEventListener('resize', ensureMenuState);
+            }
+
+            // Inquiry Form (Floating Button and Modal) Logic
+            const inquiryModalOverlay = document.getElementById('inquiry-modal-overlay');
+            const openInquiryModalButton = document.getElementById('open-inquiry-modal');
+            const closeInquiryModalButton = document.getElementById('close-inquiry-modal');
+            const submitInquiryButton = document.getElementById('submit-inquiry-button');
+            const messageBoxOverlay = document.getElementById('message-box-overlay');
+            const messageBoxText = document.getElementById('message-box-text');
+            const messageBoxCloseButton = document.getElementById('message-box-close');
+
+            if (openInquiryModalButton) {
+                openInquiryModalButton.addEventListener('click', () => {
+                    inquiryModalOverlay.style.display = 'flex'; // Use flex to center content
+                });
+            }
+
+            if (closeInquiryModalButton) {
+                closeInquiryModalButton.addEventListener('click', () => {
+                    inquiryModalOverlay.style.display = 'none';
+                });
+            }
+
+            if (submitInquiryButton) {
+                submitInquiryButton.addEventListener('click', () => {
+                    const name = document.getElementById('inquiry-name').value;
+                    const mobile = document.getElementById('inquiry-mobile').value;
+                    const pincode = document.getElementById('inquiry-pincode').value;
+                    const inquiryType = document.getElementById('inquiry-type').value;
+                    const robotCheck = document.getElementById('robot-check').checked;
+
+                    if (!name || !mobile || !pincode || !inquiryType) {
+                        showMessageBox('Please fill in all required fields.');
+                        return;
+                    }
+                    if (!robotCheck) {
+                        showMessageBox('Please confirm you are not a robot.');
+                        return;
+                    }
+
+                    const message = `Hello GreenInfinity, I would like to inquire about your products.
+Name: ${name}
+Contact No.: ${mobile}
+Pincode: ${pincode}
+Inquiry Type: ${inquiryType}`;
+
+                    // Replace '91XXXXXXXXXX' with the actual WhatsApp number for inquiries
+                    const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+
+                    window.open(whatsappUrl, '_blank');
+                    inquiryModalOverlay.style.display = 'none'; // Close modal after submission
+                    showMessageBox('Your inquiry has been sent!');
+                });
+            }
+
+            function showMessageBox(message) {
+                messageBoxText.textContent = message;
+                messageBoxOverlay.style.display = 'flex';
+            }
+
+            if (messageBoxCloseButton) {
+                messageBoxCloseButton.addEventListener('click', () => {
+                    messageBoxOverlay.style.display = 'none';
+                });
+            }
+
+            // Close inquiry modal if user clicks outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target == inquiryModalOverlay) {
+                    inquiryModalOverlay.style.display = 'none';
+                }
+                if (event.target == messageBoxOverlay) {
+                    messageBoxOverlay.style.display = 'none';
+                }
             });
 
-            // Explore Products Carousel Logic
-            const exploreProductsContainer = document.querySelector('#explore-products-carousel .carousel-container');
-            const exploreProductsItems = document.querySelectorAll('#explore-products-carousel .carousel-item');
-            const exploreProductsPrevButton = document.querySelector('#explore-products-carousel .carousel-prev');
-            const exploreProductsNextButton = document.querySelector('#explore-products-carousel .carousel-next');
+            // Product Carousel Logic
+            const productCarousel = document.getElementById('product-carousel');
+            const explorePrevButton = document.getElementById('explore-prev');
+            const exploreNextButton = document.getElementById('explore-next');
 
-            function scrollExploreProductsCarousel(direction) {
-                if (exploreProductsItems.length === 0 || !exploreProductsContainer) return;
-
-                const itemWidth = exploreProductsItems[0].offsetWidth;
-                // Get the margin-left of the second item to determine the gap
-                const gap = exploreProductsItems.length > 1 ? parseFloat(getComputedStyle(exploreProductsItems[1]).marginLeft) : 0;
-                const scrollAmount = itemWidth + gap;
-
-                if (direction === 'next') {
-                    exploreProductsContainer.scrollBy({
-                        left: scrollAmount,
+            if (explorePrevButton && productCarousel) {
+                explorePrevButton.addEventListener('click', () => {
+                    const itemWidth = productCarousel.querySelector('.carousel-item').offsetWidth;
+                    const gap = 24; // 1.5rem = 24px
+                    productCarousel.scrollBy({
+                        left: -(itemWidth + gap),
                         behavior: 'smooth'
                     });
-                } else if (direction === 'prev') {
-                    exploreProductsContainer.scrollBy({
-                        left: -scrollAmount,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-
-            if (exploreProductsPrevButton) {
-                exploreProductsPrevButton.addEventListener('click', () => {
-                    scrollExploreProductsCarousel('prev');
                 });
             }
-            if (exploreProductsNextButton) {
-                exploreProductsNextButton.addEventListener('click', () => {
-                    scrollExploreProductsCarousel('next');
+
+            if (exploreNextButton && productCarousel) {
+                exploreNextButton.addEventListener('click', () => {
+                    const itemWidth = productCarousel.querySelector('.carousel-item').offsetWidth;
+                    const gap = 24; // 1.5rem = 24px
+                    productCarousel.scrollBy({
+                        left: (itemWidth + gap),
+                        behavior: 'smooth'
+                    });
                 });
             }
 
             // Interior Guide Carousel Logic
-            const interiorGuideContainer = document.querySelector('#interior-guide-carousel .carousel-container');
-            const interiorGuideItems = document.querySelectorAll('#interior-guide-carousel .carousel-item');
-            const interiorGuidePrevButton = document.querySelector('#interior-guide-carousel .carousel-prev');
-            const interiorGuideNextButton = document.querySelector('#interior-guide-carousel .carousel-next');
+            const guideCarouselContainer = document.getElementById('guide-carousel-container');
+            const guidePrevButton = document.getElementById('guide-prev');
+            const guideNextButton = document.getElementById('guide-next');
 
-            function scrollInteriorGuideCarousel(direction) {
-                if (interiorGuideItems.length === 0 || !interiorGuideContainer) return;
-
-                const itemWidth = interiorGuideItems[0].offsetWidth;
-                // Get the margin-left of the second item to determine the gap
-                const gap = interiorGuideItems.length > 1 ? parseFloat(getComputedStyle(interiorGuideItems[1]).marginLeft) : 0;
-                const scrollAmount = itemWidth + gap;
-
-                if (direction === 'next') {
-                    interiorGuideContainer.scrollBy({
-                        left: scrollAmount,
+            if (guidePrevButton && guideCarouselContainer) {
+                guidePrevButton.addEventListener('click', () => {
+                    const itemWidth = guideCarouselContainer.querySelector('.carousel-item').offsetWidth;
+                    const gap = 24; // 1.5rem = 24px
+                    guideCarouselContainer.scrollBy({
+                        left: -(itemWidth + gap),
                         behavior: 'smooth'
                     });
-                } else if (direction === 'prev') {
-                    interiorGuideContainer.scrollBy({
-                        left: -scrollAmount,
+                });
+            }
+
+            if (guideNextButton && guideCarouselContainer) {
+                guideNextButton.addEventListener('click', () => {
+                    const itemWidth = guideCarouselContainer.querySelector('.carousel-item').offsetWidth;
+                    const gap = 24; // 1.5rem = 24px
+                    guideCarouselContainer.scrollBy({
+                        left: (itemWidth + gap),
                         behavior: 'smooth'
                     });
-                }
-            }
-
-            if (interiorGuidePrevButton) {
-                interiorGuidePrevButton.addEventListener('click', () => {
-                    scrollInteriorGuideCarousel('prev');
-                });
-            }
-            if (interiorGuideNextButton) {
-                interiorGuideNextButton.addEventListener('click', () => {
-                    scrollInteriorGuideCarousel('next');
                 });
             }
 
-            // Inquiry Form Submit Handler for MDF Page (for modal)
-            function handleModalInquirySubmit() {
-                const name = document.getElementById('modalName').value;
-                const contact = document.getElementById('modalContact').value;
-                const pincode = document.getElementById('modalPincode').value;
-                const inquiryType = document.getElementById('modalInquiryType').value;
+            // Accordion functionality
+            document.querySelectorAll('.accordion-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const accordionContent = button.nextElementSibling;
+                    const icon = button.querySelector('.fa-plus');
 
-                const message = `Hello GreenInfinity MDF, I would like to inquire about your MDF and Boards.
-Name: ${name}
-Contact No.: ${contact}
-Pincode: ${pincode}
-Inquiry Type: ${inquiryType}`;
+                    // Close all other open accordions
+                    document.querySelectorAll('.accordion-content').forEach(content => {
+                        if (content !== accordionContent && content.classList.contains('active')) {
+                            content.classList.remove('active');
+                            content.previousElementSibling.classList.remove('active');
+                            content.previousElementSibling.querySelector('.fa-plus').style.transform = 'rotate(0deg)';
+                        }
+                    });
 
-                // Replace '91XXXXXXXXXX' with the actual WhatsApp number for MDF inquiries
-                const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
-
-                window.open(whatsappUrl, '_blank');
-                closeInquiryModal(); // Close modal after submission
-            }
-
-            // Functions to open and close the inquiry modal
-            const inquiryModal = document.getElementById('inquiryModal');
-            const inquiryButton = document.getElementById('inquiryButton');
-
-            if (inquiryButton) {
-                inquiryButton.addEventListener('click', () => {
-                    inquiryModal.style.display = 'flex'; // Use flex to center content
+                    // Toggle the clicked accordion
+                    accordionContent.classList.toggle('active');
+                    button.classList.toggle('active');
+                    if (accordionContent.classList.contains('active')) {
+                        icon.style.transform = 'rotate(45deg)';
+                    } else {
+                        icon.style.transform = 'rotate(0deg)';
+                    }
                 });
-            }
-
-            function closeInquiryModal() {
-                inquiryModal.style.display = 'none';
-            }
-
-            // Close modal if user clicks outside of it
-            window.addEventListener('click', (event) => {
-                if (event.target == inquiryModal) {
-                    inquiryModal.style.display = 'none';
-                }
             });
         });
     </script>

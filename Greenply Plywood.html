@@ -3,85 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greenply Plywood</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Greenply Plywood - GreenInfinity</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        /* Custom CSS Variables for Theme */
+        :root {
+            --primary-red: #EF4444; /* Tailwind red-600 */
+            --light-red: #FEE2E2; /* Tailwind red-100 */
+            --dark-red: #DC2626; /* Tailwind red-700 */
+            --text-gray: #374151; /* Tailwind gray-700 */
+            --light-gray: #F3F4F6; /* Tailwind gray-100 */
+            --white: #FFFFFF;
+            --black: #1F2937; /* Tailwind gray-800 */
+            --dark-bg: #1A202C; /* Changed to a darker gray for footer background */
+            --footer-text: #E2E8F0; /* Lighter text for footer links */
+            --footer-heading: #EF4444; /* Red for footer headings */
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            color: #333;
-            padding-top: 64px; /* Add padding to body to prevent content from being hidden behind fixed navbar */
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-gray);
+            background-color: var(--white); /* Changed body background to white as per new design */
+        }
+
+        /* Custom theme colors for Tailwind-like classes */
+        .text-red-theme {
+            color: var(--primary-red);
         }
         .bg-red-theme {
-            background-color: #e53e3e; /* A shade of red */
-        }
-        .text-red-theme {
-            color: #e53e3e;
-        }
-        .border-red-theme {
-            border-color: #e53e3e;
+            background-color: var(--primary-red);
         }
         .hover-red-theme:hover {
-            background-color: #c53030;
+            background-color: var(--dark-red);
         }
-        .footer-link:hover {
-            text-decoration: underline;
+        .focus\:ring-red-theme:focus {
+            --tw-ring-color: rgba(239, 68, 68, 0.5); /* Primary red with opacity */
         }
-        .accordion-button {
-            cursor: pointer;
-            padding: 1rem;
-            width: 100%;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
+        .focus\:border-red-theme:focus {
+            border-color: var(--primary-red);
         }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            padding: 0 1rem;
-            background-color: #f9f9f9;
-        }
-        .accordion-content.active {
-            padding: 1rem;
-        }
-        .rotate-icon {
-            transform: rotate(45deg);
-            transition: transform 0.3s ease;
-        }
-        /* Custom styles for footer social icons */
-        .social-icon-circle {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white for circles */
-            transition: background-color 0.3s ease;
-        }
-        .social-icon-circle:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        /* Updated styles for fixed navigation bar */
+
+        /* Fixed Navbar Styling */
         .fixed-navbar {
-            position: fixed; /* Changed to fixed */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 20; /* Ensure it's above other content */
-            background-color: white; /* Changed background to white */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .fixed-navbar .nav-link {
-            color: #333; /* Make links dark for contrast on white background */
+        @media (min-width: 768px) {
+            .fixed-navbar {
+                padding-left: 3rem;
+                padding-right: 3rem;
+            }
         }
-        .fixed-navbar .nav-link:hover {
-            color: #e53e3e; /* Red on hover */
+
+        /* Navigation Menu Toggle for Mobile */
+        #navbar-menu.hidden-mobile {
+            display: none;
+        }
+
+        #navbar-menu.flex-mobile {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            background-color: var(--white);
+            border-top: 1px solid var(--light-gray);
+            padding-top: 1rem;
+        }
+
+        #navbar-menu.flex-mobile .nav-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        #navbar-menu.flex-mobile .nav-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Carousel Styling */
+        .carousel-container {
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            padding-bottom: 1rem; /* Space for scrollbar on some browsers */
+        }
+
+        .carousel-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, Opera */
+        }
+
+        .carousel-item {
+            scroll-snap-align: start;
+            background-color: var(--white);
+            color: var(--text-gray);
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align content to top */
+            min-height: 320px; /* Ensure consistent height */
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 180px; /* Fixed height for consistency */
+            object-fit: cover;
+            border-radius: 0.75rem 0.75rem 0 0; /* Rounded top corners */
+        }
+
+        /* FAQ Accordion Styling */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .accordion-button {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background-color: #f9fafb; /* gray-50 */
+            color: var(--text-gray);
+            font-weight: 600;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-button:hover {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+
+        .accordion-button.active {
+            background-color: var(--primary-red);
+            color: var(--white);
+        }
+
+        .accordion-button.active .fa-plus {
+            transform: rotate(45deg);
+            color: var(--white);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out, opacity 0.3s ease-out; /* Added opacity */
+            padding: 0 1.5rem; /* Initial padding for collapsed state */
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            opacity: 0; /* Added opacity for collapse */
+            /* Removed display: none; from CSS to control via JS for transitions */
+        }
+
+        .accordion-content.active {
+            max-height: 200px; /* Adjust as needed for content height */
+            padding: 0.5rem 1.5rem 1.5rem; /* Padding for expanded state */
+            opacity: 1;
+            overflow-y: auto; /* Add scroll if content exceeds 400px */
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active .accordion-icon {
+            transform: rotate(45deg); /* Plus to X */
         }
     </style>
 </head>
@@ -89,33 +201,41 @@
 
     <!-- Navigation Bar (Fixed at top with white background) -->
     <nav class="fixed-navbar py-4 px-6 flex justify-between items-center">
-        <div style="height:100px; width: 150px;  display: flex;justify-content: center; align-items: center;">
+        <div style="height:100px; width: 150px; display: flex;justify-content: center; align-items: center;">
             <img src="./Green Infinity Logo Final-01.png" alt="GreenInfinity Logo" style="opacity: 2.5;">
         </div>
         <div class="hidden md:flex space-x-8">
-             <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
+            <a href="./index.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Consumer</a>
             <a href="./investers.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Investors</a>
-            <a href="./about.html" class="text-gray-600 hover:text-red-600 font-medium  transition duration-300 ease-in-out py-1 nav-item">About Us</a>
+            <a href="./about.html" class="text-gray-600 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">About Us</a>
             <a href="./Inspiration.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Inspiration</a>
             <a href="./products.html" class="text-gray-700 hover:text-red-600 font-medium transition duration-300 ease-in-out py-1 nav-item">Products</a>
-
         </div>
-        <!-- Mobile menu button (if needed, not explicitly in image but good practice) -->
+        <!-- Mobile menu button -->
         <div class="md:hidden">
-            <button class="text-gray-700 focus:outline-none">
+            <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
     </nav>
 
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg py-4 px-6 absolute w-full z-90 top-[100px]">
+        <a href="./index.html" class="block py-2 text-gray-700 hover:text-red-600 font-medium nav-item">Consumer</a>
+        <a href="./investers.html" class="block py-2 text-gray-700 hover:text-red-600 font-medium nav-item">Investors</a>
+        <a href="./about.html" class="block py-2 text-gray-600 hover:text-red-600 font-medium nav-item">About Us</a>
+        <a href="./Inspiration.html" class="block py-2 text-gray-700 hover:text-red-600 font-medium nav-item">Inspiration</a>
+        <a href="./products.html" class="block py-2 text-gray-700 hover:text-red-600 font-medium nav-item">Products</a>
+    </div>
+
     <!-- Header/Hero Section -->
-    <header class="relative bg-gray-200 h-96 overflow-hidden">
-        <img src="https://placehold.co/1920x400/cccccc/ffffff?text=Greenply+Plywood+Hero+Image" alt="Greenply Plywood Interior" class="absolute inset-0 w-full h-full object-cover">
+    <header class="relative bg-gray-200 h-96 overflow-hidden mt-[100px]"> <!-- Added mt-[100px] to offset fixed navbar -->
+        <img src="https://www.greenply.com:5001/banner1710149516055-3700.jpg" alt="GreenInfinity Plywood Interior" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-black opacity-40"></div>
-        <div class="relative z-10 flex items-center h-full pl-16 text-white">
+        <div class="relative z-10 flex items-center h-full pl-6 md:pl-16 text-white">
             <div>
-                <h1 class="text-5xl font-bold mb-2">Greenply Plywood</h1>
-                <p class="text-xl">Superior plywood for every interior needs</p>
+                <h1 class="text-4xl md:text-5xl font-bold mb-2">GreenInfinity Plywood</h1>
+                <p class="text-lg md:text-xl">Superior plywood for every interior needs</p>
             </div>
         </div>
     </header>
@@ -160,12 +280,12 @@
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:space-x-12">
             <div class="lg:w-1/2 mb-8 lg:mb-0">
-                <img src="https://placehold.co/600x400/d1d5db/4b5563?text=Greenply+Interior+Design" alt="Interior Design" class="rounded-lg shadow-lg w-full h-auto">
+                <img src="https://www.greenply.com:5001/thumbnail1710149517996-5260.jpg" alt="Interior Design" class="rounded-lg shadow-lg w-full h-auto">
             </div>
             <div class="lg:w-1/2">
-                <h2 class="text-4xl font-bold text-red-theme mb-6">Greenply Plywood</h2>
-                <p class="mb-4 text-gray-700">Welcome to the world of Greenply Plywood and Blockboard. Greenply offers a diverse range of high-quality, sustainably manufactured plywood & blockboard products. As a pioneer in the industry, Greenply uses plantation timber and is the first to receive international certification for sustainable sourcing practices.</p>
-                <p class="mb-4 text-gray-700">It has varied variety of plywood products - Structural Grade Plywood, Fire Retardant Plywood, Waterproof plywood, Moisture Resistant plywood and its innovative Zero Emission plywood range. Greenply Plywood is perfect for all your interior needs. Whether you're creating furniture for your kitchen, bedroom, living room, or study room, our products provide both durability and style. Our zero-emission innovation makes Greenply the best plywood choice for your home interiors.</p>
+                <h2 class="text-4xl font-bold text-red-theme mb-6">GreenInfinity Plywood</h2>
+                <p class="mb-4 text-gray-700">Welcome to the world of GreenInfinity Plywood and Blockboard. GreenInfinity offers a diverse range of high-quality, sustainably manufactured plywood & blockboard products. As a pioneer in the industry, GreenInfinity uses plantation timber and is the first to receive international certification for sustainable sourcing practices.</p>
+                <p class="mb-4 text-gray-700">It has varied variety of plywood products - Structural Grade Plywood, Fire Retardant Plywood, Waterproof plywood, Moisture Resistant plywood and its innovative Zero Emission plywood range. GreenInfinity Plywood is perfect for all your interior needs. Whether you're creating furniture for your kitchen, bedroom, living room, or study room, our products provide both durability and style. Our zero-emission innovation makes GreenInfinity the best plywood choice for your home interiors.</p>
             </div>
         </div>
     </section>
@@ -175,17 +295,17 @@
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
-                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Green-Plywood" alt="Green-Plywood & Blockboard" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <img src="https://www.greenply.com:5001/thumbnail1709296586756-5993.jpg" alt="Green-Plywood & Blockboard" class="rounded-lg shadow-md mb-4 mx-auto">
                     <h3 class="text-xl font-semibold mb-2">Green-Plywood & Blockboard</h3>
                     <p class="text-gray-600">Explore our range of eco-friendly plywood.</p>
                 </div>
                 <div class="text-center">
-                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Optima-G-Plywood" alt="Optima-G-Plywood & Blockboard" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <img src="https://www.greenply.com:5001/thumbnail1709207476930-3330.jpg" alt="Optima-G-Plywood & Blockboard" class="rounded-lg shadow-md mb-4 mx-auto">
                     <h3 class="text-xl font-semibold mb-2">Optima-G-Plywood & Blockboard</h3>
                     <p class="text-gray-600">Premium quality for superior strength.</p>
                 </div>
                 <div class="text-center">
-                    <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Ecotec-Plywood" alt="Ecotec-Plywood & Blockboard" class="rounded-lg shadow-md mb-4 mx-auto">
+                    <img src="https://www.greenply.com:5001/thumbnail1709206776494-1070.jpg" alt="Ecotec-Plywood & Blockboard" class="rounded-lg shadow-md mb-4 mx-auto">
                     <h3 class="text-xl font-semibold mb-2">Ecotec-Plywood & Blockboard</h3>
                     <p class="text-gray-600">Advanced technology for enhanced durability.</p>
                 </div>
@@ -196,22 +316,22 @@
     <!-- Design Your Interiors Section -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-12">Design your Interiors with Greenply</h2>
+            <h2 class="text-3xl font-bold mb-12">Design your Interiors with GreenInfinity</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Bedroom" alt="Bedroom" class="rounded-lg shadow-md mb-4">
+                    <img src="https://www.greenply.com:5001/image1704392098372-7396.jpg" alt="Bedroom" class="rounded-lg shadow-md mb-4">
                     <span class="text-lg font-medium">Bedroom</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Kitchen" alt="Kitchen" class="rounded-lg shadow-md mb-4">
+                    <img src="https://www.greenply.com:5001/image1704392131175-4572.jpg" alt="Kitchen" class="rounded-lg shadow-md mb-4">
                     <span class="text-lg font-medium">Kitchen</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Living+Room" alt="Living Room" class="rounded-lg shadow-md mb-4">
+                    <img src="https://www.greenply.com:5001/image1704392170527-6407.jpg" alt="Living Room" class="rounded-lg shadow-md mb-4">
                     <span class="text-lg font-medium">Living Room</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <img src="https://placehold.co/300x200/d1d5db/4b5563?text=Office" alt="Office" class="rounded-lg shadow-md mb-4">
+                    <img src="https://www.greenply.com:5001/image1715923163378-1818.jpg" alt="Office" class="rounded-lg shadow-md mb-4">
                     <span class="text-lg font-medium">Office</span>
                 </div>
             </div>
@@ -242,27 +362,58 @@
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-3xl font-bold mb-12">Explore products</h2>
             <div class="flex items-center justify-center space-x-4">
-                <button class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                <button id="carousel-prev" class="carousel-prev bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
                     <i class="fas fa-arrow-left text-gray-700"></i>
                 </button>
-                <div class="carousel-container flex overflow-hidden space-x-6 w-full max-w-4xl">
+                <div id="products-carousel" class="carousel-container flex overflow-hidden space-x-6 w-full max-w-4xl">
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=Greenply+Club+700" alt="Greenply Club 700 Plywood" class="rounded-lg mb-4 mx-auto">
-                        <h3 class="text-lg font-semibold mb-2">Greenply Club 700 Plywood</h3>
+                        <img src="https://www.greenply.com:5001/originalthumbnail1726826783158-7331.jpg" alt="GreenInfinity Club 700 Plywood" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Club 700 Plywood</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=Greenply+Club+500" alt="Greenply Club 500 Plywood" class="rounded-lg mb-4 mx-auto">
-                        <h3 class="text-lg font-semibold mb-2">Greenply Club 500 Plywood</h3>
+                        <img src="https://www.greenply.com:5001/thumbnail1710915299824-5828.jpg" alt="GreenInfinity Club 500 Plywood" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Club 500 Plywood</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                     <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
-                        <img src="https://placehold.co/300x300/d1d5db/4b5563?text=Greenply+Platinum" alt="Greenply Platinum Plywood" class="rounded-lg mb-4 mx-auto">
-                        <h3 class="text-lg font-semibold mb-2">Greenply Platinum Plywood</h3>
+                        <img src="https://www.greenply.com:5001/thumbnail1710915962554-9648.jpg" alt="GreenInfinity Platinum Plywood" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Platinum Plywood</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
+                        <img src="https://www.greenply.com:5001/thumbnail1710916165578-1269.jpg" alt="GreenInfinity Club 700 Plywood" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity 710 Marine Plywood</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
+                        <img src="https://www.greenply.com:5001/thumbnail1710916010046-5297.jpg" alt="GreenInfinity Club 500 Plywood" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity MR 303 Plywood</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
+                        <img src="https://www.greenply.com:5001/thumbnail1711617431781-5139.jpeg" alt="GreenInfinity Platinum Plywood" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Club Flexiply</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <!-- New Products Added Here -->
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
+                        <img src="https://www.greenply.com:5001/originalthumbnail1723119027050-2325.jpg" alt="GreenInfinity Product 1" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Product 1</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
+                        <img src="https://www.greenply.com:5001/originalthumbnail1723118708533-7562.jpg" alt="GreenInfinity Product 2" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Product 2</h3>
+                        <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-80 p-4 border border-gray-200 rounded-lg shadow-md">
+                        <img src="https://www.greenply.com:5001/originalthumbnail1723118840161-3439.jpg" alt="GreenInfinity Product 3" class="rounded-lg mb-4 mx-auto">
+                        <h3 class="text-lg font-semibold mb-2">GreenInfinity Product 3</h3>
                         <button class="bg-red-theme text-white py-2 px-4 rounded-full hover-red-theme transition duration-300">View Product</button>
                     </div>
                 </div>
-                <button class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
+                <button id="carousel-next" class="carousel-next bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition duration-300">
                     <i class="fas fa-arrow-right text-gray-700"></i>
                 </button>
             </div>
@@ -279,7 +430,7 @@
                     <span class="bg-green-500 text-white text-sm px-3 py-1 rounded-full">General</span>
                 </div>
                 <p class="text-gray-700 mb-6">Need Answers? We got them</p>
-                <img src="https://placehold.co/300x400/d1d5db/4b5563?text=FAQ+Image" alt="FAQ" class="rounded-lg shadow-lg w-full h-auto">
+                <img src="https://www.greenply.com/assets/images/FAQ-banner.jpg" alt="FAQ" class="rounded-lg shadow-lg w-full h-auto">
             </div>
             <div class="lg:w-2/3">
                 <div class="accordion">
@@ -298,7 +449,7 @@
                             <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
                         </button>
                         <div class="accordion-content">
-                            <p class="py-2 text-gray-700">Yes, Greenply plywood is designed to accept various finishes, including stains and paints, for a customized look.</p>
+                            <p class="py-2 text-gray-700">Yes, GreenInfinity plywood is designed to accept various finishes, including stains and paints, for a customized look.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -316,7 +467,7 @@
                             <i class="fas fa-plus text-red-theme transition-transform duration-300"></i>
                         </button>
                         <div class="accordion-content">
-                            <p class="py-2 text-gray-700">While no plywood is entirely "waterproof," Greenply offers BWP (Boiling Waterproof) grade plywood that is highly resistant to water and ideal for areas exposed to moisture.</p>
+                            <p class="py-2 text-gray-700">While no plywood is entirely "waterproof," GreenInfinity offers BWP (Boiling Waterproof) grade plywood that is highly resistant to water and ideal for areas exposed to moisture.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -364,19 +515,19 @@
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold mb-6">Premium Plywood Board Solutions for Every Space</h2>
-            <p class="mb-4 text-gray-700">Step into a world of unmatched strength, style, and sustainability with Greenply plywood boards, your go-to solution for modern interiors. From striking plywood door designs to high-performance solutions for cabinets, plywood wardrobes, and wall panels, Greenply's extensive plywood board and blackboard range is designed to elevate every corner of your home or commercial space.</p>
-            <p class="mb-4 text-gray-700">Crafted with precision and eco-conscious innovation, Greenply plywood products are manufactured using responsibly sourced plantation timber. As one of the pioneers in the industry, Greenply proudly holds international certifications for sustainable sourcing, setting benchmarks in both quality and environmental responsibility.</p>
-            <p class="mb-4 text-gray-700">Explore a range that includes Structural Grade Plywood, Fire Retardant Plywood, Waterproof Plywood price (BWP grade) and Moisture Resistant Plywood, along with our other revolutionary features. Whether you're designing a modular kitchen, custom-built plywood cupboard for storage, or sleek room partitions, Greenply delivers exceptional strength, safety, and style.</p>
+            <p class="mb-4 text-gray-700">Step into a world of unmatched strength, style, and sustainability with GreenInfinity plywood boards, your go-to solution for modern interiors. From striking plywood door designs to high-performance solutions for cabinets, plywood wardrobes, and wall panels, GreenInfinity's extensive plywood board and blackboard range is designed to elevate every corner of your home or commercial space.</p>
+            <p class="mb-4 text-gray-700">Crafted with precision and eco-conscious innovation, GreenInfinity plywood products are manufactured using responsibly sourced plantation timber. As one of the pioneers in the industry, GreenInfinity proudly holds international certifications for sustainable sourcing, setting benchmarks in both quality and environmental responsibility.</p>
+            <p class="mb-4 text-gray-700">Explore a range that includes Structural Grade Plywood, Fire Retardant Plywood, Waterproof Plywood price (BWP grade) and Moisture Resistant Plywood, along with our other revolutionary features. Whether you're designing a modular kitchen, custom-built plywood cupboard for storage, or sleek room partitions, GreenInfinity delivers exceptional strength, safety, and style.</p>
             <p class="mb-8 text-gray-700">And the best part? Our products combine performance with value, offering durability at a competitive plywood price without compromising on aesthetics or innovation.</p>
 
-            <h3 class="text-2xl font-bold mb-4">Why Choose Greenply?</h3>
-            <p class="mb-4 text-gray-700">When it comes to creating long-lasting interiors, Greenply is more than just a plywood brand, it's a promise of quality, safety, and innovation. Here's what makes our plywood boards stand out from the rest:</p>
+            <h3 class="text-2xl font-bold mb-4">Why Choose GreenInfinity?</h3>
+            <p class="mb-4 text-gray-700">When it comes to creating long-lasting interiors, GreenInfinity is more than just a plywood brand, it's a promise of quality, safety, and innovation. Here's what makes our plywood boards stand out from the rest:</p>
 
             <h4 class="text-xl font-semibold mb-2">1. E0 Emission Rating – Cleaner, Healthier Indoors</h4>
             <ul class="list-disc list-inside mb-4 text-gray-700">
                 <li>Our plywood is manufactured with E0 emission compliance, meaning minimal formaldehyde release for better indoor air quality.</li>
                 <li>Ideal for homes with children, elderly family members, or anyone sensitive to airborne pollutants.</li>
-                <li>Greenply's commitment to sustainable and healthy living makes us a pioneer in the low-VOC plywood board category.</li>
+                <li>GreenInfinity's commitment to sustainable and healthy living makes us a pioneer in the low-VOC plywood board category.</li>
             </ul>
 
             <h4 class="text-xl font-semibold mb-2">2. Best-in-Class Warranty – A Promise You Can Trust</h4>
@@ -396,20 +547,20 @@
             <h4 class="text-xl font-semibold mb-2">4. BWP Grade – Waterproof Durability that Lasts</h4>
             <ul class="list-disc list-inside mb-4 text-gray-700">
                 <li>Boiling Waterproof (BWP) Excellence</li>
-                <li>Greenply's BWP plywood boards are ideal for wet areas like kitchens and washrooms.</li>
+                <li>GreenInfinity's BWP plywood boards are ideal for wet areas like kitchens and washrooms.</li>
                 <li>These BWP-grade sheets handle constant moisture exposure without warping or swelling, perfect for wet zones like kitchens and utility areas.</li>
-                <li>Choose Greenply for projects that demand superior moisture resistance and structural stability.</li>
+                <li>Choose GreenInfinity for projects that demand superior moisture resistance and structural stability.</li>
             </ul>
 
             <h4 class="text-xl font-semibold mb-2">5. 10-Point Quality Check – Precision in Every Sheet</h4>
             <ul class="list-disc list-inside mb-4 text-gray-700">
-                <li>Every Greenply board undergoes a rigorous 10-point quality check to ensure consistency and performance.</li>
+                <li>Every GreenInfinity board undergoes a rigorous 10-point quality check to ensure consistency and performance.</li>
                 <li>These checks cover everything from moisture content and bonding strength to surface smoothness and core gap filling.</li>
                 <li>With such stringent measures, you get plywood that not only looks premium but also performs flawlessly over time.</li>
             </ul>
 
             <h3 class="text-2xl font-bold mb-4">Explore Our Plywood & Blockboard Range</h3>
-            <p class="mb-4 text-gray-700">Greenply offers a wide variety of plywood boards and blockboards, each crafted to meet specific project needs, be it for premium interiors, budget-friendly renovations, or long-term durability. Here’s a quick look at our top product families:</p>
+            <p class="mb-4 text-gray-700">GreenInfinity offers a wide variety of plywood boards and blockboards, each crafted to meet specific project needs, be it for premium interiors, budget-friendly renovations, or long-term durability. Here’s a quick look at our top product families:</p>
             <ul class="list-disc list-inside mb-8 text-gray-700">
                 <li><a href="#" class="text-red-theme hover:underline">Green-Plywood & Blockboard</a></li>
                 <li><a href="#" class="text-red-theme hover:underline">Optima-G-Plywood & Blockboard</a></li>
@@ -419,34 +570,34 @@
             </ul>
 
             <h3 class="text-2xl font-bold mb-4">Style Meets Functionality</h3>
-            <p class="mb-4 text-gray-700">Plywood doesn't have to be basic. At Greenply, we believe strength should come with style. Our plywood door designs and decorative finishes bring elegance and personality to every piece. Whether you're looking for a minimalist flush look or ornate veneered panels, our plywood options adapt beautifully to modern, rustic, or contemporary aesthetics.</p>
+            <p class="mb-4 text-gray-700">Plywood doesn't have to be basic. At GreenInfinity, we believe strength should come with style. Our plywood door designs and decorative finishes bring elegance and personality to every piece. Whether you're looking for a minimalist flush look or ornate veneered panels, our plywood options adapt beautifully to modern, rustic, or contemporary aesthetics.</p>
 
             <h3 class="text-2xl font-bold mb-4">Affordable Luxury</h3>
-            <p class="mb-4 text-gray-700">We know that every project is unique and so is every budget. That's why Greenply offers a wide range of premium plywood board solutions across different price points, so you can enjoy uncompromised quality that fits within your plans. Whether you're a first-time homeowner or a professional interior designer, Greenply gives you access to luxury at the best affordable price.</p>
+            <p class="mb-4 text-gray-700">We know that every project is unique and so is every budget. That's why GreenInfinity offers a wide range of premium plywood board solutions across different price points, so you can enjoy uncompromised quality that fits within your plans. Whether you're a first-time homeowner or a professional interior designer, GreenInfinity gives you access to luxury at the best affordable price.</p>
 
             <h3 class="text-2xl font-bold mb-4">Quality Meets Responsibility</h3>
-            <p class="mb-4 text-gray-700">Choosing Greenply is not just a decision for today, it's an investment in a better tomorrow. Our green manufacturing processes, low-emission innovations, and commitment to sustainable sourcing make us one of India's most trusted brands in the interior and construction ecosystem.</p>
+            <p class="mb-4 text-gray-700">Choosing GreenInfinity is not just a decision for today, it's an investment in a better tomorrow. Our green manufacturing processes, low-emission innovations, and commitment to sustainable sourcing make us one of India's most trusted brands in the interior and construction ecosystem.</p>
 
             <h3 class="text-2xl font-bold mb-4">Interior Applications That Make a Lasting Impression</h3>
-            <p class="mb-4 text-gray-700">Greenply plywood boards are more than just functional building materials; they're design solutions made for different corners of your home or commercial space. Whether you're working on a large-scale renovation or a smart upgrade, here's how you can integrate our plywood and blockboards seamlessly into various interiors:</p>
+            <p class="mb-4 text-gray-700">GreenInfinity plywood boards are more than just functional building materials; they're design solutions made for different corners of your home or commercial space. Whether you're working on a large-scale renovation or a smart upgrade, here's how you can integrate our plywood and blockboards seamlessly into various interiors:</p>
 
             <h4 class="text-xl font-semibold mb-2">1. Modular Kitchens</h4>
             <p class="mb-4 text-gray-700">Plywood in the kitchen must resist moisture, heat, and daily wear. Our BWP grade plywood boards are ideal for under-sink cabinets, tall pantry units, and open shelving. They stay strong even in steamy environments and enhance kitchen aesthetics when paired with laminated plywood finishes.</p>
 
             <h4 class="text-xl font-semibold mb-2">2. Wardrobes & Cupboards</h4>
-            <p class="mb-4 text-gray-700">Looking for a sturdy yet stylish plywood wardrobe or storage unit? Greenply's commercial and <a href="#" class="text-red-theme hover:underline">waterproof plywood</a> boards offer smooth finishes and termite-resistant properties, perfect for crafting long-lasting bedroom or hallway cupboards. Plus, with the right design, you can elevate cupboard price value while staying within budget.</p>
+            <p class="mb-4 text-gray-700">Looking for a sturdy yet stylish plywood wardrobe or storage unit? GreenInfinity's commercial and <a href="#" class="text-red-theme hover:underline">waterproof plywood</a> boards offer smooth finishes and termite-resistant properties, perfect for crafting long-lasting bedroom or hallway cupboards. Plus, with the right design, you can elevate cupboard price value while staying within budget.</p>
 
             <h4 class="text-xl font-semibold mb-2">3. Living Room TV Units & Partitions</h4>
             <p class="mb-4 text-gray-700">For elegant yet functional room dividers and media walls, opt for our decorative plywood board range. The surface smoothness makes them ideal for veneers and laminates, giving your living room a premium touch.</p>
 
             <h4 class="text-xl font-semibold mb-2">4. Bathroom Cabinets & Vanity Units</h4>
-            <p class="mb-4 text-gray-700">Our waterproof plywood price range is designed with humid zones in mind. Whether it's under-the-sink cabinets or wall-mounted storage, Greenply plywood boards are resistant to fungal growth, swelling, and delamination.</p>
+            <p class="mb-4 text-gray-700">Our waterproof plywood price range is designed with humid zones in mind. Whether it's under-the-sink cabinets or wall-mounted storage, GreenInfinity plywood boards are resistant to fungal growth, swelling, and delamination.</p>
 
             <h4 class="text-xl font-semibold mb-2">5. Doors & Frames</h4>
             <p class="mb-4 text-gray-700">Explore stylish <a href="#" class="text-red-theme hover:underline">plywood door design</a> options that blend strength and elegance. From main entrances to bedroom doors, our structural-grade plywood boards maintain their shape and integrity, even with daily usage and seasonal changes.</p>
 
-            <h3 class="text-2xl font-bold mb-4">Make the Smart Move with Greenply Plywood Boards</h3>
-            <p class="mb-4 text-gray-700">When it comes to interiors that last a lifetime, don't settle for anything less than the best. Explore Greenply's extensive range of plywood boards, each designed with precision, protection, and performance in mind. Whether you're picking the perfect plywood door design, optimizing for durability with BWP-grade waterproof sheets, or just exploring the best plywood in India for your renovation, Greenply ensures you get more than just wood—you get peace of mind.</p>
+            <h3 class="text-2xl font-bold mb-4">Make the Smart Move with GreenInfinity Plywood Boards</h3>
+            <p class="mb-4 text-gray-700">When it comes to interiors that last a lifetime, don't settle for anything less than the best. Explore GreenInfinity's extensive range of plywood boards, each designed with precision, protection, and performance in mind. Whether you're picking the perfect plywood door design, optimizing for durability with BWP-grade waterproof sheets, or just exploring the best plywood in India for your renovation, GreenInfinity ensures you get more than just wood—you get peace of mind.</p>
         </div>
     </section>
 
@@ -501,10 +652,8 @@
                     <li><a href="./investers.html" class="footer-link">Investors</a></li>
                     <li><a href="./Sustainable.html" class="footer-link">Sustainability</a></li>
                     <li><a href="./blog.html" class="footer-link">Blogs</a></li>
-                    <!-- <li><a href="#" class="footer-link">FAQ</a></li> -->
                     <li><a href="./Privacy Policy.html" class="footer-link">Privacy Policy</a></li>
                     <li><a href="./Disclaimer.html" class="footer-link">Disclaimer</a></li>
-                    <!-- <li><a href="#" class="footer-link">HKS Award</a></li> -->
                 </ul>
             </div>
         </div>
@@ -517,117 +666,118 @@
                 <a href="https://www.instagram.com/greenplyplywood/" class="social-icon-footer"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.youtube.com/channel/UCl3ckO1adsIiPFHsb8Uizvg" class="social-icon-footer"><i class="fab fa-youtube"></i></a>
             </div>
-            <p class="text-center text-sm text-gray-400">Copyright © 2025 GreenInfinity.com. All Rights Reserved.</p>
-        </div>
-
-        <!-- Floating Info Icon -->
-        <div class="fixed bottom-8 right-8 bg-red-theme text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-red-700 transition duration-300">
-            <i class="fas fa-info text-2xl"></i>
+            <p class="text-center text-sm text-gray-400">Copyright &copy; 2025 GreenInfinity.com. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
-        // JavaScript for Accordion (FAQ)
-        document.addEventListener('DOMContentLoaded', () => {
-            const accordionButtons = document.querySelectorAll('.accordion-button');
+        // Get elements
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const productsCarousel = document.getElementById('products-carousel');
+        const carouselPrevBtn = document.getElementById('carousel-prev');
+        const carouselNextBtn = document.getElementById('carousel-next');
 
-            accordionButtons.forEach((button, index) => {
-                button.addEventListener('click', () => {
-                    const accordionContent = button.nextElementSibling;
-                    const icon = button.querySelector('i');
-
-                    // Close all other open accordions
-                    accordionButtons.forEach((otherButton, otherIndex) => {
-                        if (otherButton !== button && otherButton.classList.contains('active')) {
-                            otherButton.classList.remove('active');
-                            otherButton.nextElementSibling.style.maxHeight = 0;
-                            otherButton.nextElementSibling.classList.remove('active');
-                            otherButton.querySelector('i').classList.remove('rotate-icon');
-                        }
-                    });
-
-                    // Toggle the clicked accordion
-                    button.classList.toggle('active');
-                    icon.classList.toggle('rotate-icon');
-
-                    if (button.classList.contains('active')) {
-                        accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
-                        accordionContent.classList.add('active');
-                    } else {
-                        accordionContent.style.maxHeight = 0;
-                        accordionContent.classList.remove('active');
-                    }
-                });
-
-                // Open the first accordion item by default
-                if (index === 0) {
-                    button.click(); // Simulate a click to open it
-                }
-            });
+        // Mobile menu toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
 
-
-        // JavaScript for Carousel (Explore Products)
-        const carouselContainer = document.querySelector('.carousel-container');
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        const prevButton = document.querySelector('.carousel-prev');
-        const nextButton = document.querySelector('.carousel-next');
-
-        let currentIndex = 0;
-        const totalItems = carouselItems.length;
-
-        // Calculate item width dynamically including gap
-        const calculateItemWidth = () => {
-            if (carouselItems.length > 0) {
-                const itemStyle = getComputedStyle(carouselItems[0]);
-                const itemWidth = carouselItems[0].offsetWidth;
-                const gap = parseFloat(itemStyle.marginRight) || 0; // Assuming margin-right for gap
-                return itemWidth + gap;
-            }
-            return 0;
-        };
-
-        function updateCarousel() {
-            const currentItemWidth = calculateItemWidth();
-            carouselContainer.style.transform = `translateX(-${currentIndex * currentItemWidth}px)`;
-        }
-
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalItems - 1;
-            updateCarousel();
-        });
-
-        nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex < totalItems - 1) ? currentIndex + 1 : 0;
-            updateCarousel();
-        });
-
-        // Recalculate item width and update carousel on window resize
-        window.addEventListener('resize', () => {
-            updateCarousel();
-        });
-
-        // Initial carousel position
-        updateCarousel();
-
-        // Inquiry Form Submit Handler
+        // Handle inquiry form submission for WhatsApp
         function handleInquirySubmit() {
             const name = document.getElementById('name').value;
             const company = document.getElementById('company').value;
             const pincode = document.getElementById('pincode').value;
             const inquiryType = document.getElementById('inquiryType').value;
+            const robotCheck = document.getElementById('robotCheck').checked;
 
-            const message = `Hello Greenply, I would like to inquire about your products.
-Name: ${name}
-Company: ${company}
-Pincode: ${pincode}
-Inquiry Type: ${inquiryType}`;
+            if (!name || !company || !pincode || inquiryType === "Select Type") {
+                alert('Please fill in all required fields.');
+                return;
+            }
 
-            // Replace '91XXXXXXXXXX' with the actual WhatsApp number
-            const whatsappUrl = `https://wa.me/+91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+            if (!robotCheck) {
+                alert('Please confirm you are not a robot.');
+                return;
+            }
+
+            const message = `
+                Inquiry Details:
+                Name: ${name}
+                Company: ${company}
+                Pincode: ${pincode}
+                Inquiry Type: ${inquiryType}
+            `.trim();
+
+            const whatsappNumber = '+919876543210'; // Example: +91 for India
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
             window.open(whatsappUrl, '_blank');
         }
+
+        // Carousel functionality for Explore products
+        carouselPrevBtn.addEventListener('click', () => {
+            productsCarousel.scrollBy({
+                left: -352, // Item width (320px) + space-x-6 (24px) = 344px. Adjusted for better scroll.
+                behavior: 'smooth'
+            });
+        });
+
+        carouselNextBtn.addEventListener('click', () => {
+            productsCarousel.scrollBy({
+                left: 352, // Item width (320px) + space-x-6 (24px) = 344px. Adjusted for better scroll.
+                behavior: 'smooth'
+            });
+        });
+
+        // FAQ Accordion functionality
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionContent = button.nextElementSibling;
+                const icon = button.querySelector('.fa-plus');
+
+                // Check if the clicked accordion is already active
+                const isActive = button.classList.contains('active');
+
+                // Close all other open accordions
+                document.querySelectorAll('.accordion-content').forEach(content => {
+                    if (content !== accordionContent && content.classList.contains('active')) {
+                        content.classList.remove('active');
+                        content.previousElementSibling.classList.remove('active');
+                        content.previousElementSibling.querySelector('.fa-plus').style.transform = 'rotate(0deg)';
+                        // Re-hide display after transition for other contents
+                        content.addEventListener('transitionend', function handler() {
+                            if (!content.classList.contains('active')) {
+                                content.style.display = 'none';
+                            }
+                            content.removeEventListener('transitionend', handler);
+                        });
+                    }
+                });
+
+                // Toggle the clicked accordion
+                if (isActive) {
+                    button.classList.remove('active');
+                    icon.style.transform = 'rotate(0deg)';
+                    accordionContent.classList.remove('active');
+                    // Hide display after transition for current content
+                    accordionContent.addEventListener('transitionend', function handler() {
+                        if (!accordionContent.classList.contains('active')) {
+                            accordionContent.style.display = 'none';
+                        }
+                        accordionContent.removeEventListener('transitionend', handler);
+                    });
+                } else {
+                    button.classList.add('active');
+                    icon.style.transform = 'rotate(45deg)';
+                    accordionContent.style.display = 'block'; // Set display block before adding active class
+                    requestAnimationFrame(() => { // Use requestAnimationFrame to ensure reflow before transition
+                        accordionContent.classList.add('active');
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
